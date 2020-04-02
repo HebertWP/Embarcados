@@ -1,7 +1,7 @@
 /* ***************************************************************** */
 /* File name:        ledSwi.c                                        */
 /* File description: Header file containing the functions needed to  */
-/*                   initialize, switch in between and operate RGB   */
+/*                   initialize, switch in between and operate red   */
 /*                   leds and buttons                                */
 /*                                                                   */
 /* Author name:      Caio Villela/ Hebert Wandick                    */
