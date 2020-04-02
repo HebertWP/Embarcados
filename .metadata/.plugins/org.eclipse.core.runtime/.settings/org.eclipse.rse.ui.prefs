@@ -1,2 +1,6 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
 org.eclipse.rse.preferences.order.connections=LAPTOP-FO1GLT9E.Local
+=======
+org.eclipse.rse.preferences.order.connections=DESKTOP-3BEMKMM.Local
+>>>>>>> 6e000db95eb6eecc1b504cf58d5014d6f23a8823

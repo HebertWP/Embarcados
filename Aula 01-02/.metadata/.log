@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 !SESSION 2020-04-01 18:40:15.342 -----------------------------------------------
+=======
+!SESSION 2020-04-01 18:56:45.323 -----------------------------------------------
+>>>>>>> 6e000db95eb6eecc1b504cf58d5014d6f23a8823
 eclipse.buildId=3.2.0.201603041649
 java.version=1.7.0_76
 java.vendor=Oracle Corporation
 BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=pt_BR
+<<<<<<< HEAD
 Framework arguments:  -product com.somniumtech.branding.kds.ide -showlocation
 Command-line arguments:  -os win32 -ws win32 -arch x86 -product com.somniumtech.branding.kds.ide -showlocation
 
@@ -12,11 +17,34 @@ Command-line arguments:  -os win32 -ws win32 -arch x86 -product com.somniumtech.
 !ENTRY org.eclipse.egit.ui 2 0 2020-04-01 18:52:53.143
 !MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
 user global configuration and to define the default location to store repositories: 'C:\Users\Hebert Wandick'. If this is
+=======
+Framework arguments:  -product com.somniumtech.branding.kds.ide -product com.somniumtech.branding.kds.ide -showlocation
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product com.somniumtech.branding.kds.ide -data C:\Users\caiov\Documents\GitHub\Embarcados\Aula 01-02 -product com.somniumtech.branding.kds.ide -showlocation
+
+!ENTRY org.eclipse.egit.ui 2 0 2020-04-01 18:56:49.941
+!MESSAGE Warning: EGit couldn't detect the installation path "gitPrefix" of native Git. Hence EGit can't respect system level
+Git settings which might be configured in ${gitPrefix}/etc/gitconfig under the native Git installation directory.
+The most important of these settings is core.autocrlf. Git for Windows by default sets this parameter to true in
+this system level configuration. The Git installation location can be configured on the
+Team > Git > Configuration preference page's 'System Settings' tab.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.egit.ui 2 0 2020-04-01 18:56:49.947
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\caiov'. If this is
+>>>>>>> 6e000db95eb6eecc1b504cf58d5014d6f23a8823
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.e4.ui.workbench.swt 4 2 2020-04-01 19:00:14.268
+=======
+!ENTRY com.processorexpert.core.ide.wizard.ui 2 0 2020-04-01 18:56:49.981
+!MESSAGE External elements location C:\Freescale\KDS_v3\eclipse\ProcessorExpert\BoardConfigurations/wizard_data does not exist
+
+!ENTRY org.eclipse.e4.ui.workbench.swt 4 2 2020-04-01 18:58:24.525
+>>>>>>> 6e000db95eb6eecc1b504cf58d5014d6f23a8823
 !MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.e4.ui.workbench.swt".
 !STACK 0
 org.eclipse.e4.core.di.InjectionException: org.eclipse.swt.SWTException: Widget is disposed
@@ -58,6 +86,16 @@ org.eclipse.e4.core.di.InjectionException: org.eclipse.swt.SWTException: Widget 
 	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
 	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4353)
 	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1061)
+<<<<<<< HEAD
+=======
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1085)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1070)
+	at org.eclipse.swt.widgets.Widget.notifyListeners(Widget.java:782)
+	at org.eclipse.jface.action.ActionContributionItem$9.handleEvent(ActionContributionItem.java:1293)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4353)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1061)
+>>>>>>> 6e000db95eb6eecc1b504cf58d5014d6f23a8823
 	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:4172)
 	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3761)
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$9.run(PartRenderingEngine.java:1151)
@@ -95,10 +133,17 @@ Caused by: org.eclipse.swt.SWTException: Widget is disposed
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
 	at java.lang.reflect.Method.invoke(Unknown Source)
 	at org.eclipse.e4.core.internal.di.MethodRequestor.execute(MethodRequestor.java:55)
+<<<<<<< HEAD
 	... 60 more
 
 !ENTRY org.eclipse.e4.ui.workbench 4 0 2020-04-01 19:00:14.311
 !MESSAGE Exception occurred while unrendering: org.eclipse.e4.ui.model.application.ui.basic.impl.TrimmedWindowImpl@109f852 (elementId: IDEWindow, tags: [topLevel], contributorURI: platform:/plugin/org.eclipse.ui.workbench) (widget: null, renderer: null, toBeRendered: true, onTop: false, visible: true, containerData: null, accessibilityPhrase: null) (label: %trimmedwindow.label.eclipseSDK, iconURI: null, tooltip: null, context: null, variables: [], x: 52, y: 52, width: 1024, height: 768)
+=======
+	... 67 more
+
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2020-04-01 18:58:24.535
+!MESSAGE Exception occurred while unrendering: org.eclipse.e4.ui.model.application.ui.basic.impl.TrimmedWindowImpl@1bd0a26 (elementId: IDEWindow, tags: [topLevel, shellMaximized], contributorURI: platform:/plugin/org.eclipse.ui.workbench) (widget: null, renderer: null, toBeRendered: true, onTop: false, visible: true, containerData: null, accessibilityPhrase: null) (label: %trimmedwindow.label.eclipseSDK, iconURI: null, tooltip: null, context: null, variables: [], x: 305, y: 305, width: 1024, height: 768)
+>>>>>>> 6e000db95eb6eecc1b504cf58d5014d6f23a8823
 !STACK 0
 org.eclipse.e4.core.di.InjectionException: org.eclipse.swt.SWTException: Widget is disposed
 	at org.eclipse.e4.core.internal.di.MethodRequestor.execute(MethodRequestor.java:62)
@@ -139,6 +184,16 @@ org.eclipse.e4.core.di.InjectionException: org.eclipse.swt.SWTException: Widget 
 	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
 	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4353)
 	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1061)
+<<<<<<< HEAD
+=======
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1085)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1070)
+	at org.eclipse.swt.widgets.Widget.notifyListeners(Widget.java:782)
+	at org.eclipse.jface.action.ActionContributionItem$9.handleEvent(ActionContributionItem.java:1293)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4353)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1061)
+>>>>>>> 6e000db95eb6eecc1b504cf58d5014d6f23a8823
 	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:4172)
 	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3761)
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$9.run(PartRenderingEngine.java:1151)
@@ -176,6 +231,7 @@ Caused by: org.eclipse.swt.SWTException: Widget is disposed
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
 	at java.lang.reflect.Method.invoke(Unknown Source)
 	at org.eclipse.e4.core.internal.di.MethodRequestor.execute(MethodRequestor.java:55)
+<<<<<<< HEAD
 	... 60 more
 !SESSION 2020-04-01 19:05:52.500 -----------------------------------------------
 eclipse.buildId=3.2.0.201603041649
@@ -267,3 +323,6 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY com.processorexpert.core.ide.wizard.ui 2 0 2020-04-02 15:02:16.570
 !MESSAGE External elements location C:\Freescale\KDS_v3\eclipse\ProcessorExpert\BoardConfigurations/wizard_data does not exist
+=======
+	... 67 more
+>>>>>>> 6e000db95eb6eecc1b504cf58d5014d6f23a8823

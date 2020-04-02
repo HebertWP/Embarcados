@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 activeuserprofiles=LAPTOP-FO1GLT9E;Team
 eclipse.preferences.version=1
 org.eclipse.rse.systemtype.local.systemType.defaultUserId=Hebert Wandick
 useridperkey=LAPTOP-FO1GLT9E.Local\=Hebert Wandick;
+=======
+activeuserprofiles=DESKTOP-3BEMKMM;Team
+eclipse.preferences.version=1
+org.eclipse.rse.systemtype.local.systemType.defaultUserId=caiov
+useridperkey=DESKTOP-3BEMKMM.Local\=caiov;
+>>>>>>> 6e000db95eb6eecc1b504cf58d5014d6f23a8823
