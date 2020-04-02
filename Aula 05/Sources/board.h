@@ -42,8 +42,6 @@
 #define BUTTON4_PORT_BASE_PNT   PORTA /* peripheral port base pointer */
 #define BUTTON4_GPIO_BASE_PNT   PTA   /* peripheral gpio base pointer */
 #define BUTTON4_PIN	         (uint32_t) 5u
-<<<<<<< HEAD
-=======
 
 #define LED1_PORT_BASE_PNT   PORTA /* peripheral port base pointer */
 #define LED1_GPIO_BASE_PNT   PTA   /* peripheral gpio base pointer */
@@ -61,5 +59,4 @@
 #define LED4_GPIO_BASE_PNT   PTA   /* peripheral gpio base pointer */
 #define LED4_PIN	         (uint32_t) 5u
 
->>>>>>> d02c7548758c9d95d3025b069445600973431836
 #endif /* SOURCES_BOARD_H_ */
