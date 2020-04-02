@@ -2,7 +2,8 @@
  * buttons.c
  *
  *  Created on: 05/03/2020
- *      Author: aluno
+ *  Author: Caio Villela
+ *          Hebert Wandick
  */
 
 /* our includes */
