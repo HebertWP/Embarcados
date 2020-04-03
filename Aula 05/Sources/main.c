@@ -19,8 +19,10 @@
 #include "ledSwit.h"
 
 /* globals */
+/* using the 1º,2º,4º led*/
 int iLeds[3] = {1, 2, 4};
 int iNumLeds = 3;
+/*using the 1º,3º,4º buttons*/
 int iButtons[2] = {1, 3, 4};
 int iNumButtons = 3;
 
@@ -30,43 +32,79 @@ int iNumButtons = 3;
 /* Input params:       n/a                          */
 /* Output params:      n/a                          */
 /* ************************************************ */
-
 int main(void)
 {
-	/* board initializations */
-	initLedButton(ILeds, iNumLeds, iButtons, iNumButtons);
+    /* board initializations */
+    initLedButton(ILeds, iNumLeds, iButtons, iNumButtons);
 
-	/* main loop */
-	while (1)
-	{
-		/* sets the RGB led color */
-		if (readButton(1))
-		{
-			ligaLed(1);
-		};
-		if (readButton(3))
-		{
-			ligaLed(2);
-		};
-		if (readButton(3) && readButton(1))
-		{
-			ligaLed(4);
-		};
+    /* main loop */
+    while (1)
+    {
+        /* logic table on this example:
+                t= toggle
+                l= ligada
+                d= desliga
+            | Buttons|  led   |
+            |1 |3 |4 |1 |2 |4 |
+            |0 |0 |0 |l |d |d |   
+            |0 |0 |1 |t |t |t |   
+            |0 |1 |0 |d |l |d |   
+            |0 |1 |1 |t |t |t |   
+            |1 |0 |0 |d |d |l |   
+            |1 |0 |1 |t |t |t |   
+            |1 |1 |0 |l |l |l |   
+            |1 |1 |1 |d |d |d | 
+        */
+        if (!readButton(1) && !readButton(3) && !readButton(3))
+        {
+            ligaLed(1);
+            desligaLed(2);
+            desligaLed(4);
+        };
+        if (!readButton(1) && !readButton(3) && readButton(4))
+        {
+            toggleLed(1);
+            toggleLed(2);
+            toggleLed(4);
+        };
+        if (!readButton(1) && readButton(3) && !readButton(3))
+        {
+            desligaLed(1);
+            ligaLed(2);
+            desligaLed(4);
+        };
+        if (!readButton(1) && readButton(3) && readButton(4))
+        {
+            toggleLed(1);
+            toggleLed(2);
+            toggleLed(4);
+        };
+        if (readButton(1) && !readButton(3) && !readButton(3))
+        {
+            desligaLed(1);
+            desligaLed(2);
+            ligaLed(4;
+        };
+        if (readButton(1) && !readButton(3) && readButton(4))
+        {
+            toggleLed(1);
+            toggleLed(2);
+            toggleLed(4);
+        };
+        if (readButton(1) && readButton(3) && !readButton(3))
+        {
+            ligaLed(1);
+            LigaLed(2);
+            LigaLed(4;
+        };
+        if (readButton(1) && readButton(3) && readButton(3))
+        {
+            desligaLed(1);
+            desligaLed(2);
+            desligaLed(24;
+        };
 
-		if (!readButton(3) && !readButton(1))
-		{
-			desligaLed(1);
-			desligaLed(2);
-			desligaLed(4);
-		};
-
-		if (readButton(4))
-		{
-			toggleLed(1);
-			toggleLed(2);
-			toggleLed(4);
-		};
-		/* wait 1000ms doing anything! */
-		util_genDelay1000ms();
-	}
+        /* wait 1000ms to next cicle off operation */
+        util_genDelay1000ms();
+    }
 }
