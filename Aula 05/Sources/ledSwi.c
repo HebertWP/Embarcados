@@ -28,8 +28,6 @@ void initLedButton(int *iPinsLed, int iTamLed,int *iPinsButton, int iTamButton){
     /*un-gateport A clock*/
     SIM_SCGC5|=0x200;
 
-
-
     /*initialize selected Leds as GPIO and set them as digital output*/
     if(iTamLed != 0){
         for(iI = 0; iI < iTamLed; iI ++;){
@@ -70,9 +68,6 @@ void initLedButton(int *iPinsLed, int iTamLed,int *iPinsButton, int iTamButton){
             }
         }
     }
-
-
-
 }
 
 void toggleLed(int iPin)
@@ -80,16 +75,16 @@ void toggleLed(int iPin)
     switch (iPin)
     {
     case 1:
-        GPIOA_PTOR |= 0x00;
+        GPIOA_PTOR |= LED1_PIN;
         break;
     case 2:
-        GPIOA_PTOR |= 0x02;
+        GPIOA_PTOR |= LED2_PIN;
         break;
     case 3:
-        GPIOA_PTOR |= 0x04;
+        GPIOA_PTOR |= LED3_PIN;
         break;
     case 4:
-        GPIOA_PTOR |= 0x08;
+        GPIOA_PTOR |= LED4_PIN;
         break;
     };
 }
@@ -101,32 +96,32 @@ void writeLed(int iPin, int iNivel)
         switch (iPin)
         {
         case 1:
-            GPIOA_PSOR|=0x00;
+            GPIOA_PSOR|=LED1_PIN;
             break;
         case 2:
-            GPIOA_PSOR|=0x02;
+            GPIOA_PSOR|=LED2_PIN;
             break;
         case 3:
-            GPIOA_PSOR|=0x04;
+            GPIOA_PSOR|=LED3_PIN;
             break;
         case 4:
-            GPIOA_PSOR|=0x08;
+            GPIOA_PSOR|=LED4_PIN;
             break;
         };
     }
     else
     {
         case 1:
-            GPIOA_PCOR|=0x00;
+            GPIOA_PCOR|=LED1_PIN;
             break;
         case 2:
-            GPIOA_PCOR|=0x02;
+            GPIOA_PCOR|=LED2_PIN;
             break;
         case 3:
-            GPIOA_PCOR|=0x04;
+            GPIOA_PCOR|=LED3_PIN;
             break;
         case 4:
-            GPIOA_PCOR|=0x08;
+            GPIOA_PCOR|=LED4_PIN;
             break;
         };
     }
@@ -142,15 +137,15 @@ void desligaLed(int iPin){
 
 int readButton(int iPin){
     case 1:
-        GPIOA_PDIR |= 0x00;
+        GPIOA_PDIR |= BUTTON1_PIN;
         break;
     case 2:
-        GPIOA_PDIR |= 0x02;
+        GPIOA_PDIR |= BUTTON2_PIN;
         break;
     case 3:
-        GPIOA_PDIR |= 0x04;
+        GPIOA_PDIR |= BUTTON3_PIN;
         break;
     case 4:
-        GPIOA_PDIR |= 0x08;
+        GPIOA_PDIR |= BUTTON4_PIN;
         break;
 }
