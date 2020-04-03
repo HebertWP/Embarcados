@@ -13,16 +13,9 @@
 #include "board.h"
 #include "ledSwi.h"
 
-/* system includes */
-//#include "fsl_clock_manager.h"
-//#include "fsl_port_hal.h"
-//#include "fsl_gpio_hal.h"
-
 void initLedButton(int *iPinsLed, int iTamLed,int *iPinsButton, int iTamButton){
     int iI = 0; /*integer iterator*/
-    uint32_t uiLedPins; /*selected led pins are 1*/
-    uint32_t uiButtonPins; /*selected button pins are 1*/
-
+    
     /*un-gateport A clock*/
     SIM_SCGC5|=0x200;
 
