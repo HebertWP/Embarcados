@@ -10,9 +10,9 @@
 /*                   16 KB SRAM                                      */
 /*                   Voltage range: 1.71 to 3.6 V                    */
 /*                                                                   */
-/* Author name:      Rodrigo M Bacurau                               */
-/* Creation date:    26fev2020                                       */
-/* Revision date:    02mar2020                                       */
+/* Author name:      Caio Villela/ Hebert Wandick                    */
+/* Creation date:    02apr2020                                       */
+/* Revision date:    03apr2020                                       */
 /* ***************************************************************** */
 
 /* our includes */

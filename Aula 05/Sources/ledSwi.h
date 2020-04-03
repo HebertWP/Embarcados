@@ -1,5 +1,5 @@
 /* ***************************************************************** */
-/* File name:        ledSwi.c                                        */
+/* File name:        ledSwi.h                                        */
 /* File description: Header file containing the functions needed to  */
 /*                   initialize, switch in between and operate RGB   */
 /*                   leds and buttons                                */

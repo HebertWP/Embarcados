@@ -6,7 +6,7 @@
 /*                                                                   */
 /* Author name:      Caio Villela/ Hebert Wandick                    */
 /* Creation date:    02apr2020                                       */
-/* Revision date:    02apr2020                                       */
+/* Revision date:    03apr2020                                       */
 /* ***************************************************************** */
 
 /* our includes */
@@ -14,9 +14,9 @@
 #include "ledSwi.h"
 
 /* system includes */
-#include "fsl_clock_manager.h"
-#include "fsl_port_hal.h"
-#include "fsl_gpio_hal.h"
+//#include "fsl_clock_manager.h"
+//#include "fsl_port_hal.h"
+//#include "fsl_gpio_hal.h"
 
 void initLedButton(int *iPinsLed, int iTamLed,int *iPinsButton, int iTamButton){
     int iI = 0; /*integer iterator*/
@@ -143,7 +143,7 @@ int readButton(int iPin){
             iPin = BUTTON3_MASK;
         case 4:
             iPin = BUTTON4_MASK;
-      }
+    }
 
     /*bit mask, returns 1 if bit is turned on, returns 0 otherwise*/
     switch(iInput & iPin){
@@ -152,4 +152,5 @@ int readButton(int iPin){
       case 0:
         return(1);
     }
+    return 0;
 }
