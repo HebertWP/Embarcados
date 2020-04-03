@@ -121,11 +121,11 @@ void writeLed(int iPin, int iNivel)
 }
 
 void ligaLed(int iPin){
-    writeLed(iPin,0);
+    writeLed(iPin,1);
 };
 
-void desligaLed(int iPin){
-    writeLed(iPin,1);
+void desligaLed(int iPin){ 
+    writeLed(iPin,0);
 }
 
 int readButton(int iPin){
