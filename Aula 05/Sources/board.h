@@ -14,49 +14,44 @@
 /* system includes */
 #include <MKL25Z4.h>
 
-/* FDRMKL25Z RGB LED pins defintions */
-#define RED_LED_PORT_BASE_PNT    PORTB /* peripheral port base pointer */
-#define RED_LED_GPIO_BASE_PNT    PTB   /* peripheral gpio base pointer */
-#define RED_LED_PIN		         (uint32_t) 18u
-
-#define GREEN_LED_PORT_BASE_PNT  PORTB /* peripheral port base pointer */
-#define GREEN_LED_GPIO_BASE_PNT  PTB   /* peripheral gpio base pointer */
-#define GREEN_LED_PIN	         (uint32_t) 19u
-
-#define BLUE_LED_PORT_BASE_PNT   PORTB /* peripheral port base pointer */
-#define BLUE_LED_GPIO_BASE_PNT   PTB   /* peripheral gpio base pointer */
-#define BLUE_LED_PIN	         (uint32_t) 1u
-
 #define BUTTON1_PORT_BASE_PNT   PORTA /* peripheral port base pointer */
 #define BUTTON1_GPIO_BASE_PNT   PTA   /* peripheral gpio base pointer */
-#define BUTTON1_PIN	         (uint32_t) 2u
+#define BUTTON1_PIN	         (uint32_t) 1u
+#define BUTTON1_MASK            0x02
 
 #define BUTTON2_PORT_BASE_PNT   PORTA /* peripheral port base pointer */
 #define BUTTON2_GPIO_BASE_PNT   PTA   /* peripheral gpio base pointer */
-#define BUTTON2_PIN	         (uint32_t) 3u
+#define BUTTON2_PIN	         (uint32_t) 2u
+#define BUTTON2_MASK            0x04
 
 #define BUTTON3_PORT_BASE_PNT   PORTA /* peripheral port base pointer */
 #define BUTTON3_GPIO_BASE_PNT   PTA   /* peripheral gpio base pointer */
-#define BUTTON3_PIN	         (uint32_t) 5u
+#define BUTTON3_PIN	         (uint32_t) 4u
+#define BUTTON3_MASK            0x10
 
 #define BUTTON4_PORT_BASE_PNT   PORTA /* peripheral port base pointer */
 #define BUTTON4_GPIO_BASE_PNT   PTA   /* peripheral gpio base pointer */
-#define BUTTON4_PIN	         (uint32_t) 6u
+#define BUTTON4_PIN	         (uint32_t) 5u
+#define BUTTON4_MASK            0x20
 
 #define LED1_PORT_BASE_PNT   PORTA /* peripheral port base pointer */
 #define LED1_GPIO_BASE_PNT   PTA   /* peripheral gpio base pointer */
-#define LED1_PIN	         (uint32_t) 2u
+#define LED1_PIN	         (uint32_t) 1u
+#define LED1_MASK            0x02
 
 #define LED2_PORT_BASE_PNT   PORTA /* peripheral port base pointer */
 #define LED2_GPIO_BASE_PNT   PTA   /* peripheral gpio base pointer */
-#define LED2_PIN	         (uint32_t) 3u
+#define LED2_PIN	         (uint32_t) 2u
+#define LED2_MASK            0x04
 
 #define LED3_PORT_BASE_PNT   PORTA /* peripheral port base pointer */
 #define LED3_GPIO_BASE_PNT   PTA   /* peripheral gpio base pointer */
-#define LED3_PIN	         (uint32_t) 5u
+#define LED3_PIN	         (uint32_t) 4u
+#define LED3_MASK            0x10
 
 #define LED4_PORT_BASE_PNT   PORTA /* peripheral port base pointer */
 #define LED4_GPIO_BASE_PNT   PTA   /* peripheral gpio base pointer */
-#define LED4_PIN	         (uint32_t) 6u
+#define LED4_PIN	         (uint32_t) 5u
+#define LED4_MASK            0x20
 
 #endif /* SOURCES_BOARD_H_ */

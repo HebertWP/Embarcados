@@ -16,14 +16,14 @@
 /* ***************************************************************** */
 
 /* our includes */
-#include "ledSwit.h"
+#include "ledSwi.h"
 
 /* globals */
 /* using the 1º,2º,4º led*/
 int iLeds[3] = {1, 2, 4};
 int iNumLeds = 3;
 /*using the 1º,3º,4º buttons*/
-int iButtons[2] = {1, 3, 4};
+int iButtons[3] = {1, 3, 4};
 int iNumButtons = 3;
 
 /* ************************************************ */
@@ -35,7 +35,7 @@ int iNumButtons = 3;
 int main(void)
 {
     /* board initializations */
-    initLedButton(ILeds, iNumLeds, iButtons, iNumButtons);
+    initLedButton(iLeds, iNumLeds, iButtons, iNumButtons);
 
     /* main loop */
     while (1)
@@ -83,7 +83,7 @@ int main(void)
         {
             desligaLed(1);
             desligaLed(2);
-            ligaLed(4;
+            ligaLed(4);
         };
         if (readButton(1) && !readButton(3) && readButton(4))
         {
@@ -94,17 +94,17 @@ int main(void)
         if (readButton(1) && readButton(3) && !readButton(3))
         {
             ligaLed(1);
-            LigaLed(2);
-            LigaLed(4;
+            ligaLed(2);
+            ligaLed(4);
         };
         if (readButton(1) && readButton(3) && readButton(3))
         {
             desligaLed(1);
             desligaLed(2);
-            desligaLed(24;
+            desligaLed(4);
         };
 
         /* wait 1000ms to next cicle off operation */
-        util_genDelay1000ms();
+        for(int iI=0; iI <500000; iI++);
     }
 }
