@@ -16,33 +16,13 @@
 /* ***************************************************************** */
 
 /* our includes */
-#include "util.h"
-#include "mcg.h"
-#include "ledrgb.h"
-#include "buttons.h"
+#include "ledSwit.h"
 
 /* globals */
-static unsigned char cLedColor = 0;                 /* stores the current RGB led color */
-
-/* ************************************************ */
-/* Method name:        boardInit                    */
-/* Method description: main board all needed        */
-/*                     initializations              */
-/* Input params:       n/a                          */
-/* Output params:      n/a                          */
-/* ************************************************ */
-void boardInit(void)
-{
-	/* fist of all, clock configuration and initialization */
-	mcg_clockInit();
-
-	/* RGB LED initialization */
-	ledrgb_init();
-	buttons_init();
-
-}
-
-
+int iLeds[3] = {1, 2, 4};
+int iNumLeds = 3;
+int iButtons[2] = {1, 3, 4};
+int iNumButtons = 3;
 
 /* ************************************************ */
 /* Method name:        main                         */
@@ -50,24 +30,43 @@ void boardInit(void)
 /* Input params:       n/a                          */
 /* Output params:      n/a                          */
 /* ************************************************ */
+
 int main(void)
 {
 	/* board initializations */
-	boardInit();
+	initLedButton(ILeds, iNumLeds, iButtons, iNumButtons);
 
 	/* main loop */
-    while (1){
+	while (1)
+	{
 		/* sets the RGB led color */
-        if(button_read()==1){
-        	ledrgb_write(cLedColor);
+		if (readButton(1))
+		{
+			ligaLed(1);
+		};
+		if (readButton(3))
+		{
+			ligaLed(2);
+		};
+		if (readButton(3) && readButton(1))
+		{
+			ligaLed(4);
+		};
 
-        	/* increments the ledColor from 0 to 7 */
-        	if(++cLedColor>7)
-			cLedColor = 0;
+		if (!readButton(3) && !readButton(1))
+		{
+			desligaLed(1);
+			desligaLed(2);
+			desligaLed(4);
+		};
 
-        	/* wait 100ms doing anything! */
-        	util_genDelay1000ms();
-        }
-
-    }
+		if (readButton(4))
+		{
+			toggleLed(1);
+			toggleLed(2);
+			toggleLed(4);
+		};
+		/* wait 1000ms doing anything! */
+		util_genDelay1000ms();
+	}
 }

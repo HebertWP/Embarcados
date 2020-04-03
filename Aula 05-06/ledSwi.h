@@ -10,6 +10,19 @@
 /* ***************************************************************** */
 
 #ifndef LEDSWI_H
+
+void initLedButton(int *iPinsLed, int iTamLed,int *iPinsButton, int iTamButton);
+
+int readButton(int iPin);
+
+void ligaLed(int iPin);
+
+void desligaLed(int iPin);
+
+void toggleLed(int iPin);
+
+void writeLed(int iPin, int iNivel);
+
 #define LEDSWI_H
 
 
