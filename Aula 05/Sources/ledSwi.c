@@ -142,6 +142,7 @@ int readButton(int iPin){
 
     iInput = GPIOA_PDIR;
 
+    /*configures iPin as 32 bit pinnage regarding it's button*/
     switch(iPin){
         case 1:
             iPin = BUTTON1_PIN;
@@ -153,6 +154,7 @@ int readButton(int iPin){
             iPin = BUTTON4_PIN;
       }
 
+    /*bit mask, returns 1 if bit is turned on, returns 0 otherwise*/
     switch(iInput & iPin){
       case 1:
         return(0);
