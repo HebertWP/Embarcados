@@ -111,6 +111,8 @@ void writeLed(int iPin, int iNivel)
     }
     else
     {
+      switch(iPin)
+      {
         case 1:
             GPIOA_PCOR|=LED1_PIN;
             break;
@@ -136,16 +138,26 @@ void desligaLed(int iPin){
 }
 
 int readButton(int iPin){
-    case 1:
-        GPIOA_PDIR |= BUTTON1_PIN;
-        break;
-    case 2:
-        GPIOA_PDIR |= BUTTON2_PIN;
-        break;
-    case 3:
-        GPIOA_PDIR |= BUTTON3_PIN;
-        break;
-    case 4:
-        GPIOA_PDIR |= BUTTON4_PIN;
-        break;
+    int iInput; /*32 bit number showing the inputs*/
+
+    iInput = GPIOA_PDIR;
+
+    switch(iPin){
+        case 1:
+            iPin = BUTTON1_PIN;
+        case 2:
+            iPin = BUTTON2_PIN;
+        case 3:
+            iPin = BUTTON3_PIN;
+        case 4:
+            iPin = BUTTON4_PIN;
+      }
+
+    switch(iInput & iPin){
+      case 1:
+        return(0);
+      case 0:
+        return(1);
+    }
+
 }
