@@ -56,6 +56,8 @@ void initLedButton(int *iPinsLed, int iTamLed,int *iPinsButton, int iTamButton){
 
 void toggleLed(int iPin)
 {
+    /* toggle PTAx*/
+    /* PTOR : Port Toggle Output Register */
     switch (iPin)
     {
     case 1:
@@ -75,6 +77,10 @@ void toggleLed(int iPin)
 
 void writeLed(int iPin, int iNivel)
 {
+    /* set PTAx*/
+    /* PSOR : Port Set Output Register */
+    /* GPIOA_PSOR |= turn HIGH the correponting output pin */
+    /* GPIOA_PCOR |= turn LOW the correponting output pin */
     if (iNivel)
     {
         switch (iPin)
@@ -114,10 +120,12 @@ void writeLed(int iPin, int iNivel)
 }
 
 void ligaLed(int iPin){
+    /*call the function responsible by set set pin output level to HIGH*/
     writeLed(iPin,1);
 };
 
 void desligaLed(int iPin){ 
+    /*call the function responsible by set set pin output level to LOW*/
     writeLed(iPin,0);
 }
 
@@ -138,7 +146,7 @@ int readButton(int iPin){
             iPin = BUTTON4_MASK;
     }
 
-    /*bit mask, returns 1 if bit is turned on, returns 0 otherwise*/
+    /*bit mask, returns 1 if bit is turned off, returns 0 otherwise*/
     switch(iInput & iPin){
       case 1:
         return(0);
