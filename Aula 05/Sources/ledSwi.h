@@ -16,16 +16,16 @@
 /* Methodname:         initLedButton                        */
 /* Method description: Esse metodoso realiza a inicializacao*/
 /*                     dos Led e Botoes blugados no comtrole*/
-/* Inputparams:        iPinsLed- Um vetor contendo o numero */  
+/* Inputparams:        iPinsLed- Um vetor contendo o numero */
 /*                     leds e utilizados                    */
 /*                     iTamLed- Quantidade de led a serem   */
 /*                     incializados                         */
-/*                     iPinsButton- Um vetor contendo o     */  
+/*                     iPinsButton- Um vetor contendo o     */
 /*                     numero botoesutilizados              */
 /*                     iTamButton- Quantidade de botoes     */
 /*                     a serem incializados                 */
 /* Outputparams:       n/a                                  */
-/************************************************************/ 
+/************************************************************/
 void initLedButton(int *iPinsLed, int iTamLed,int *iPinsButton, int iTamButton);
 
 /* **********************************************************/
@@ -35,7 +35,7 @@ void initLedButton(int *iPinsLed, int iTamLed,int *iPinsButton, int iTamButton);
 /* Inputparams:        iPin- Numero do botao a ser lido     */
 /* Outputparams:       0 caso seja lido nivel logico baixo  */
 /*                     1 caso seja lido nivel logico alto   */
-/************************************************************/ 
+/************************************************************/
 int readButton(int iPin);
 
 /* **********************************************************/
@@ -43,7 +43,7 @@ int readButton(int iPin);
 /* Method description: Liga un led                          */
 /* Inputparams:        iPin- Numero do led a ser ligado     */
 /* Outputparams:       n/a                                  */
-/************************************************************/ 
+/************************************************************/
 void ligaLed(int iPin);
 
 /* **********************************************************/
@@ -51,7 +51,7 @@ void ligaLed(int iPin);
 /* Method description: Desliga led                          */
 /* Inputparams:        iPin- Numero do led a ser desligado  */
 /* Outputparams:       n/a                                  */
-/************************************************************/ 
+/************************************************************/
 void desligaLed(int iPin);
 
 /* **********************************************************/
@@ -62,7 +62,7 @@ void desligaLed(int iPin);
 /* Inputparams:        iPin- Numero do led a ser desconetado*/
 /*                     do controlador                       */
 /* Outputparams:       n/a                                  */
-/************************************************************/ 
+/************************************************************/
 void toggleLed(int iPin);
 
 /* **********************************************************/
@@ -74,7 +74,7 @@ void toggleLed(int iPin);
 /*                     logico alterado                      */
 /*                     iNivel- nivel logico a ser aplicado  */
 /* Outputparams:       n/a                                  */
-/************************************************************/ 
+/************************************************************/
 void writeLed(int iPin, int iNivel);
 
 #endif

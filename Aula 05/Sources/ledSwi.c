@@ -13,9 +13,22 @@
 #include "board.h"
 #include "ledSwi.h"
 
+
+/* **************************************************** */
+/* Method name:        initLedButton                    */
+/* Method description: Initializes selected Leds        */
+/*                     and Buttons as GPIO and sets     */
+/*                     them as digital output/input     */
+/* Input params:       int* iPinsLed - array containing */
+/*                     numbers of leds to be initialized*/
+/*                     int iTamLed - size of that array */
+/*                     int* iPinsButton-same for buttons*/
+/*                     int iTamButton - same for buttons*/
+/* Output params:      n/a                              */
+/* **************************************************** */
 void initLedButton(int *iPinsLed, int iTamLed,int *iPinsButton, int iTamButton){
     int iI = 0; /*integer iterator*/
-    
+
     /*un-gateport A clock*/
     SIM_SCGC5|=0x200;
 
@@ -54,6 +67,13 @@ void initLedButton(int *iPinsLed, int iTamLed,int *iPinsButton, int iTamButton){
     }
 }
 
+/* **************************************************** */
+/* Method name:        toggleLed                        */
+/* Method description: toggles digital output           */
+/* Input params:       int iPin - tells what led is to  */
+/*                     be initialized                   */
+/* Output params:      n/a                              */
+/* **************************************************** */
 void toggleLed(int iPin)
 {
     switch (iPin)
@@ -73,6 +93,15 @@ void toggleLed(int iPin)
     };
 }
 
+/* **************************************************** */
+/* Method name:        writeLed                         */
+/* Method description: writes 1 or 0 on digital output  */
+/* Input params:       int iPin - tells what led is to  */
+/*                     be written on                    */
+/*                     int iNivel - what level is to be */
+/*                     written                          */
+/* Output params:      n/a                              */
+/* **************************************************** */
 void writeLed(int iPin, int iNivel)
 {
     if (iNivel)
@@ -113,14 +142,37 @@ void writeLed(int iPin, int iNivel)
     }
 }
 
+/* **************************************************** */
+/* Method name:        ligaLed                          */
+/* Method description: turns on Led                     */
+/* Input params:       int iPin - tells what led is to  */
+/*                     be turned on                     */
+/* Output params:      n/a                              */
+/* **************************************************** */
 void ligaLed(int iPin){
     writeLed(iPin,1);
 };
 
-void desligaLed(int iPin){ 
+/* **************************************************** */
+/* Method name:        desligaLed                       */
+/* Method description: turns Led off                    */
+/* Input params:       int iPin - tells what led is to  */
+/*                     be turned off                    */
+/* Output params:      n/a                              */
+/* **************************************************** */
+void desligaLed(int iPin){
     writeLed(iPin,0);
 }
 
+
+/* **************************************************** */
+/* Method name:        readButton                       */
+/* Method description: reads logical level on selected  */
+/*                     button                           */
+/* Input params:       int iPin - tells what button is  */
+/*                     to be read                       */
+/* Output params:      n/a                              */
+/* **************************************************** */
 int readButton(int iPin){
     int iInput; /*32 bit number showing the inputs*/
 
