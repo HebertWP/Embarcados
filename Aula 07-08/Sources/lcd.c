@@ -9,10 +9,11 @@
 /* ***************************************************************** */
 
 #include "lcd.h"
-//#include "KL25Z/es670_peripheral_board.h"
+//#include "KL25Z/es670_peripheral_board.h" //orginal
 #include "board.h"
-//#include "Util/util.h"
-
+//#include "Util/util.h" //Original
+#include "util.h"
+//compiling with 2 warnings, by integer truncated unsigned type
 /* system includes */
 #include "fsl_clock_manager.h"
 #include "fsl_port_hal.h"
