@@ -20,11 +20,11 @@
 
 /* globals */
 /* using the 1º,2º,4º led*/
-int iLeds[3] = {1, 2, 4};
-int iNumLeds = 3;
+int iLeds[2] = {1, 2};
+int iNumLeds = 2;
 /*using the 1º,3º,4º buttons*/
-int iButtons[3] = {1, 3, 4};
-int iNumButtons = 3;
+int iButtons[2] = {3 , 4};
+int iNumButtons = 2;
 
 /* ************************************************ */
 /* Method name:        main                         */
@@ -45,75 +45,40 @@ int main(void)
                 t= toggle
                 l= ligada
                 d= desliga
-            | Buttons|  led   |
-            |1 |3 |4 |1 |2 |4 |
-            |0 |0 |0 |l |d |d |
-            |0 |0 |1 |t |t |t |
-            |0 |1 |0 |d |l |d |
-            |0 |1 |1 |t |t |t |
-            |1 |0 |0 |d |d |l |
-            |1 |0 |1 |t |t |t |
-            |1 |1 |0 |l |l |l |
-            |1 |1 |1 |d |d |d |
+            |Buttons|  led  |
+            | 3 | 4 | 1 | 2 |
+            | 0 | 0 | l | l |
+            | 0 | 1 | t | t |
+            | 1 | 0 | d | l |
+            | 1 | 1 | l | d |
         */
-        /*case |0 |0 |0 |l |d |d |  */   
-        if (!readButton(1) && !readButton(3) && !readButton(3))
-        {
-            ligaLed(1);
-            desligaLed(2);
-            desligaLed(4);
-        };
-        /*case |0 |0 |1 |t |t |t |  */   
-        if (!readButton(1) && !readButton(3) && readButton(4))
-        {
-            toggleLed(1);
-            toggleLed(2);
-            toggleLed(4);
-        };
-        /*case |0 |1 |0 |d |l |d |  */   
-        if (!readButton(1) && readButton(3) && !readButton(3))
-        {
-            desligaLed(1);
-            ligaLed(2);
-            desligaLed(4);
-        };
-        /*case |0 |1 |1 |t |t |t |  */   
-        if (!readButton(1) && readButton(3) && readButton(4))
-        {
-            toggleLed(1);
-            toggleLed(2);
-            toggleLed(4);
-        };
-        /*case |1 |0 |0 |d |d |l |  */   
-        if (readButton(1) && !readButton(3) && !readButton(3))
-        {
-            desligaLed(1);
-            desligaLed(2);
-            ligaLed(4);
-        };
-        /*case |1 |0 |1 |t |t |t |  */   
-        if (readButton(1) && !readButton(3) && readButton(4))
-        {
-            toggleLed(1);
-            toggleLed(2);
-            toggleLed(4);
-        };
-        /*case |1 |1 |0 |l |l |l |  */   
-        if (readButton(1) && readButton(3) && !readButton(3))
+        /*case | 0 | 0 | l | l |  */   
+        if (!readButton(3) && !readButton(4))
         {
             ligaLed(1);
             ligaLed(2);
-            ligaLed(4);
         };
-        /*case |1 |1 |1 |d |d |d |  */   
-        if (readButton(1) && readButton(3) && readButton(3))
+        /*case | 0 | 1 | t | t |  */   
+        if (!readButton(3) && readButton(4))
+        {
+            toggleLed(1);
+            toggleLed(2);
+        };
+        /*case | 1 | 0 |d | l |  */   
+        if (readButton(3) && !readButton(4))
         {
             desligaLed(1);
-            desligaLed(2);
-            desligaLed(4);
+            ligaLed(2);
         };
-
+        /*case | 1 | 0 | d | l |  */   
+        if (readButton(3) && readButton(4))
+        {
+            ligaLed(1);
+            desligaLed(2);
+        };
+        
         /* wait unknown time to next cicle off operation */
-        for(int iI=0; iI <500000; iI++);
+        for(int iI=0; iI <500000; iI++)
+            for(int iY=0; iY <500000; iY++);
     }
 }
