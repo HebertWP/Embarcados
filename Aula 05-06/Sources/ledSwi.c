@@ -15,9 +15,9 @@
 
 void initLedButton(int *iPinsLed, int iTamLed,int *iPinsButton, int iTamButton){
     int iI = 0; /*integer iterator*/
-    
+
     /*un-gateport A clock*/
-    SIM_SCGC5|=0x200;
+    SIM_SCGC5|=0x0200;
 
     /*initialize selected Leds as GPIO and set them as digital output*/
     if(iTamLed != 0){
@@ -124,7 +124,7 @@ void ligaLed(int iPin){
     writeLed(iPin,1);
 };
 
-void desligaLed(int iPin){ 
+void desligaLed(int iPin){
     /*call the function responsible by set set pin output level to LOW*/
     writeLed(iPin,0);
 }

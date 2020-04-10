@@ -37,10 +37,23 @@ void lcd_initLcd(void)
 {
     /* pins configured as outputs */
 
-    /* un-gate port clock*/
-    CLOCK_SYS_EnablePortClock(PORTC_IDX);
+    /*un-gateport C clock*/
+    SIM_SCGC5|=0x0800;
 
-    /* set pin as gpio */
+    /*set pins as gpio*/
+    PORTC_PCR8|= 0x100; /*RS*/
+    PORTC_PCR9|= 0x100; /*RENABLE*/
+    PORTC_PCR0|= 0x100; /*RD0*/
+    PORTC_PCR1|= 0x100; /*RD1*/
+    PORTC_PCR2|= 0x100; /*RD2*/
+    PORTC_PCR3|= 0x100; /*RD3*/
+    PORTC_PCR4|= 0x100; /*RD4*/
+    PORTC_PCR5|= 0x100; /*RD5*/
+    PORTC_PCR6|= 0x100; /*RD6*/
+    PORTC_PCR7|= 0x100; /*RD7*/
+
+
+    /* set pin as gpio
     PORT_HAL_SetMuxMode(LCD_PORT_BASE_PNT, LCD_RS_PIN, LCD_RS_ALT);
     PORT_HAL_SetMuxMode(LCD_PORT_BASE_PNT, LCD_ENABLE_PIN, LCD_ENABLE_ALT);
     PORT_HAL_SetMuxMode(LCD_PORT_BASE_PNT, LCD_DATA_DB0_PIN, LCD_DATA_ALT);
@@ -51,8 +64,21 @@ void lcd_initLcd(void)
     PORT_HAL_SetMuxMode(LCD_PORT_BASE_PNT, LCD_DATA_DB5_PIN, LCD_DATA_ALT);
     PORT_HAL_SetMuxMode(LCD_PORT_BASE_PNT, LCD_DATA_DB6_PIN, LCD_DATA_ALT);
     PORT_HAL_SetMuxMode(LCD_PORT_BASE_PNT, LCD_DATA_DB7_PIN, LCD_DATA_ALT);
+    */
 
-    /* set pin as digital output */
+    /* set pins as digital output */
+    GPIOC_PDDR |= LCD_DATA_DB0_DIR;
+    GPIOC_PDDR |= LCD_DATA_DB1_DIR;
+    GPIOC_PDDR |= LCD_DATA_DB2_DIR;
+    GPIOC_PDDR |= LCD_DATA_DB3_DIR;
+    GPIOC_PDDR |= LCD_DATA_DB4_DIR;
+    GPIOC_PDDR |= LCD_DATA_DB5_DIR;
+    GPIOC_PDDR |= LCD_DATA_DB6_DIR;
+    GPIOC_PDDR |= LCD_DATA_DB7_DIR;
+    GPIOC_PDDR |= LCD_RS_DIR;
+    GPIOC_PDDR |= LCD_ENABLE_DIR;
+
+    /* set pin as digital output
     GPIO_HAL_SetPinDir(LCD_GPIO_BASE_PNT, LCD_RS_PIN, LCD_RS_DIR);
     GPIO_HAL_SetPinDir(LCD_GPIO_BASE_PNT, LCD_ENABLE_PIN, LCD_ENABLE_DIR);
     GPIO_HAL_SetPinDir(LCD_GPIO_BASE_PNT, LCD_DATA_DB0_PIN, LCD_DATA_DIR);
@@ -63,7 +89,8 @@ void lcd_initLcd(void)
     GPIO_HAL_SetPinDir(LCD_GPIO_BASE_PNT, LCD_DATA_DB5_PIN, LCD_DATA_DIR);
     GPIO_HAL_SetPinDir(LCD_GPIO_BASE_PNT, LCD_DATA_DB6_PIN, LCD_DATA_DIR);
     GPIO_HAL_SetPinDir(LCD_GPIO_BASE_PNT, LCD_DATA_DB7_PIN, LCD_DATA_DIR);
-
+     */
+     
     // turn-on LCD, with no cursor and no blink
     lcd_sendCommand(CMD_NO_CUR_NO_BLINK);
 
