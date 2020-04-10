@@ -1,11 +1,10 @@
 /* ***************************************************************** */
 /* File name:        lcd.c                                           */
-/* File description: File dedicated to the hardware abstraction layer*/
-/*                   related to the LCD HARDWARE based on the KS006U */
-/*                   controller                                      */
-/* Author name:      dloubach                                        */
+/* File description: file containing the implementation of functions */
+/*                   used to control the LCD display                 */
+/* Author name:      Caio Villela, Hebert Wandick                    */
 /* Creation date:    16out2015                                       */
-/* Revision date:    25fev2016                                       */
+/* Revision date:    10/apr/2020                                      */
 /* ***************************************************************** */
 
 #include "lcd.h"
@@ -260,4 +259,24 @@ void lcd_dummyText(void)
     // set the cursor line 1, column 0
     lcd_setCursor(1,0);
     lcd_writeString("Prj Sis Embarcad");
+}
+
+/* ************************************************ */
+/* Method name:        lcd_writeText                */
+/* Method description: Write text sent by user, on  */
+/*                     especified line              */
+/* Input params:       int iL, line // chr* cString */
+/* Output params:      n/a                          */
+/* ************************************************ */
+void lcd_writeText(int iL, char* cString )
+{
+    // clear LCD
+    lcd_sendCommand(CMD_CLEAR);
+
+    //set cursor to line iL, column 0
+    lcd_setCursor(il, 0);
+
+    // send string
+    lcd_writeString(cString);
+
 }

@@ -1,12 +1,12 @@
 /* ***************************************************************** */
 /* File name:        lcd.h                                           */
-/* File description: Header file containing the functions/methods    */
-/*                   interfaces for handling the LCD hardware from   */
-/*                   the hardware kit                                */
-/* Author name:      dloubach                                        */
+/* File description: file containing the description of functions    s*/
+/*                   used to control the LCD display                 */
+/* Author name:      Caio Villela, Hebert Wandick                    */
 /* Creation date:    16out2015                                       */
-/* Revision date:    25fev2016                                       */
+/* Revision date:    10/apr/2020                                      */
 /* ***************************************************************** */
+
 
 #ifndef SOURCES_LCD_H_
 #define SOURCES_LCD_H_
@@ -73,6 +73,15 @@ void lcd_setCursor(unsigned char cLine, unsigned char cColumn);
 /* Output params:      n/a                          */
 /* ************************************************ */
 void lcd_dummyText(void);
+
+/* ************************************************ */
+/* Method name:        lcd_writeText                */
+/* Method description: Write text sent by user, on  */
+/*                     especified line              */
+/* Input params:       int iL, line // chr* cString */
+/* Output params:      n/a                          */
+/* ************************************************ */
+void lcd_writeText(int iL, char* cString )
 
 
 #endif /* SOURCES_LCD_H_ */
