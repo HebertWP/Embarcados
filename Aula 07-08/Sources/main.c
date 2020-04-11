@@ -43,6 +43,10 @@ int main(void)
 
 		/* wait 100ms doing anything! */
         util_genDelay100ms();
+        lcd_writeText(0,"Na primeira linha");
+        util_genDelay100ms();
+        lcd_writeText(1,"Na segunda linha");
+        util_genDelay100ms();
     }
     /* Never leave main */
     return 0;

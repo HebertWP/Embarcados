@@ -74,5 +74,13 @@ void lcd_setCursor(unsigned char cLine, unsigned char cColumn);
 /* ************************************************ */
 void lcd_dummyText(void);
 
+/* ************************************************ */
+/* Method name:        lcd_writeText                */
+/* Method description: Write text sent by user, on  */
+/*                     especified line              */
+/* Input params:       int iL, line // chr* cString */
+/* Output params:      n/a                          */
+/* ************************************************ */
+void lcd_writeText(int iL, char* cString );
 
 #endif /* SOURCES_LCD_H_ */
