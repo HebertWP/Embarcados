@@ -3,8 +3,8 @@
 /* File description: file containing the implementation of functions */
 /*                   used to control the LCD display                 */
 /* Author name:      Caio Villela, Hebert Wandick                    */
-/* Creation date:    16out2015                                       */
-/* Revision date:    10/apr/2020                                      */
+/* Creation date:    10/apr/2020                                     */
+/* Revision date:    10/apr/2020                                     */
 /* ***************************************************************** */
 
 #include "lcd.h"
@@ -19,11 +19,11 @@
 #include "fsl_gpio_hal.h"
 
 /* line and columns */
-#define LINE0        0U
-#define COLUMN0        0U
+#define LINE0       0U
+#define COLUMN0     0U
 
-#define L0C0_BASE    0x80 /* line 0, column 0 */
-#define L1C0_BASE    0xC0 /* line 1, column 0 */
+#define L0C0_BASE   0x80 /* line 0, column 0 */
+#define L1C0_BASE   0xC0 /* line 1, column 0 */
 #define MAX_COLUMN  15U
 
 /* ************************************************ */
@@ -81,8 +81,6 @@ void lcd_initLcd(void)
 
 }
 
-
-
 /* ************************************************ */
 /* Method name:        lcd_write2Lcd                */
 /* Method description: Send command or data to LCD  */
@@ -116,8 +114,6 @@ void lcd_write2Lcd(unsigned char ucBuffer,  unsigned char cDataType)
     util_genDelay1ms();
 }
 
-
-
 /* ************************************************ */
 /* Method name:        lcd_writeData                */
 /* Method description: Write data to be displayed   */
@@ -130,8 +126,6 @@ void lcd_writeData(unsigned char ucData)
     lcd_write2Lcd(ucData, LCD_RS_DATA);
 }
 
-
-
 /* ************************************************ */
 /* Method name:        lcd_sendCommand              */
 /* Method description: Write command to LCD         */
@@ -143,8 +137,6 @@ void lcd_sendCommand(unsigned char ucCmd)
     /* just a relay to send command */
     lcd_write2Lcd(ucCmd, LCD_RS_CMD);
 }
-
-
 
 /* ************************************************ */
 /* Method name:        lcd_setCursor                */
@@ -171,8 +163,6 @@ void lcd_setCursor(unsigned char cLine, unsigned char cColumn)
     lcd_sendCommand(cCommand);
 }
 
-
-
 /* ************************************************ */
 /* Method name:        lcd_writeString              */
 /* Method description: Write string to be displayed */
@@ -187,8 +177,6 @@ void lcd_writeString(const char *cBuffer)
         lcd_writeData(*cBuffer++);
     };
 }
-
-
 
 /* ************************************************ */
 /* Method name:        lcd_dummyText                */

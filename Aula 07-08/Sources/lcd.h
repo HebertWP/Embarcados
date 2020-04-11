@@ -1,10 +1,10 @@
 /* ***************************************************************** */
 /* File name:        lcd.h                                           */
-/* File description: file containing the description of functions    s*/
+/* File description: file containing the description of functions    */
 /*                   used to control the LCD display                 */
 /* Author name:      Caio Villela, Hebert Wandick                    */
-/* Creation date:    16out2015                                       */
-/* Revision date:    10/apr/2020                                      */
+/* Creation date:    09/apr/2020                                     */
+/* Revision date:    10/apr/2020                                     */
 /* ***************************************************************** */
 
 

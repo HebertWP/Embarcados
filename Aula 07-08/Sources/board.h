@@ -7,7 +7,6 @@
 /* Creation date:    09abri2020                                      */
 /* Revision date:    09abri2020                                      */
 /* ***************************************************************** */
-
 #ifndef SOURCES_BOARD_H_
 #define SOURCES_BOARD_H_
 
@@ -69,4 +68,5 @@
 #define LCD_DATA_DB6_DIR            (GPIO_OUTPUT << LCD_DATA_DB6_PIN)
 #define LCD_DATA_DB7_DIR            (GPIO_OUTPUT << LCD_DATA_DB7_PIN)
 /*                 END OF LCD definitions                 */
+
 #endif /* SOURCES_BOARD_H_ */

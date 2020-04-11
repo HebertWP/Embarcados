@@ -1,33 +1,19 @@
-/*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of Freescale Semiconductor, Inc. nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+/* ***************************************************************** */
+/* File name:        main.c                                          */
+/* File description: File dedicated to the ES670 prototype projects  */
+/*                   involving the FRDM-KL25Z board together with is */
+/*                   daughter board containing more peripherals      */
+/*                                                                   */
+/*                   Processor MKL25Z128VLK4 characteristics         */
+/*                   48 MHz ARM Cortex-M0+ core                      */
+/*                   128 KB program flash memory                     */
+/*                   16 KB SRAM                                      */
+/*                   Voltage range: 1.71 to 3.6 V                    */
+/*                                                                   */
+/* Author name:      Caio Villela/ Hebert Wandick                    */
+/* Creation date:    10/apr/2020                                     */
+/* Revision date:    10/apr/2020                                     */
+/* ***************************************************************** */
 #include "fsl_device_registers.h"
 #include "lcd.h"
 #include "util.h"
@@ -36,13 +22,17 @@ int main(void)
 {
 
     /* Write your code here */
-	lcd_initLcd();
+    /*Initing LCD*/
+    lcd_initLcd();
     /* This for loop should be replaced. By default this loop allows a single stepping. */
-    for (;;) {
+    while(1){
+        /* Teacher's text function */
         lcd_dummyText();
 
-		/* wait 100ms doing anything! */
+        /* wait 100ms doing anything! */
         util_genDelay100ms();
+
+        /*Text ours function */
         lcd_writeText(0,"Na primeira linha");
         util_genDelay100ms();
         lcd_writeText(1,"Na segunda linha");
@@ -51,6 +41,3 @@ int main(void)
     /* Never leave main */
     return 0;
 }
-////////////////////////////////////////////////////////////////////////////////
-// EOF
-////////////////////////////////////////////////////////////////////////////////
