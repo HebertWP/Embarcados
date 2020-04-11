@@ -81,7 +81,6 @@ void lcd_dummyText(void);
 /* Input params:       int iL, line // chr* cString */
 /* Output params:      n/a                          */
 /* ************************************************ */
-void lcd_writeText(int iL, char* cString )
-
+void lcd_writeText(int iL, char* cString );
 
 #endif /* SOURCES_LCD_H_ */
