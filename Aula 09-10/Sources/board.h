@@ -24,18 +24,35 @@
 #define 7_SEG_BASE_PNT                PORTC                                   /* peripheral port base pointer */
 #define 7_SEG_GPIO_BASE_PNT           PTC                                     /* peripheral gpio base pointer */
 
+/*pins*/
+#define 7_SEG_A_PIN                   0U
+#define 7_SEG_B_PIN                   1U
+#define 7_SEG_C_PIN                   2U
+#define 7_SEG_D_PIN                   3U
+#define 7_SEG_E_PIN                   4U
+#define 7_SEG_F_PIN                   5U
+#define 7_SEG_G_PIN                   6U
+#define 7_SEG_DP_PIN                  7U
 
-#define 7_SEG_A_PIN                  (GPIO_OUTPUT << LCD_RS_PIN)
-#define 7_SEG_B_PIN
-#define 7_SEG_C_PIN
-#define 7_SEG_D_PIN
-#define 7_SEG_E_PIN
-#define 7_SEG_F_PIN
-#define 7_SEG_G_PIN
-#define 7_SEG_DP_PIN
+#define 7_SEG_D1_PIN                  13U
+#define 7_SEG_D2_PIN                  12U
+#define 7_SEG_D3_PIN                  11U
+#define 7_SEG_D4_PIN                  10U
 
+/*directories*/
+#define 7_SEG_A_DIR                  (GPIO_OUTPUT << 7_SEG_A_PIN)
+#define 7_SEG_B_DIR                  (GPIO_OUTPUT << 7_SEG_B_PIN)
+#define 7_SEG_C_DIR                  (GPIO_OUTPUT << 7_SEG_C_PIN)
+#define 7_SEG_D_DIR                  (GPIO_OUTPUT << 7_SEG_D_PIN)
+#define 7_SEG_E_DIR                  (GPIO_OUTPUT << 7_SEG_E_PIN)
+#define 7_SEG_F_DIR                  (GPIO_OUTPUT << 7_SEG_F_PIN)
+#define 7_SEG_G_DIR                  (GPIO_OUTPUT << 7_SEG_G_PIN)
+#define 7_SEG_DP_DIR                 (GPIO_OUTPUT << 7_SEG_DP_PIN)
 
-
+#define 7_SEG_D1_DIR                 (GPIO_OUTPUT << 7_SEG_D1_PIN)
+#define 7_SEG_D2_DIR                 (GPIO_OUTPUT << 7_SEG_D2_PIN)
+#define 7_SEG_D3_DIR                 (GPIO_OUTPUT << 7_SEG_D3_PIN)
+#define 7_SEG_D4_DIR                 (GPIO_OUTPUT << 7_SEG_D4_PIN)
 
 
 #endif /* SOURCES_BOARD_H_ */

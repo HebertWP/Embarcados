@@ -23,7 +23,8 @@ static int i = 0;
 
 void main_cyclicExecuteIsr(void)
 {
-  /*add function*/
+  /*apagar o enable dos displays*/
+  /*selecionar o primeiro display novamente*/
   /*ISR para tratamento da interrupção gerada pelo LPTMR0*/
 };
 
@@ -37,7 +38,7 @@ int main(void)
 
 
       /*mudar dps*/
-      tc_installLptmr0(<CYCLIC_EXECUTIVE_PERIOD>,main_cyclicExecuteIsr);
+      tc_installLptmr0(4000,main_cyclicExecuteIsr);
     }
 
     return 0;
