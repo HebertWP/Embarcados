@@ -18,28 +18,27 @@
 #include "fsl_device_registers.h"
 #include "lptrm.h"
 
-static int i = 0;
+int iDC = 0;      /*display counter, shows which display is to be shown*/
 
 
 void main_cyclicExecuteIsr(void)
 {
-  /*apagar o enable dos displays*/
-  /*selecionar o primeiro display novamente*/
-  /*ISR para tratamento da interrupção gerada pelo LPTMR0*/
+  /*acrescentar counter*/
+  /*tratamento de flags*/
 };
 
 
 
 int main(void)
 {
+    tc_installLptmr0(4000,main_cyclicExecuteIsr);
     while(1){
 
 
 
+        while(/*flag*/){
 
-      /*mudar dps*/
-      tc_installLptmr0(4000,main_cyclicExecuteIsr);
-    }
+        }
 
     return 0;
 }
