@@ -16,22 +16,29 @@
 /* ***************************************************************** */
 
 #include "fsl_device_registers.h"
+#include "lptrm.h"
 
 static int i = 0;
 
+
+void main_cyclicExecuteIsr(void)
+{
+  /*add function*/
+  /*ISR para tratamento da interrupção gerada pelo LPTMR0*/
+};
+
+
+
 int main(void)
 {
+    while(1){
 
-    /* Write your code here */
 
-    /* This for loop should be replaced. By default this loop allows a single stepping. */
-    while(1)
-    {
 
+
+      /*mudar dps*/
+      tc_installLptmr0(<CYCLIC_EXECUTIVE_PERIOD>,main_cyclicExecuteIsr);
     }
-    /* Never leave main */
+
     return 0;
 }
-////////////////////////////////////////////////////////////////////////////////
-// EOF
-////////////////////////////////////////////////////////////////////////////////
