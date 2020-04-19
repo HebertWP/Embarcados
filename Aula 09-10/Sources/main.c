@@ -18,6 +18,7 @@
 #include "fsl_device_registers.h"
 #include "lptrm.h"
 
+unsigned char ucDisplays[4];
 int iDC = 0;      /*display counter, shows which display is to be shown*/
 
 
