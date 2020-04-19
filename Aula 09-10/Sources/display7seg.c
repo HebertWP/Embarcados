@@ -7,8 +7,6 @@
 /* Revision date:    10/apr/2020                                     */
 /* ***************************************************************** */
 
-
-
 extern unsigned char ucDisplays[4];
 
 /* ************************************************ */
@@ -68,6 +66,7 @@ void display7seg_init(void){
 /* ******************************************************** */
 void display7seg_writeSymbol(unsigned char ucDisplay,unsigned char ucValue)
 {
+    /*mask for 7seg display*/
     unsigned char uc7seg;
 
     /*disable all displays*/
@@ -87,7 +86,7 @@ void display7seg_writeSymbol(unsigned char ucDisplay,unsigned char ucValue)
     GPIOC_PCOR |= DISPLAY_DP_DIR;
 
     /*write data on siplay BUS*/
-    /*didnt use karnaugh approach for debugging purposes*/
+    /*didn't use karnaugh approach for debugging purposes*/
     switch(ucValue){
       case 0:
         uc7seg = 0x3F;
@@ -203,29 +202,25 @@ void display7seg_writeSymbol(unsigned char ucDisplay,unsigned char ucValue)
         GPIOC_PSOR |= 0x80;
         break;
 
-    }
+    };
 
     /*enable writing on a display*/
     switch(ucDisplay){
        case 1:
             GPIOC_PSOR |= DISPLAY_D1_DIR;
-            ucDisplays[0] = uc7seg;
             break;
 
        case 2:
             GPIOC_PSOR |= DISPLAY_D2_DIR;
-            ucDisplays[1] = uc7seg;
             break;
 
        case 3:
             GPIOC_PSOR |= DISPLAY_D3_DIR;
-            ucDisplays[2] = uc7seg;
             break;
 
        case 4:
             GPIOC_PSOR |= DISPLAY_D4_DIR;
-            ucDisplays[3] = uc7seg;
             break;
-    }
+    };
 
 }
