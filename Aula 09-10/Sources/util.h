@@ -21,7 +21,6 @@
 /* ************************************************ */
 void util_genDelay088us(void);
 
-
 /* ************************************************ */
 /* Method name:        util_genDelay250us           */
 /* Method description: generates ~   250 micro sec  */
@@ -30,7 +29,6 @@ void util_genDelay088us(void);
 /* ************************************************ */
 void util_genDelay250us(void);
 
-
 /* ************************************************ */
 /* Method name:        util_genDelay1ms             */
 /* Method description: generates ~   1 mili sec     */
@@ -38,7 +36,6 @@ void util_genDelay250us(void);
 /* Output params:      n/a                          */
 /* ************************************************ */
 void util_genDelay1ms(void);
-
 
 /* ************************************************ */
 /* Method name:        util_genDelay10ms            */
@@ -55,6 +52,5 @@ void util_genDelay10ms(void);
 /* Output params:      n/a                          */
 /* ************************************************ */
 void util_genDelay100ms(void);
-
 
 #endif /* UTIL_H */

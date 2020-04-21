@@ -27,5 +27,4 @@
 /* ************************************************ */
 void tc_installLptmr0(uint32_t uiTimeInUs, lptmr_callback_t tUserCallback);
 
-
 #endif /* SOURCES_LPTMR_H_ */

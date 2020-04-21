@@ -23,7 +23,7 @@
 void util_genDelay088us(void)
 {
     char i;
-    for(i=0; i<120; i++)
+    for (i = 0; i < 120; i++)
     {
         __asm("NOP");
         __asm("NOP");
@@ -42,8 +42,6 @@ void util_genDelay088us(void)
         __asm("NOP");
     }
 }
-
-
 
 /* ************************************************ */
 /* Method name:        util_genDelay250us           */
@@ -54,7 +52,7 @@ void util_genDelay088us(void)
 void util_genDelay250us(void)
 {
     char i;
-    for(i=0; i<120; i++)
+    for (i = 0; i < 120; i++)
     {
         __asm("NOP");
         __asm("NOP");
@@ -70,8 +68,6 @@ void util_genDelay250us(void)
     util_genDelay088us();
     util_genDelay088us();
 }
-
-
 
 /* ************************************************ */
 /* Method name:        util_genDelay1ms             */
@@ -86,7 +82,6 @@ void util_genDelay1ms(void)
     util_genDelay250us();
     util_genDelay250us();
 }
-
 
 /* ************************************************ */
 /* Method name:        util_genDelay10ms            */
@@ -107,8 +102,6 @@ void util_genDelay10ms(void)
     util_genDelay1ms();
     util_genDelay1ms();
 }
-
-
 
 /* ************************************************ */
 /* Method name:        util_genDelay100ms           */

@@ -7,11 +7,8 @@
 /* Revision date:    10/apr/2020                                     */
 /* ***************************************************************** */
 
-
 #ifndef SOURCES_DISPLAY7SEG_H_
 #define SOURCES_DISPLAY7SEG_H_
-
-
 
 /* ************************************************ */
 /* Method name:        display7seg_init             */
@@ -20,8 +17,6 @@
 /* Output params:      n/a                          */
 /* ************************************************ */
 void display7seg_init(void);
-
-
 
 /* ******************************************************** */
 /* Method name:        display7seg_writeSymbol              */
@@ -32,7 +27,7 @@ void display7seg_init(void);
 /*       indicates what symbol is to be shown on the display*/
 /* Output params:      n/a                                  */
 /* ******************************************************** */
-void display7seg_writeSymbol(unsigned char ucDisplay,unsigned char ucValue);
+void display7seg_writeSymbol(unsigned char ucDisplay, unsigned char ucValue);
 
 /* ******************************************************** */
 /* Method name:        display7seg_writeNumber              */

@@ -17,21 +17,19 @@
 #include "fsl_port_hal.h"
 #include "fsl_gpio_hal.h"
 
-
 /* LPTMR configurations */
 lptmr_user_config_t lptmrConfig =
-{
-    .timerMode              = kLptmrTimerModeTimeCounter,
-    .freeRunningEnable      = false,
-    .prescalerEnable        = true,
-    .prescalerClockSource   = kClockLptmrSrcLpoClk,
-    .prescalerValue         = kLptmrPrescalerDivide2,
-    .isInterruptEnabled     = true,
+    {
+        .timerMode = kLptmrTimerModeTimeCounter,
+        .freeRunningEnable = false,
+        .prescalerEnable = true,
+        .prescalerClockSource = kClockLptmrSrcLpoClk,
+        .prescalerValue = kLptmrPrescalerDivide2,
+        .isInterruptEnabled = true,
 };
 
 /* LPTMR driver state information */
 lptmr_state_t lptmrState;
-
 
 /* LPTMR IRQ handler that would cover the same name's APIs in startup code */
 /* Do not edit this part */
@@ -39,8 +37,6 @@ void LPTMR0_IRQHandler(void)
 {
     LPTMR_DRV_IRQHandler(0U);
 }
-
-
 
 /* ************************************************ */
 /* Method name:        tc_installLptmr              */
