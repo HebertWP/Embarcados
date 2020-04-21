@@ -11,17 +11,19 @@
 /*                   Voltage range: 1.71 to 3.6 V                    */
 /*                                                                   */
 /* Author name:      Caio Villela /Hebert Wandick                    */
-/* Creation date:    10/apr/2020                                     */
-/* Revision date:    10/apr/2020                                     */
+/* Creation date:    21/apr/2020                                     */
+/* Revision date:    21/apr/2020                                     */
 /* ***************************************************************** */
 
+
 #include "fsl_device_registers.h"
-#include "lptrm.h"
+#include "lptmr.h"
+#include "display7seg.h"
+#include "util.h"
 
-unsigned char ucDisplays[4] = {1, 2, 3, 4}  /*display values, hardcoded for testing*/
-int iDC = 0;       /* display counter, tells which display is to be shown */
-int iFlag = 0;     /* interruption flag */
-
+int iDC = 0;       	/* display counter, tells which display is to be shown */
+int iMode = 0;     	/* which mode are */
+int iNum = 0;     	/* which number to be displayed */
 
 /* ************************************************  */
 /* Method name:        main_cyclicExecuteIsr         */
@@ -31,35 +33,33 @@ int iFlag = 0;     /* interruption flag */
 /* Output params:      n/a                           */
 /* ************************************************  */
 void main_cyclicExecuteIsr(void){
-    iFlag = 1;
+	/*select which infomation will be show*/
+	switch(iMode){
+		case 0:
+			display7seg_writeNumber(-1);
+			break;
+		case 1:
+			display7seg_writeNumber(iNum);
+			break;
+		case 2:
+			display7seg_writeSymbol(iDC,22);
+	};
 };
 
-
-
 int main(void){
-    int iIterator;   /*value to be passed as a parameter in writeSymbol func*/
     display7seg_init();
-
+    tc_installLptmr0(16,main_cyclicExecuteIsr);
     while(1){
-       tc_installLptmr0(4000,main_cyclicExecuteIsr);
-
-       iIterator = iDC + 1;
-       void display7seg_writeSymbol( (unsigned char)iIterator, ucDisplays[iDC] );
-
-       /*stuck here until timer finishes*/
-        while(iFlag == 0);
-
-        /*reset flag*/
-        iFlag = 0;
-
-        /*increment counter*/
-        if(iDC == 3){
-          iDC = 0;
-        } else {
-          iDC ++;
-        };
-
+    	/* update the global variables that will be printed*/
+        iMode=0;
+        util_genDelay100ms();
+        iMode=1;
+        iNum++;
+        util_genDelay100ms();
+        iMode=2;
+        /*limit off iDC is 4*/
+        iDC= ( iDC >= 4 ? iDC++ : 0);
+        util_genDelay100ms();
     };
-
     return 0;
 }

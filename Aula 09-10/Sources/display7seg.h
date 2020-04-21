@@ -34,5 +34,11 @@ void display7seg_init(void);
 /* ******************************************************** */
 void display7seg_writeSymbol(unsigned char ucDisplay,unsigned char ucValue);
 
-
+/* ******************************************************** */
+/* Method name:        display7seg_writeNumber              */
+/* Method description: write numbers on  7seg displays	    */
+/* Input params:       iNum number to be print at displays  */
+/* Output params:      n/a                                  */
+/* ******************************************************** */
+void display7seg_writeNumber(int num);
 #endif /* SOURCES_DISPLAY7SEG_H_ */

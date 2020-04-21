@@ -7,7 +7,15 @@
 /* Revision date:    10/apr/2020                                     */
 /* ***************************************************************** */
 
-extern unsigned char ucDisplays[4];
+
+#include "display7seg.h"
+#include "board.h"
+/* system includes */
+#include "fsl_lptmr_driver.h"
+
+#include "fsl_clock_manager.h"
+#include "fsl_port_hal.h"
+#include "fsl_gpio_hal.h"
 
 /* ************************************************ */
 /* Method name:        display7seg_init             */
@@ -36,7 +44,6 @@ void display7seg_init(void){
   PORTC_PCR11|= 0x100; /*D3*/
   PORTC_PCR10|= 0x100; /*D4*/
 
-
   /* set pins as digital output */
   GPIOC_PDDR |= DISPLAY_A_DIR;
   GPIOC_PDDR |= DISPLAY_B_DIR;
@@ -50,7 +57,6 @@ void display7seg_init(void){
   GPIOC_PDDR |= DISPLAY_D2_DIR;
   GPIOC_PDDR |= DISPLAY_D3_DIR;
   GPIOC_PDDR |= DISPLAY_D4_DIR;
-
 
 }
 
@@ -67,7 +73,6 @@ void display7seg_init(void){
 void display7seg_writeSymbol(unsigned char ucDisplay,unsigned char ucValue)
 {
     /*mask for 7seg display*/
-    unsigned char uc7seg;
 
     /*disable all displays*/
     GPIOC_PCOR |= DISPLAY_D1_DIR;
@@ -85,123 +90,77 @@ void display7seg_writeSymbol(unsigned char ucDisplay,unsigned char ucValue)
     GPIOC_PCOR |= DISPLAY_G_DIR;
     GPIOC_PCOR |= DISPLAY_DP_DIR;
 
-    /*write data on siplay BUS*/
-    /*didn't use karnaugh approach for debugging purposes*/
-    switch(ucValue){
+    /*write data on display BUS*/
+   switch(ucValue)
+   {
       case 0:
-        uc7seg = 0x3F;
         GPIOC_PSOR |= 0x3F;
         break;
-
       case 1:
-        uc7seg = 0x06;
         GPIOC_PSOR |= 0x06;
         break;
-
       case 2:
-        uc7seg = 0x5B;
         GPIOC_PSOR |= 0x5B;
         break;
-
       case 3:
-         uc7seg = 0x4F;
          GPIOC_PSOR |= 0x4F;
          break;
-
       case 4:
-         uc7seg = 0x66;
          GPIOC_PSOR |= 0x66;
          break;
-
       case 5:
-         uc7seg = 0x6D;
          GPIOC_PSOR |= 0x6D;
          break;
-
       case 6:
-         uc7seg = 0x7D;
          GPIOC_PSOR |= 0x7D;
          break;
-
       case 7:
-         uc7seg = 0x07;
          GPIOC_PSOR |= 0X07;
       break;
-
       case 8:
-         uc7seg = 0x7F;
          GPIOC_PSOR |= 0x7F;
       break;
-
       case 9:
-         uc7seg = 0x6F;
          GPIOC_PSOR |= 0x6F;
       break;
-
       case 10:
-         uc7seg = 0xBF;
          GPIOC_PSOR |= 0xBF;
       break;
-
       case 11:
-         uc7seg = 0x86;
          GPIOC_PSOR |= 0x86;
       break;
-
       case 12:
-         uc7seg = 0xDB;
          GPIOC_PSOR |= 0xDB;
       break;
-
       case 13:
-         uc7seg = 0xCF;
          GPIOC_PSOR |= 0xCF;
       break;
-
       case 14:
-         uc7seg = 0xE6;
          GPIOC_PSOR |= 0xE6;
       break;
-
       case 15:
-         uc7seg = 0xED;
          GPIOC_PSOR |= 0xED;
       break;
-
       case 16:
-         uc7seg = 0xFD;
          GPIOC_PSOR |= 0xFD;
       break;
-
       case 17:
-         uc7seg = 0x87;
          GPIOC_PSOR |= 0x87;
       break;
-
       case 18:
-         uc7seg = 0xFF;
          GPIOC_PSOR |= 0xFF;
       break;
-
       case 19:
-         uc7seg = 0xEF;
          GPIOC_PSOR |= 0xEF;
       break;
-
       case 20:
-        uc7seg = 0x80;
         GPIOC_PSOR |= 0x80;
         break;
-
       case 21:
-        uc7seg = 0x00;
         break;
-
       case 22:
-        uc7seg = 0xFF;
         GPIOC_PSOR |= 0x80;
         break;
-
     };
 
     /*enable writing on a display*/
@@ -209,7 +168,6 @@ void display7seg_writeSymbol(unsigned char ucDisplay,unsigned char ucValue)
        case 1:
             GPIOC_PSOR |= DISPLAY_D1_DIR;
             break;
-
        case 2:
             GPIOC_PSOR |= DISPLAY_D2_DIR;
             break;
@@ -222,5 +180,58 @@ void display7seg_writeSymbol(unsigned char ucDisplay,unsigned char ucValue)
             GPIOC_PSOR |= DISPLAY_D4_DIR;
             break;
     };
+}
 
+/* ******************************************************** */
+/* Method name:        toChar					            */
+/* Method description: Take a number and turn to Char 		*/
+/* Input params:       iNum the number that will became char*/
+/* Output params:      unsigned char with the 				*/
+/* ******************************************************** */
+unsigned char toChar(int iNum){
+	switch(iNum){
+		case 0:
+			return 0;
+		case 1:
+			return 1;
+		case 2:
+			return 2;
+		case 3:
+			return 3;
+		case 4:
+			return 4;
+		case 5:
+			return 5;
+		case 6:
+			return 6;
+		case 7:
+			return 7;
+		case 8:
+			return 8;
+		case 9:
+			return 9;
+	};
+	return -1;
+}
+
+/* ******************************************************** */
+/* Method name:        display7seg_writeNumber              */
+/* Method description: write numbers on  7seg displays	    */
+/* Input params:       iNum number to be print at displays  */
+/* Output params:      n/a                                  */
+/* ******************************************************** */
+void display7seg_writeNumber(int iNum)
+{
+	if(iNum == -1 || iNum >9999){
+		display7seg_writeSymbol(1,22);
+		display7seg_writeSymbol(2,22);
+		display7seg_writeSymbol(3,22);
+		display7seg_writeSymbol(4,22);
+	}
+	int i=1;
+	do{
+		/*write digit by digit, make "shift" of 10 per idaration*/
+		display7seg_writeSymbol(i++,toChar(iNum%10));
+		iNum=iNum/10;
+	}while(iNum>0);
 }
