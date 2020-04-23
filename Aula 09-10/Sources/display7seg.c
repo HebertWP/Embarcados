@@ -186,7 +186,7 @@ void display7seg_writeSymbol(unsigned char ucDisplay, unsigned char ucValue)
 /* Input params:       iNum the number that will became char*/
 /* Output params:      unsigned char with the 				*/
 /* ******************************************************** */
-unsigned char toChar(int iNum)
+/*unsigned char toChar(int iNum)
 {
     switch (iNum)
     {
@@ -213,14 +213,14 @@ unsigned char toChar(int iNum)
     };
     return -1;
 }
-
+*/
 /* ******************************************************** */
 /* Method name:        display7seg_writeNumber              */
 /* Method description: write numbers on  7seg displays	    */
 /* Input params:       iNum number to be print at displays  */
 /* Output params:      n/a                                  */
 /* ******************************************************** */
-void display7seg_writeNumber(int iNum)
+/*void display7seg_writeNumber(int iNum)
 {
     if (iNum == -1 || iNum > 9999)
     {
@@ -232,8 +232,9 @@ void display7seg_writeNumber(int iNum)
     int i = 1;
     do
     {
-        /*write digit by digit, make "shift" of 10 per idaration*/
+       //write digit by digit, make "shift" of 10 per idaration
         display7seg_writeSymbol(i++, toChar(iNum % 10));
         iNum = iNum / 10;
     } while (iNum > 0);
 }
+*/

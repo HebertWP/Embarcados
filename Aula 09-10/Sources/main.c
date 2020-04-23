@@ -14,15 +14,14 @@
 /* Creation date:    21/apr/2020                                     */
 /* Revision date:    21/apr/2020                                     */
 /* ***************************************************************** */
-
-#include "fsl_device_registers.h"
 #include "lptmr.h"
 #include "display7seg.h"
-#include "util.h"
 
-int iDC = 0;   /* display counter, tells which display is to be shown */
-int iMode = 0; /* which mode are */
-int iNum = 0;  /* which number to be displayed */
+/*system include*/
+#include "fsl_device_registers.h"
+
+int iFlag = 0;     /* interruption flag */
+
 
 /* ************************************************  */
 /* Method name:        main_cyclicExecuteIsr         */
@@ -31,38 +30,31 @@ int iNum = 0;  /* which number to be displayed */
 /* Input params:       n/a                           */
 /* Output params:      n/a                           */
 /* ************************************************  */
-void main_cyclicExecuteIsr(void)
-{
-    /*select which infomation will be show*/
-    switch (iMode)
-    {
-    case 0:
-        display7seg_writeNumber(-1);
-        break;
-    case 1:
-        display7seg_writeNumber(iNum);
-        break;
-    case 2:
-        display7seg_writeSymbol(iDC, 22);
-    };
-};
+void main_cyclicExecuteIsr(void){
+    iFlag = 1;
+}
 
-int main(void)
-{
+
+
+int main(void){
+    unsigned char iIterator;   /*auxliary varieble to chose the correc display, with star at 1 not on 0*/
+    unsigned char ucDisplays[4] = {1, 2, 3, 4};  /*display values, hardcoded for testing*/
+    int iDC = 0;       /* display counter, tells which display is to be shown */
     display7seg_init();
-    tc_installLptmr0(16, main_cyclicExecuteIsr);
-    while (1)
-    {
-        /* update the global variables that will be printed*/
-        iMode = 0;
-        util_genDelay100ms();
-        iMode = 1;
-        iNum++;
-        util_genDelay100ms();
-        iMode = 2;
-        /*limit off iDC is 4*/
-        iDC = iDC >= 4 ? iDC++ : 0;
-        util_genDelay100ms();
+    tc_installLptmr0(4000,main_cyclicExecuteIsr);
+
+    while(1){
+        iIterator = iDC + 1;
+        display7seg_writeSymbol(iIterator, ucDisplays[iDC]);
+
+       /*stuck here until timer finishes*/
+        while(iFlag == 0);
+
+        /*reset flag*/
+        iFlag = 0;
+
+        /*increment counter*/
+        iDC= (iDC == 3) ? 0 : iDC + 1;
     };
     return 0;
 }
