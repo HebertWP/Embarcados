@@ -17,23 +17,27 @@
 /* Clock gate control */
 #define  CGC_CLOCK_DISABLED     0x00U       /*Disable clock*/
 #define  CGC_CLOCK_ENABLED		0x01U       /*Enable clock*/
-#define PORT_A_TO_SHIFT			0x09U       /*Select byte to be turn on*/
 
-#define PRESCALER				0b110U		/*Prescale Factor Selection, 110 Divide by 64*/
-#define TPM_CLOCK				0b11U		/*TPM clock source select, 11 MCGIRCLK clock (32KHz)*/
-#define TPM_CMOD				0b01U		/*Clock Mode Selection *,01 LPTPM counter increments on every LPTPM counter clock */
-#define TPM_CPWMS				0b0U		/*Center-aligned PWM Select,0 LPTPM counter operates in up counting mode.*/
-#define TPM_MOD					49U			/*Counting 50 pulses*/
-#define TPM_MSnx				0b10U		/*Edge-aligned PWM*/
-#define TPM_ELSnx				0b10U		/*High-true pulses (clear Output on match, set Output on reload)*/
-#define CONFIG_PORT_AS_PWM		0b011U		/*011 Alternative 3 (chip-specific).*/
+#define  CGC_TMP0_TO_SHIFT		24U         /*To byte 24*/
 
-#define COOLERFAN_PORTx_PCRn	PORTA_PCR13 /*Cooler connect at portA pin 13*/
-#define COOLERFAN_TPMx_CnSC 	TPM1_C0SC   /*Cooler connect at TPM1 on CH 0*/
-#define COOLERFAN_TPMx_CnV 	TPM1_C0V    /*Cooler connect at TPM1 on CH 0*/
+#define PORT_E_TO_SHIFT			13U       /*Select byte to be turn on*/
 
-#define HEADER_PORTx_PCRn		PORTA_PCR12 /*Header connect at portA pin 12*/
-#define HEADER_TPMx_CnSC 		TPM1_C1SC   /*Header connect at TPM1 on CH 1*/
-#define HEADER_TPMx_CnV 		TPM1_C1V    /*Header connect at TPM1 on CH 1*/
+#define PRESCALER_DIVEDE_BY_ONE			0b000U		/*Prescale Factor Selection, 110 Divide by 1*/
+#define CMDO_RISING_EDGE_CONT           0b010U      /*Conting at rising edge */
 
+//#define TPM_CLOCK			        	0b11U		/*TPM clock source select, 11 MCGIRCLK clock (32KHz)*/
+//#define TPM_CMOD				        0b01U		/*Clock Mode Selection *,01 LPTPM counter increments on every LPTPM counter clock */
+//#define TPM_CPWMS				        0b0U		/*Center-aligned PWM Select,0 LPTPM counter operates in up counting mode.*/
+//#define TPM_MOD					        49U			/*Counting 50 pulses*/
+//#define TPM_MSnx				        0b10U		/*Edge-aligned PWM*/
+//#define TPM_ELSnx				        0b10U		/*High-true pulses (clear Output on match, set Output on reload)*/
+#define CONFIG_PORT_AS_EXTERNAL_CLOCK   0b011U		/*011 Alternative 3 (chip-specific).*/ //<------------------------------------------------
+#define TPM_CLKIN0                      0b0000U     /*Selec TPM_CLKIN0 */ 
+
+#define TPM0CLKSEL_TO_SHIFT             24U                
+
+#define TACHOMETER_PORTx_PCRn		PORTE_PCR29 /*Tachmeter connect at portA pin 12*/
+#define TACHOMETER_TPMx_CnSC 		TPM0_C2SC   /*Tachmeter connect at TPM1 on CH 1*/
+#define TACHOMETER_TPMx_CnV 		TPM0_C2V    /*Tachmeter connect at TPM1 on CH 1*/
+#define TACHOMETER_TPMx_SC          TPM0_SC
 #endif /* SOURCES_BOARD_H_ */
