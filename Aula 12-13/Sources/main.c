@@ -38,7 +38,7 @@ int main(void)
     unsigned int value = 0;
     /* initing the tachometer and interruptions */
     tachometer_init();
-    tc_installLptmr0(2500, main_cyclicExecuteIsr);
+    tc_installLptmr0(250000, main_cyclicExecuteIsr);
 
     while (true)
     {
@@ -46,7 +46,7 @@ int main(void)
         if (flag)
         {
             /*read with a windows of 100ms */
-            value = tachometer_readSensor(100);
+            value = tachometer_readSensor(250000);
             flag = false;
         }
     }

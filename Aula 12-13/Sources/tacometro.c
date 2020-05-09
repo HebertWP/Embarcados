@@ -38,7 +38,7 @@ void tachometer_init(void)
     SET_BITS(SIM_SOPT4, TPM_CLKIN0, 1, TPM0CLKSEL_TO_SHIFT);
 
     /*6- config  the TPM's timer to increment in external clock rising edge */
-    SET_BITS(TACHOMETER_TPMx_SC, CMDO_RISING_EDGE_CONT, 2, 3);
+    SET_BITS(TACHOMETER_TPMx_SC, TPM_CMOD_RISING_EDGE_CONT, 2, 3);
 }
 
 /* ************************************************ */
@@ -50,5 +50,12 @@ void tachometer_init(void)
 /* ************************************************ */
 unsigned int tachometer_readSensor(unsigned int uiPeriod)
 {
-    return 0;
+    unsigned int uiOut = TACHOMETER_TPMx_CNT / 7; /*the number of roations*/
+    uiOut = uiOut * 1000000 / (uiPeriod);         /*in rotation per seconts*/
+    uiOut = uiOut * 60;                           /*in rotation per minute*/
+
+    /*clear to next mesuarement*/
+    SET_BITS(TACHOMETER_TPMx_CNT, TACHOMETER_TPMx_CNT_CLEAR, 16, 0);
+
+    return uiOut;
 }
