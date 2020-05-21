@@ -12,6 +12,18 @@
 #include "print_scan.h"
 #include "util.h"
 
-UART0_init()
-UART0_enableIRQ()
-UART0_IRQHandler()
+void main_cyclicExecuteIsr(void){
+    iFlag = 1;
+}
+
+
+int main(void){
+
+    UART0_init();
+    UART0_enableIRQ();
+
+    /*stuck on echo forever*/
+    while(1)
+        UART0_IRQHandler();
+
+};
