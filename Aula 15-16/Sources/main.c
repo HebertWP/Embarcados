@@ -10,8 +10,7 @@
 #include "fsl_device_registers.h"
 #include "UART.h"
 #include "print_scan.h"
-#include "util.h"
-
+int iFlag;
 void main_cyclicExecuteIsr(void){
     iFlag = 1;
 }
