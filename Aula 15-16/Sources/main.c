@@ -10,19 +10,14 @@
 #include "fsl_device_registers.h"
 #include "UART.h"
 #include "print_scan.h"
-int iFlag;
-void main_cyclicExecuteIsr(void){
-    iFlag = 1;
-}
-
+#include "util.h"
 
 int main(void){
 
     UART0_init();
     UART0_enableIRQ();
 
-    /*stuck on echo forever*/
-    while(1)
-        UART0_IRQHandler();
+    /*echo*/
+    UART0_IRQHandler();
 
 };
