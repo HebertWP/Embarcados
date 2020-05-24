@@ -14,6 +14,55 @@
 #include "util.h"
 #include "fsl_debug_console.h"
 
+/*union variable used for converting unsigned chars/floats */
+typedef union
+{
+  unsigned char ucBytes[4];
+  float fReal;
+}floatUCharType;
+
+
+/* ****************************************************/
+/* Method name:        floatToUChar     		          */
+/* Method description: converts 4 unsiged chars to 1  */
+/* 					           float  		                    */
+/* Input params:       ucValue array character to be  */
+/*					           converted 					            */
+/* Output params:      1 float                        */
+/* ****************************************************/
+float uCharToFloat(unsigned char* ucValue){
+  floatUCharType varFloatUChar;
+  static unsigned char ucCount;
+
+  varFloatUChar.ucBytes[ucCount] = ucValue;
+
+  if(++ucCount >= 4){
+      ucCount = 0;
+      return(varFloatUChar.fReal);
+  }
+}
+
+
+/* ****************************************************/
+/* Method name:        floatToUChar     		          */
+/* Method description: converts 1 float to 4 unsigned */
+/* 					           chars  		                    */
+/* Input params:       fValue character to be         */
+/*					           converted 					            */
+/* Output params:      4 unsigned char array          */
+/* ****************************************************/
+
+unsigned char* floatToUChar(int flag, float fReceived){
+  floatUCharType varFloatUChar;
+  unsigned char ucSendChar[4];
+  int iCount;
+
+  varFloatUChar.fReal = fReceived;
+  return(varFloatUChar.ucBytes);
+
+}
+
+
 /* ************************************************ */
 /* Method name:        toUint8_t			        */
 /* Method description: take a char and turn it on	*/

@@ -4,7 +4,7 @@ typedef union
   float fReal;
 }floatUCharType;
 
-float uChatToFloat(unsigned char ucValue){
+float uCharToFloat(unsigned char ucValue){
   floatUCharType varFloatUChar;
   static unsigned char ucCount;
 
@@ -16,21 +16,14 @@ float uChatToFloat(unsigned char ucValue){
   }
 }
 
-unsigned char floatToUChar(int flag, float fReceived){
+unsigned char* floatToUChar(int flag, float fReceived){
   floatUCharType varFloatUChar;
-  unsigned char ucSendChar;
-  static unsigned char ucCount;
+  unsigned char ucSendChar[4];
+  int iCount;
 
   varFloatUChar.fReal = fReceived;
+  return(varFloatUChar.ucBytes);
 
-  if(flag == 0){
-    ucCount = 0;
-    return(varFloatUChar.ucBytes[0]);
-  }
-  if(ucCount < 4){
-    ucCount++ ;
-    return(varFloatUChar.ucBytes[ucCount]);
-  }
 }
 
 
