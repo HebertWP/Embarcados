@@ -68,7 +68,7 @@ void processByteCommunication(unsigned char ucByte){
                   break;
 
                 case FLOAT_VALUE:
-                  if(ucByte >= '0' && ucByte <= '9'){
+                  if( '0' <= ucByte && ucByte <= '9'){
                     if(ucValueCount < MAX_VALUE_LENGTH)
                       ucValue[ucValueCount ++] = ucByte;
                   }else{
@@ -92,3 +92,4 @@ void processByteCommunication(unsigned char ucByte){
 
             }
 }
+v
