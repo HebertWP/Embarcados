@@ -77,7 +77,7 @@ void UART0_enableIRQ(void)
 /* ************************************************ */
 void UART0_IRQHandler(void)
 {
-	// Echo received character
+	/*Send to State Machine handle*/
 	processByteCommunication(debug_getchar());
 }
 

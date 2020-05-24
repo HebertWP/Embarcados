@@ -1,14 +1,20 @@
 /* ***************************************************************** */
-/* File name:        tacometro.h                                     */
-/* File description: Header file containing the functions needed to  */
-/*					 use tachometer 								 */
+/* File name:        communicationStateMachine.h                     */
+/* File description: Implements the State machine, discribe in .pdf  */
 /* Author name:      Caio Villela, Hebert Wandick                    */
-/* Creation date:    08/may/2020                                     */
-/* Revision date:    08/may/2020                                     */
+/* Creation date:    24/may/2020                                     */
+/* Revision date:    24/may/2020                                     */
 /* ***************************************************************** */
-#ifndef TACOMETRO_H_
-#define TACOMETRO_H_
+#ifndef COMMUNICATIONSTATEMACHINE_H_
+#define COMMUNICATIONSTATEMACHINE_H_
 
+/* ************************************************ */
+/* Method name:        processByteCommunication     */
+/* Method description: Handle what to do by 		*/
+/* 					   corresponding byte and order */
+/* Input params:       ucByte the byte received		*/
+/* Output params:      n/a                          */
+/* ************************************************ */
 void processByteCommunication(unsigned char ucByte);
-void answerParam(ucParam, ucByte);
+
 #endif

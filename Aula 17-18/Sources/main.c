@@ -3,21 +3,20 @@
 /* File description: implements UART configuration and interruption  */
 /*                                                                   */
 /* Author name:      Caio Villela/ Hebert Wandick                    */
-/* Creation date:    20/may/2020                                     */
-/* Revision date:    20/may/2020                                     */
+/* Creation date:    24/may/2020                                     */
+/* Revision date:    24/may/2020                                     */
 /* ***************************************************************** */
 
 #include "fsl_device_registers.h"
 #include "UART.h"
 #include "print_scan.h"
-#include "util.h"
 
 int main(void){
 
     UART0_init();
     UART0_enableIRQ();
 
-    /*echo*/
+    /*Call the StateMachine*/
     UART0_IRQHandler();
 
 };

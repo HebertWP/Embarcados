@@ -1,3 +1,13 @@
+/* ***************************************************************** */
+/* File name:        communicationStateMachine.c                     */
+/* File description: Implements the state machine using the util.h 	 */
+/* 					 file to implements the responsive acts 		 */
+/* 					 through UART interface    			             */
+/* Author name:      Caio Villela/ Hebert Wandick                    */
+/* Creation date:    24/may/2020                                     */
+/* Revision date:    24/may/2020                                     */
+/* ***************************************************************** */
+
 #include "communicationStateMachine.h"
 #include "util.h"
 
@@ -16,6 +26,13 @@
 unsigned char ucUartState = IDLE;
 unsigned char ucValueCount;
 
+/* ************************************************ */
+/* Method name:        processByteCommunication     */
+/* Method description: Handle what to do by 		*/
+/* 					   corresponding byte and order */
+/* Input params:       ucByte the byte received		*/
+/* Output params:      n/a                          */
+/* ************************************************ */
 void processByteCommunication(unsigned char ucByte){
 
     static unsigned char ucParam;
