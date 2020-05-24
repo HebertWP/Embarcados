@@ -14,6 +14,10 @@
 #include "util.h"
 #include "fsl_debug_console.h"
 
+#define HASHTAG         0b00100011
+#define LETRA_A         0b01100001
+#define PONTO_VIRGULA   0b00111011
+
 /*union variable used for converting unsigned chars/floats */
 typedef union
 {
@@ -59,17 +63,19 @@ unsigned char* floatToUChar(int flag, float fReceived){
 }
 
 /* ************************************************ */
-/* Method name:        setParam				        */
+/* Method name:        setParam				              */
 /* Method description: set the temperature or led in*/
-/* 					   machine						*/
-/* 					   uint8_t						*/
-/* Input params:       ucParam type of parameter  to*/
-/*					   be set						*/
-/*					   ucByte array of information  */
-/* Output params:      n/a	 				        */
+/* 					           machine						          */
+/* 					           						                  */
+/* Input params:     ucParam -> type of parameter to*/
+/*					         be set           						  */
+/*					         ucByte -> array of information */
+/* Output params:      n/a	 				                */
 /* ************************************************ */
 void setParam(unsigned char ucParam, unsigned char *ucByte)
 {
+    float fTemp;
+
     if ('b' == ucParam)
     {
         if ('0' == ucByte[0])
@@ -84,10 +90,11 @@ void setParam(unsigned char ucParam, unsigned char *ucByte)
         }
     }
 
-    if ('v' == ucParam)
+    if ('t' == ucParam)
     {
-
-
+      fTemp = uCharToFloat(ucByte);
+      /*setTemperature(fTemp)*/
+      /*ainda nao temos essa funcao*/
     }
 }
 
@@ -104,24 +111,70 @@ void answerParam(unsigned char ucParam)
 {
     float fTemp;
     float fCy;
+    unsigned char ucValue[4];
+    int i;
+
+    sendByteUART(HASHTAG);
+    sendByteUART(LETRA_A);
+
     switch (ucParam)
     {
-    case 't':
-        /* return the temperature*/
-        fTemp = 23.37;
+      case 't':
+          /* return the temperature*/
+          /* fTemp = getTemp()*/
+          fTemp = 23.37;
+          ucValue = floatToUChar(fTemp);
 
-        break;
+          for(i = 0; i < 4; i++)
+            sendByteUART(ucValue[i]);
 
-    case 'c':
-        /* return the cooler duty cycle*/
-        fCy = 0.1;
+          break;
 
-        break;
+      case 'c':
+          /* return the cooler duty cycle*/
+          /* fCy = getCoolerDutyCycle()*/
+          fCy = 0.1;
+          ucValue = floatToUChar(fCy);
 
-    case 'a':
-        /*return  the header duty cycle*/
-        fCy = 1;
+          for(i = 0; i < 4; i++)
+            sendByteUART(ucValue[i]);
 
-        break;
+          break;
+
+      case 'a':
+          /*return  the heater duty cycle*/
+          /* fCy = getHeaterDutyCycle()*/
+          fCy = 1.2;
+          ucValue = floatToUChar(fCy);
+
+          for(i = 0; i < 4; i++)
+            sendByteUART(ucValue[i]);
+
+          break;
     };
+
+    sendByteUART(PONTO_VIRGULA);
+}
+
+
+/* ************************************************ */
+/* Method name:        sendByteUART			            */
+/* Method description: sends byte via UART          */
+/* Input params:       ucByte -> Byte to be sent    */
+/* Output params:      n/a	 				                */
+/* ************************************************ */
+void sendByteUART(unsigned char ucByte)
+{
+
+}
+
+/* ************************************************ */
+/* Method name:        getByteUART			            */
+/* Method description: reads byte via UART          */
+/* Input params:       n/a                          */
+/* Output params:      read Byte  	                */
+/* ************************************************ */
+unsigned char getByteUART()
+{
+  return();
 }
