@@ -30,16 +30,12 @@ typedef union
 /*					           converted 					            */
 /* Output params:      1 float                        */
 /* ****************************************************/
+
 float uCharToFloat(unsigned char* ucValue){
   floatUCharType varFloatUChar;
-  static unsigned char ucCount;
 
-  varFloatUChar.ucBytes[ucCount] = ucValue;
-
-  if(++ucCount >= 4){
-      ucCount = 0;
-      return(varFloatUChar.fReal);
-  }
+  varFloatUChar.ucBytes = ucValue;
+  return(varFloatUChar.fReal);
 }
 
 
