@@ -11,12 +11,12 @@
 #include "UART.h"
 #include "print_scan.h"
 
-int main(void){
+int main(void)
+{
 
     UART0_init();
     UART0_enableIRQ();
 
     /*Call the StateMachine*/
     UART0_IRQHandler();
-
 };
