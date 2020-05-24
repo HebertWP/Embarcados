@@ -92,7 +92,7 @@
 									<listOptionValue builtIn="false" value="&quot;MKL26Z128xxx4_flash.ld&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.cpp.linker.otherobjs.827051449" name="Other objects" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.cpp.linker.otherobjs" valueType="userObjs">
-									<listOptionValue builtIn="false" value="&quot;C:\Users\Hebert Wandick\Downloads\libksdk_platform.a&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Freescale\KSDK_1.2.0\lib\ksdk_platform_lib\kds\KL25Z4\debug\libksdk_platform.a&quot;"/>
 								</option>
 								<inputType id="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.linker.input.440779387" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>

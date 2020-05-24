@@ -63,12 +63,12 @@ void processByteCommunication(unsigned char ucByte){
 
                 case PARAM:
                   if(';' == ucByte)
-                    answerParam(ucParam, ucByte);
+                    answerParam(ucParam);
                   ucUartState = IDLE;
                   break;
 
                 case FLOAT_VALUE:
-                  if( '0' <= ucByte && ucByte <= '9'){
+                  if(ucByte >= '0' && ucByte <= '9'){
                     if(ucValueCount < MAX_VALUE_LENGTH)
                       ucValue[ucValueCount ++] = ucByte;
                   }else{
@@ -92,4 +92,3 @@ void processByteCommunication(unsigned char ucByte){
 
             }
 }
-v
