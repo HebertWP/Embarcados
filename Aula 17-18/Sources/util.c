@@ -58,20 +58,6 @@ unsigned char* floatToUChar(int flag, float fReceived){
 
 }
 
-
-/* ************************************************ */
-/* Method name:        toUint8_t			        */
-/* Method description: take a char and turn it on	*/
-/* 					   uint8_t						*/
-/* Input params:       ucValue character to be 		*/
-/*					   converted 					*/
-/* Output params:      number 				        */
-/* ************************************************ */
-uint8_t toUint8_t(unsigned char ucValue)
-{
-    return (uint8_t)ucValue - 48; /*using asci table, Note:Not prove against simples erros*/
-}
-
 /* ************************************************ */
 /* Method name:        setParam				        */
 /* Method description: set the temperature or led in*/
@@ -100,19 +86,20 @@ void setParam(unsigned char ucParam, unsigned char *ucByte)
 
     if ('v' == ucParam)
     {
-        /*convert floats Note:considering it's is [23,69�C==2369]*/
-        float fTemp = 10 * toUint8_t(ucByte[0]) + toUint8_t(ucByte[1]) + 0.1 * toUint8_t(ucByte[0]) + 0.01 * toUint8_t(ucByte[0]);
+
+
     }
 }
 
 /* ************************************************ */
-/* Method name:        answerParam			        */
+/* Method name:        answerParam			            */
 /* Method description: return the corresponding     */
-/*					   information 					*/
-/* Input params:       ucParam type of parameter  to*/
-/*					   be get 						*/
-/* Output params:      n/a	 				        */
+/*					           information 					        */
+/* Input params:       ucParam -> what parameter is */
+/*					           to be returned               */
+/* Output params:      n/a	 				                */
 /* ************************************************ */
+
 void answerParam(unsigned char ucParam)
 {
     float fTemp;
@@ -122,20 +109,19 @@ void answerParam(unsigned char ucParam)
     case 't':
         /* return the temperature*/
         fTemp = 23.37;
-        for (int iI = 0; iI < sizeof(float); iI++)
-            debug_putchar(((int *)(&fTemp))[iI]);
+
         break;
+
     case 'c':
         /* return the cooler duty cycle*/
         fCy = 0.1;
-        for (int iI = 0; iI < sizeof(float); iI++)
-            debug_putchar(((int *)(&fCy))[iI]);
+
         break;
+
     case 'a':
         /*return  the header duty cycle*/
         fCy = 1;
-        for (int iI = 0; iI < sizeof(float); iI++)
-            debug_putchar(((int *)(&fCy))[iI]);
+
         break;
     };
 }
