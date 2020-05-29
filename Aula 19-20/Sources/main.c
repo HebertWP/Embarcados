@@ -28,18 +28,25 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "fsl_device_registers.h"
-
-static int i = 0;
+#include "TempSensor.h"
+#include "lcd.h"
+#include "util.h"
 
 int main(void)
 {
-
+	unsigned int Temp;
+	char aux[3];
     /* Write your code here */
-
+	initTempSensor();
     /* This for loop should be replaced. By default this loop allows a single stepping. */
-    for (;;) {
-        i++;
+    while(1){
+    	util_genDelay100ms();
+    	Temp=getTemp();
+    	aux[0]=Temp%10;
+    	Temp=Temp/10;
+    	aux[1]=Temp%10;
+    	aux[2]='\0';
+    	lcd_writeText(0,aux);
     }
     /* Never leave main */
     return 0;

@@ -11,6 +11,9 @@
 
 #include "board.h"
 #include "adc.h"
+#include "fsl_port_hal.h"
+#include "fsl_gpio_hal.h"
+#include "fsl_clock_manager.h"
 
 #define ADC0_SC1A_COCO (ADC0_SC1A >> 7)
 #define ADC0_SC2_ADACT (ADC0_SC2 >> 7)
