@@ -95,6 +95,17 @@
 #define LCD_DATA_DB7_DIR            (GPIO_OUTPUT << LCD_DATA_DB7_PIN)
 /*                 END OF LCD definitions                 */
 
+/*                 General uC definitions                 */
+
+/* Clock gate control */
+#define  CGC_CLOCK_DISABLED         0x00U
+#define  CGC_CLOCK_ENABLED          0x01U
+
+/* GPIO input / output */
+#define GPIO_INPUT                  0x00U
+#define GPIO_OUTPUT                 0x01U
+
+
 /*	TEMPERATURE SENSOR DIEODE DEFINITONS */
 #define THERMOMETER_PORT_BASE_PNT 	PORTE		/*peripheral port base pointer */
 #define THERMOMETER_GPIO_BASE_PNT 	PTE		/*peripheral gpio base pointer */

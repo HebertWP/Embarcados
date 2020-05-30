@@ -12,6 +12,14 @@
 /* Revision date:    21mar2016                                       */
 /* ***************************************************************** */
 
+/*system includes*/
+#include "stdint.h"
+
+/*my includes*/
+#include "util.h"
+#include "fsl_debug_console.h"
+
+
 #include "util.h"
 
 /* ************************************************ */
@@ -128,4 +136,153 @@ void util_genDelay100ms(void)
     util_genDelay10ms();
     util_genDelay10ms();
     util_genDelay10ms();
+}
+
+#define HASHTAG 0b00100011
+#define LETRA_A 0b01100001
+#define PONTO_VIRGULA 0b00111011
+
+/*union variable used for converting unsigned chars/floats */
+typedef union {
+    unsigned char ucBytes[4];
+    float fReal;
+} floatUCharType;
+
+/* ************************************************** */
+/* Method name:        floatToUChar     		      */
+/* Method description: converts 4 unsiged chars to 1  */
+/* 					           float  		          */
+/* Input params:       ucValue array character to be  */
+/*					           converted 			  */
+/* Output params:      1 float                        */
+/* ****************************************************/
+float uCharToFloat(unsigned char *ucValue)
+{
+    floatUCharType varFloatUChar;
+    int iI;
+    for (iI = 0; iI < 4; iI++)
+    {
+        varFloatUChar.ucBytes[iI] = ucValue[iI];
+    }
+    return (varFloatUChar.fReal);
+}
+
+/* ************************************************** */
+/* Method name:        floatToUChar     		      */
+/* Method description: converts 1 float to 4 unsigned */
+/* 					           chars  		          */
+/* Input params:       fValue character to be         */
+/*					           converted 			  */
+/* Output params:      4 unsigned char array          */
+/* ************************************************** */
+floatUCharType varFloatUChar;
+unsigned char *floatToUChar(float fReceived)
+{
+    varFloatUChar.fReal = fReceived;
+    return (varFloatUChar.ucBytes);
+}
+
+/* ******************************************************** */
+/* Method name:        setParam                             */
+/* Method description: set the temperature or led in        */
+/* 					           machine				        */
+/* 					           						        */
+/* Input params:     ucParam -> type of parameter to be set */
+/*					         ucByte -> array of information */
+/* Output params:      n/a	 				                */
+/* ************************************************ */
+void setParam(unsigned char ucParam, unsigned char *ucByte)
+{
+    float fTemp;
+    switch (ucParam){
+    case 'b':
+        if ('0' == ucByte[0])
+        {
+            /*turn off button*/
+            /*test was supposed to use the debug mode with a break point in here*/
+        }
+        else
+        {
+            /*test was supposed to use the debug mode with a break point in here*/
+            /*turn on button*/
+        }
+        break;
+    case 't':
+        fTemp = uCharToFloat(ucByte);
+        /*setTemperature(fTemp)*/
+        /*ainda nao temos essa funcao*/
+        break;
+    case 'r':
+    	break;
+    case 'p':
+    	break;
+    }
+
+    /*sending "#a;" to corfirm*/
+    debug_putchar(HASHTAG);
+    debug_putchar(LETRA_A);
+    debug_putchar(PONTO_VIRGULA);
+}
+
+/* ************************************************ */
+/* Method name:        answerParam			        */
+/* Method description: return the corresponding     */
+/*					           information 			*/
+/* Input params:       ucParam -> what parameter is */
+/*					           to be returned       */
+/* Output params:      n/a	 				        */
+/* ************************************************ */
+
+void answerParam(unsigned char ucParam)
+{
+    float fTemp;
+    float fCy;
+    unsigned char *ucValue = malloc(4 * sizeof(unsigned char));
+    int iI;
+
+    debug_putchar(HASHTAG);
+    debug_putchar(LETRA_A);
+
+    switch (ucParam)
+    {
+    case 't':
+        /* return the temperature*/
+        /* fTemp = getTemp()*/
+        fTemp = 23.37;
+
+        ucValue = floatToUChar(fTemp);
+        for (iI = 0; iI < 4; iI++)
+            debug_putchar(ucValue[iI]);
+
+        break;
+
+    case 'c':
+        /* return the cooler duty cycle*/
+        /* fCy = getCoolerDutyCycle()*/
+        fCy = 0.1;
+        ucValue = floatToUChar(fCy);
+        for (iI = 0; iI < 4; iI++)
+            debug_putchar(ucValue[iI]);
+
+        break;
+
+    case 'a':
+        /*return  the heater duty cycle*/
+        /* fCy = getHeaterDutyCycle()*/
+        fCy = 1.2;
+        ucValue = floatToUChar(fCy);
+
+        for (iI = 0; iI < 4; iI++)
+            debug_putchar(ucValue[iI]);
+
+        break;
+    case 'r':
+    	/*return the cooler information */
+    	break;
+    case 'p':
+		/*return resistor power*/
+    	break;
+    };
+    free(ucValue);
+    debug_putchar(PONTO_VIRGULA);
 }
