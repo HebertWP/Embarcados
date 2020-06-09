@@ -13,6 +13,7 @@
 #include "util.h"
 #include "UART.h"
 #include "print_scan.h"
+#include "aquecedorECooler.h"
 
 int main(void)
 {
@@ -20,10 +21,14 @@ int main(void)
 	/*init UART0*/
     UART0_init();
     UART0_enableIRQ();
+	
+	PWM_init();
+    coolerfan_init();
+    heater_init();
 
     /*init Temperature sensor*/
     unsigned int Temp;
-	char aux[3];
+	unsigned char aux[3];
  	initTempSensor();
 
  	/*init lcd*/

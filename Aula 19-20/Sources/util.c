@@ -21,7 +21,9 @@
 
 
 #include "util.h"
-
+#include "aquecedorECooler.h"
+float fColler=0;
+float fHeader=0;
 /* ************************************************ */
 /* Method name:        util_genDelay088us           */
 /* Method description: generates ~ 088 micro sec    */
@@ -212,10 +214,19 @@ void setParam(unsigned char ucParam, unsigned char *ucByte)
         /*setTemperature(fTemp)*/
         /*ainda nao temos essa funcao*/
         break;
-    case 'r':
+    case 'c':
+        /*set coller speed*/
+        fColler = uCharToFloat(ucByte);
+        fColler=(fColler>0.5)? 0.5: fColler;
+        coolerfan_PWMDuty(fColler);
+        
     	break;
-    case 'p':
-    	break;
+    case 'a':
+        /*set resitor power*/
+        fHeader = uCharToFloat(ucByte);
+    	fHeader=(fHeader>0.5)? 0.5: fHeader;
+        heater_PWMDuty(fHeader);
+        break;
     }
 
     /*sending "#a;" to corfirm*/
@@ -236,7 +247,7 @@ void setParam(unsigned char ucParam, unsigned char *ucByte)
 void answerParam(unsigned char ucParam)
 {
     float fTemp;
-    float fCy;
+
     unsigned char *ucValue = malloc(4 * sizeof(unsigned char));
     int iI;
 
@@ -259,8 +270,7 @@ void answerParam(unsigned char ucParam)
     case 'c':
         /* return the cooler duty cycle*/
         /* fCy = getCoolerDutyCycle()*/
-        fCy = 0.1;
-        ucValue = floatToUChar(fCy);
+        ucValue = floatToUChar(fColler);
         for (iI = 0; iI < 4; iI++)
             debug_putchar(ucValue[iI]);
 
@@ -269,19 +279,12 @@ void answerParam(unsigned char ucParam)
     case 'a':
         /*return  the heater duty cycle*/
         /* fCy = getHeaterDutyCycle()*/
-        fCy = 1.2;
-        ucValue = floatToUChar(fCy);
+        ucValue = floatToUChar(fHeader);
 
         for (iI = 0; iI < 4; iI++)
             debug_putchar(ucValue[iI]);
 
         break;
-    case 'r':
-    	/*return the cooler information */
-    	break;
-    case 'p':
-		/*return resistor power*/
-    	break;
     };
     free(ucValue);
     debug_putchar(PONTO_VIRGULA);

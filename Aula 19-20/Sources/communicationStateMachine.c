@@ -62,7 +62,7 @@ void processByteCommunication(unsigned char ucByte)
             break;
 
         case GET:
-            if ('t' == ucByte || 'c' == ucByte || 'a' == ucByte || 'r' == ucByte || 'p' == ucByte)
+            if ('t' == ucByte || 'c' == ucByte || 'a' == ucByte)
             {
                 ucParam = ucByte;
                 ucUartState = PARAM;
@@ -72,7 +72,7 @@ void processByteCommunication(unsigned char ucByte)
             break;
 
         case SET:
-            if ('t' == ucByte || 'r' == ucByte || 'p' == ucByte)
+            if ('t' == ucByte || 'a' == ucByte || 'c' == ucByte)
             {
                 ucParam = ucByte;
                 ucValueCount = 0;

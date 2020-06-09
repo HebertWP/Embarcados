@@ -30,5 +30,5 @@ unsigned int getTemp(){
 	adc_initConvertion();
 	while(!adc_isAdcDone());
 	int iAux=adc_getConvertionValue();
-	return tabela_temp[iAux];
+	return tabela_temp[255-iAux];
 };
