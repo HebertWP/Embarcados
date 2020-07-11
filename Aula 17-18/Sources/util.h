@@ -12,26 +12,66 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+/* ****************************************************/
+/* Method name:        floatToUChar     		          */
+/* Method description: converts 4 unsiged chars to 1  */
+/* 					           float  		                    */
+/* Input params:       ucValue array character to be  */
+/*					           converted 					            */
+/* Output params:      1 float                        */
+/* ****************************************************/
+float uCharToFloat(unsigned char* ucValue);
+
+/* ****************************************************/
+/* Method name:        floatToUChar     		          */
+/* Method description: converts 1 float to 4 unsigned */
+/* 					           chars  		                    */
+/* Input params:       fValue character to be         */
+/*					           converted 					            */
+/* Output params:      4 unsigned char array          */
+/* ****************************************************/
+unsigned char* floatToUChar(int flag, float fReceived);
+
 /* ************************************************ */
-/* Method name:        setParam				        */
+/* Method name:        setParam				              */
 /* Method description: set the temperature or led in*/
-/* 					   machine						*/
-/* 					   uint8_t						*/
-/* Input params:       ucParam type of parameter  to*/
-/*					   be set						*/
-/*					   ucByte array of information  */
-/* Output params:      n/a	 				        */
+/* 					           machine						          */
+/* 					           						                  */
+/* Input params:     ucParam -> type of parameter to*/
+/*					         be set           						  */
+/*					         ucByte -> array of information */
+/* Output params:      n/a	 				                */
 /* ************************************************ */
 void setParam(unsigned char ucParam, unsigned char *ucByte);
 
 /* ************************************************ */
-/* Method name:        answerParam			        */
+/* Method name:        answerParam			            */
 /* Method description: return the corresponding     */
-/*					   information 					*/
-/* Input params:       ucParam type of parameter  to*/
-/*					   be get 						*/
-/* Output params:      n/a	 				        */
+/*					           information 					        */
+/* Input params:       ucParam -> what parameter is */
+/*					           to be returned               */
+/* Output params:      n/a	 				                */
 /* ************************************************ */
 void answerParam(unsigned char ucParam);
+
+/* ************************************************ */
+/* Method name:        sendByteUART			            */
+/* Method description: sends byte via UART          */
+/* Input params:       ucByte -> Byte to be sent    */
+/* Output params:      n/a	 				                */
+/* ************************************************ */
+void sendByteUART(unsigned char ucByte);
+
+
+/* ************************************************ */
+/* Method name:        getByteUART			            */
+/* Method description: reads byte via UART          */
+/* Input params:       n/a                          */
+/* Output params:      read Byte  	                */
+/* ************************************************ */
+unsigned char getByteUART();
+
+
+
 
 #endif
