@@ -94,16 +94,13 @@ void lcd_write2Lcd(unsigned char ucBuffer,  unsigned char cDataType)
     /* writing data or command */
     if(LCD_RS_CMD == cDataType)
         /* will send a command */
-        GPIOC_PCOR |= LCD_RS_DIR;
+        GPIOC_PSOR |= LCD_RS_DIR;
     else
         /* will send data */
-        GPIOC_PSOR |= LCD_RS_DIR;
+        GPIOC_PCOR |= LCD_RS_DIR;
     
     /* write in the LCD bus */
-    GPIOC_PDOR |= (((ucBuffer & (1u << 0u)) & (ucBuffer & (1u << 1u)) &
-                  (ucBuffer & (1u << 2u)) & (ucBuffer & (1u << 3u))) &
-                  ((ucBuffer & (1u << 4u)) & (ucBuffer & (1u << 5u)) &
-                  (ucBuffer & (1u << 6u)) & (ucBuffer & (1u << 7u))));
+    GPIOC_PDOR |= ucBuffer;
 
     /* enable, delay, disable LCD */
     /* this generates a pulse in the enable pin */

@@ -29,10 +29,10 @@ int main(void)
         /* Teacher's text function */
         lcd_dummyText();
 
-        /* wait 100ms doing anything! */
+        /* wait 100ms without doing anything! */
         util_genDelay100ms();
 
-        /*Text ours function */
+        /*Test our function */
         lcd_writeText(0,"Na primeira linha");
         util_genDelay100ms();
         lcd_writeText(1,"Na segunda linha");
