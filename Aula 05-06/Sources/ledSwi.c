@@ -13,6 +13,22 @@
 #include "board.h"
 #include "ledSwi.h"
 
+
+/**************************************************************/
+/* Method name:           initLedButton                       */
+/* Method description:    This method initializes given       */
+/*                        LEDs and buttons, and sets them     */
+/*                        as digital outputs/inputs           */
+/* Input params:          *iPinsLed, defines what pins the LED*/
+/*                        are set to.                         */
+/*                        iTamLed, number of LEDS to be set   */
+/*                        *iPinsButton, defines what pins the */
+/*                        buttons are set to.                 */
+/*                        iTamBautton, number of buttons to be*/
+/*                        set                                 */
+/* Output params:         n/a                                 */
+/**************************************************************/
+
 void initLedButton(int *iPinsLed, int iTamLed,int *iPinsButton, int iTamButton){
     int iI = 0; /*integer iterator*/
     
@@ -54,6 +70,15 @@ void initLedButton(int *iPinsLed, int iTamLed,int *iPinsButton, int iTamButton){
     }
 }
 
+
+/**************************************************************/
+/* Method name:           toggleLed                           */
+/* Method description:    This method toggles the selected LED*/
+/* Input params:          iPin, defines what pin is to be     */
+/*                        toggled.                            */
+/* Output params:         n/a                                 */
+/**************************************************************/
+
 void toggleLed(int iPin)
 {
     /* toggle PTAx*/
@@ -75,12 +100,24 @@ void toggleLed(int iPin)
     };
 }
 
+
+/**************************************************************/
+/* Method name:           writeLed                            */
+/* Method description:    writes certain value to a LED pin   */
+/* Input params:          iPin, defines what pin is to be     */
+/*                        set.                                */
+/*                        iNivel, defines what level it is to */
+/*                        be set to                           */
+/* Output params:         n/a                                 */
+/**************************************************************/
+
 void writeLed(int iPin, int iNivel)
 {
     /* set PTAx*/
     /* PSOR : Port Set Output Register */
-    /* GPIOA_PSOR |= turn HIGH the correponting output pin */
-    /* GPIOA_PCOR |= turn LOW the correponting output pin */
+    /* GPIOA_PSOR |= turn HIGH the correponting output pin -> OFF */
+    /* GPIOA_PCOR |= turn LOW the correponting output pin -> ON   */
+    
     if (iNivel)
     {
         switch (iPin)
@@ -119,15 +156,42 @@ void writeLed(int iPin, int iNivel)
     }
 }
 
+
+/**************************************************************/
+/* Method name:           ligaLed                             */
+/* Method description:    turns led ON                        */
+/* Input params:          iPin, defines what pin is to be     */
+/*                        turned on.                          */
+/* Output params:         n/a                                 */
+/**************************************************************/
+
 void ligaLed(int iPin){
     /*call the function responsible by set set pin output level to HIGH*/
-    writeLed(iPin,1);
+    writeLed(iPin,0);
 };
+
+/**************************************************************/
+/* Method name:           desligaLed                          */
+/* Method description:    turns led OFF                       */
+/* Input params:          iPin, defines what pin is to be     */
+/*                        turned off.                         */
+/* Output params:         n/a                                 */
+/**************************************************************/
+
 
 void desligaLed(int iPin){ 
     /*call the function responsible by set set pin output level to LOW*/
-    writeLed(iPin,0);
+    writeLed(iPin,1);
 }
+
+
+/**************************************************************/
+/* Method name:           readButton                          */
+/* Method description:    reads button value                  */
+/* Input params:          iPin, defines what pin is to be     */
+/*                        read.                               */
+/* Output params:         n/a                                 */
+/**************************************************************/
 
 int readButton(int iPin){
     int iInput; /*32 bit number showing the inputs*/
