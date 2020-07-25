@@ -14,6 +14,8 @@
 #include "UART.h"
 #include "print_scan.h"
 #include "aquecedorECooler.h"
+#include "pid.h"
+
 
 int main(void)
 {
@@ -27,21 +29,34 @@ int main(void)
     heater_init();
 
     /*init Temperature sensor*/
-    unsigned int Temp;
-	unsigned char aux[3];
+    unsigned int fTemp;
+	unsigned char ucAux[3];
  	initTempSensor();
+
+	float fSetPoint = 0, fActuatorValue = 0;
+
 
  	/*init lcd*/
  	void lcd_initLcd(void);
     while(1){
+
     	/*get and show temperature at lcd*/
-    	util_genDelay100ms();
-    	Temp=getTemp();
-    	aux[0]=Temp%10;
-    	Temp=Temp/10;
-    	aux[1]=Temp%10;
-    	aux[2]='\0';
-    	lcd_writeText(0,aux);
+    	
+		/*get setPoint from UART*/
+
+		/*PID LOOP*/
+		fTemp = getTemp();
+		fSetPoint = getSetPoint();
+		fActuatorValue = pidUpdateData(fTemp, fSetPoint)
+		actuatorSetValue(fActuatorValue)
+		
+		/*print Temperature*/
+    	ucAux[0]=fTemp%10;
+    	fTemp=fTemp/10;
+    	ucAux[1]=fTemp%10;
+    	ucAux[2]='\0';
+    	lcd_writeText(0,ucAux);
+		util_genDelay100ms();
     }
     /* Never leave main */
     return 0;
