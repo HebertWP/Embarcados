@@ -11,44 +11,26 @@
 /*                   Voltage range: 1.71 to 3.6 V                    */
 /*                                                                   */
 /* Author name:      Caio Villela /Hebert Wandick                    */
-/* Creation date:    08/may/2020                                     */
-/* Revision date:    08/may/2020                                     */
+/* Creation date:    24/apr/2020                                     */
+/* Revision date:    24/apr/2020                                     */
 /* ***************************************************************** */
 
 /*my  includes*/
-#include "lptmr.h"
-#include "tacometro.h"
-
-bool flag = false;
-
-/* ************************************************  */
-/* Method name:        main_cyclicExecuteIsr         */
-/* Method description: lets program continue running */
-/*                     upon timer reaching its limit */
-/* Input params:       n/a                           */
-/* Output params:      n/a                           */
-/* ************************************************  */
-void main_cyclicExecuteIsr()
-{
-    flag = true;
-}
+#include "aquecedorECooler.h"
 
 int main(void)
 {
-    unsigned int value = 0;
-    /* initing the tachometer and interruptions */
-    tachometer_init();
-    tc_installLptmr0(250000, main_cyclicExecuteIsr);
+    /*initing the cooler and header control */
+    PWM_init();
+    coolerfan_init();
+    heater_init();
 
-    while (true)
-    {
-        /* if it is need to read tachometer */
-        if (flag)
-        {
-            /*read with a windows of 100ms */
-            value = tachometer_readSensor(250000);
-            flag = false;
-        }
+    /*make both work in 50% of power*/
+    coolerfan_PWMDuty(0.5);
+    heater_PWMDuty(0.5);
+
+    while (1) {
+
     }
     return 0;
 }
