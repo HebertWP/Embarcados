@@ -119,9 +119,14 @@ float pid_getKd(void)
 float pidUpdateData(float fSensorValue, float fSetValue)
 {
 	float fError, fDifference, fOut;
+	static int iStaturationFlag;
 
 	fError = fSetValue - fSensorValue;
-	pidConfig.fError_sum += fError;
+	
+	/* if there is no saturation */
+	if( iStaturationFlag == 0)
+		pidConfig.fError_sum += fError;
+	
 	fDifference = pidConfig.fError_previous - fError;
 
 	fOut = pidConfig.fKp*fError
@@ -130,11 +135,19 @@ float pidUpdateData(float fSensorValue, float fSetValue)
 
 	pidConfig.fError_previous = fError;
 
-	if (fOut>100.0)
+	if (fOut>100.0){
 		fOut = 100.0;
-
-	else if (fOut<0.0)
+		iStaturationFlag = 1;
+	}
+	
+	else if (fOut<0.0){
 		fOut = 0.0;
+		iStaturationFlag = 1;
+	}
+
+	else
+		iStaturationFlag = 0;
+	
 
 	return fOut;
 }
