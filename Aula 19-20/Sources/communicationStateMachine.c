@@ -39,7 +39,7 @@ void processByteCommunication(unsigned char ucByte)
 
     static unsigned char ucParam;
     static unsigned char ucValue[MAX_VALUE_LENGTH + 1];
-    if ('#' == ucByte)
+    if ('#' == ucByte) /*in idle*/
         ucUartState = READY;
     else if (IDLE != ucUartState)
         switch (ucUartState)
@@ -94,14 +94,14 @@ void processByteCommunication(unsigned char ucByte)
             break;
 
         case FLOAT_VALUE:
-            if (ucByte >= '0' && ucByte <= '9')
+            if (ucByte >= '0' && ucByte <= '9')/*get the number with a human write it direct in decimal*/
             {
                 if (ucValueCount < MAX_VALUE_LENGTH)
                     ucValue[ucValueCount++] = ucByte;
             }
             else
             {
-                if (';' == ucByte)
+                if (';' == ucByte)/*if the data had been pass correct it will be work correct, if not return to idle*/
                 {
                     ucValue[ucValueCount] = '\0';
                     setParam(ucParam, ucValue);
@@ -118,7 +118,7 @@ void processByteCommunication(unsigned char ucByte)
             else
             {
                 if (';' == ucByte)
-                    setParam(ucParam, ucValue);
+                    setParam(ucParam, ucValue);/*enable or disable the buttons  */
                 ucUartState = IDLE;
             }
             break;
