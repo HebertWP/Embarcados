@@ -39,6 +39,7 @@ void PWM_init(void){
     /*Center-aligned PWM Select,0 LPTPM counter operates in up counting mode.*/
     SET_BITS(TPM1_SC, TPM_CPWMS, 1, 5);
 
+    /**/
     /*Counting 50 pulses*/
     SET_BITS(TPM1_MOD, TPM_MOD, 16, 0);
 }
@@ -84,7 +85,10 @@ void heater_init(void){
 /* Output params:      n/a                          */
 /* ************************************************ */
 void coolerfan_PWMDuty(float fCoolerDuty){
-    SET_BITS(COOLERFAN_TPMx_CnV, (unsigned int)fCoolerDuty*50, 16, 0);
+	/*reset the TPM1 */
+	SET_BITS(TPM1_CNT,0x00,16,0);
+
+	SET_BITS(COOLERFAN_TPMx_CnV, (unsigned int)(fCoolerDuty*50), 16, 0);
 }
 
 /* ************************************************ */
@@ -96,5 +100,8 @@ void coolerfan_PWMDuty(float fCoolerDuty){
 /* Output params:      n/a                          */
 /* ************************************************ */
 void heater_PWMDuty(float fHeaterDuty){
-    SET_BITS(HEADER_TPMx_CnV, (unsigned int)fHeaterDuty*50, 16, 0);
+	/*reset the TPM1 */
+	SET_BITS(TPM1_CNT,0x00,16,0);
+
+	SET_BITS(HEADER_TPMx_CnV, (unsigned int)(fHeaterDuty*50), 16, 0);
 }

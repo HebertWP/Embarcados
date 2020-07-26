@@ -1,11 +1,12 @@
 /* ***************************************************************** */
-/* File name:        lcd.c                                           */
-/* File description: file containing the implementation of functions */
-/*                   used to control the LCD display                 */
+/* File name:        aquecedorECooler.h                              */
+/* File description: Header file containing the functions needed to	 */
+/* 					 use heater and cooler                           */
 /* Author name:      Caio Villela, Hebert Wandick                    */
 /* Creation date:    10/apr/2020                                     */
-/* Revision date:    10/apr/2020                                     */
+/* Revision date:    26/jul/2020                                     */
 /* ***************************************************************** */
+
 #ifndef AQUECEDORECOOLER_H_
 #define AQUECEDORECOOLER_H_
 
