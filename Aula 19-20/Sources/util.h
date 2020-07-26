@@ -5,9 +5,9 @@
 /*                   Those delays were tested under the following:   */
 /*                   core clock @ 40MHz                              */
 /*                   bus clock @ 20MHz                               */
-/* Author name:      dloubach                                        */
+/* Author name:      dloubach/Hebert W/Caio V                        */
 /* Creation date:    09jan2015                                       */
-/* Revision date:    09mar2016                                       */
+/* Revision date:    26jul2020                                       */
 /* ***************************************************************** */
 
 #ifndef UTIL_H

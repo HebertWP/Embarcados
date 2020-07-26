@@ -2,14 +2,16 @@
 /* File name:        util.c                                          */
 /* File description: This file has a couple of useful functions to   */
 /*                   make programming more productive                */
-/*                                                                   */
+/*                   with some incremts make by hebert and Caio to   */
+/*					 beter usage for them							 */
+/*                                                					 */
 /*                   Remarks: The soft delays consider               */
 /*                   core clock @ 40MHz                              */
 /*                   bus clock @ 20MHz                               */
 /*                                                                   */
-/* Author name:      dloubach                                        */
+/* Author name:      dloubach/Hebert W/Caio V                        */
 /* Creation date:    09jan2015                                       */
-/* Revision date:    21mar2016                                       */
+/* Revision date:    26jul2020                                       */
 /* ***************************************************************** */
 
 /*system includes*/
