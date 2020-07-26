@@ -11,7 +11,9 @@
 #include "stdint.h"
 
 /*my includes*/
+#include "math.h" 
 #include "util.h"
+#include "board.h"
 #include "fsl_debug_console.h"
 
 #define HASHTAG 0b00100011
@@ -21,7 +23,7 @@
 /*union variable used for converting unsigned chars/floats */
 typedef union {
     unsigned char ucBytes[4];
-    float fReal;
+    int iReal;
 } floatUCharType;
 
 /* ************************************************** */
@@ -32,15 +34,19 @@ typedef union {
 /*					           converted 			  */
 /* Output params:      1 float                        */
 /* ****************************************************/
-float uCharToFloat(unsigned char *ucValue)
+float uCharToFloat(unsigned char *ucValue, int iCommaPos)
 {
+    float fFloat;
+
     floatUCharType varFloatUChar;
     int iI;
     for (iI = 0; iI < 4; iI++)
     {
         varFloatUChar.ucBytes[iI] = ucValue[iI];
     }
-    return (varFloatUChar.fReal);
+
+    fFLoat = varFloatUChar.iReal / pow(10, 4 - iCommaPos)
+    return (fFloat);
 }
 
 /* ************************************************** */
@@ -63,11 +69,13 @@ unsigned char *floatToUChar(float fReceived)
 /* Method description: set the temperature or led in        */
 /* 					           machine				        */
 /* 					           						        */
-/* Input params:     ucParam -> type of parameter to be set */
+/* Input params:    ucParam -> type of parameter to be set  */
 /*					         ucByte -> array of information */
+/*                           iCommaPos -> position of comma */
+/*                           in float values.               */
 /* Output params:      n/a	 				                */
-/* ************************************************ */
-void setParam(unsigned char ucParam, unsigned char *ucByte)
+/* **********************************************************/
+void setParam(unsigned char ucParam, unsigned char *ucByte, int iCommaPos)
 {
     float fTemp;
 
@@ -87,7 +95,7 @@ void setParam(unsigned char ucParam, unsigned char *ucByte)
 
     if ('t' == ucParam)
     {
-        fTemp = uCharToFloat(ucByte);
+        fTemp = uCharToFloat(ucByte, iCommaPos);
         /*setTemperature(fTemp)*/
         /*ainda nao temos essa funcao*/
     }

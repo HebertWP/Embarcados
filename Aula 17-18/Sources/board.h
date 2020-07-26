@@ -20,4 +20,16 @@
 #define GPIO_INPUT                  0x00U
 #define GPIO_OUTPUT                 0x01U
 
+/*state machine constants*/
+#define IDLE '0'
+#define READY '1'
+#define GET '2'
+#define SET '3'
+#define PARAM '4'
+#define FLOAT_VALUE '5'
+#define BUTTON_VALUE '6'
+#define SET_VALUE '7'
+
+#define MAX_VALUE_LENGTH 3
+
 #endif /* SOURCES_BOARD_H_ */

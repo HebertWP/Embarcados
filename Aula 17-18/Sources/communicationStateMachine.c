@@ -11,27 +11,28 @@
 /*my includes*/
 #include "communicationStateMachine.h"
 #include "util.h"
-
-#define IDLE '0'
-#define READY '1'
-#define GET '2'
-#define SET '3'
-#define PARAM '4'
-#define FLOAT_VALUE '5'
-#define BUTTON_VALUE '6'
-#define SET_VALUE '7'
-#define ANSWER '8'
-
-#define MAX_VALUE_LENGTH 3
+#include "board.h"
+/*        GLOBAL VARIABLES         */
+/*  ucUartState == Current state   */
+/*  ucValueCont == Position of     */
+/*                 float input     */  
+/*                 inside the      */
+/*                 array           */
+/*  iCommaPos == Position of comma */
+/*              inside float array */
+/*  iAuxCommaPos == Auxiliary      */
+/*                  iterator       */
+/***********************************/
 
 unsigned char ucUartState = IDLE;
-unsigned char ucValueCount;
+unsigned char ucValueCount = 0;
+int iCommaPos = 0, iAuxCommaPos = 0, iFlag = 0;
 
 /* ************************************************ */
 /* Method name:        processByteCommunication     */
 /* Method description: Handle what to do by 		*/
 /* 					   corresponding byte and order */
-/* Input params:       ucByte the byte received		*/
+/* Input params:       ucByte, received byte 		*/
 /* Output params:      n/a                          */
 /* ************************************************ */
 void processByteCommunication(unsigned char ucByte)
@@ -39,12 +40,20 @@ void processByteCommunication(unsigned char ucByte)
 
     static unsigned char ucParam;
     static unsigned char ucValue[MAX_VALUE_LENGTH + 1];
+
+
+    /*the following logic can be better understood through the adjacent
+      pdf file*/
+
+
+    /*starts implementation*/
     if ('#' == ucByte)
         ucUartState = READY;
+
     else if (IDLE != ucUartState)
         switch (ucUartState)
         {
-
+        
         case READY:
             switch (ucByte)
             {
@@ -76,11 +85,14 @@ void processByteCommunication(unsigned char ucByte)
             {
                 ucParam = ucByte;
                 ucValueCount = 0;
+                iCommaPos = 0;
+                iAuxCommaPos = 0;
                 ucUartState = FLOAT_VALUE;
             }
             else if ('b' == ucByte)
             {
                 ucParam = ucByte;
+                iFlag = 0;
                 ucUartState = BUTTON_VALUE;
             }
             else
@@ -97,28 +109,39 @@ void processByteCommunication(unsigned char ucByte)
             if (ucByte >= '0' && ucByte <= '9')
             {
                 if (ucValueCount < MAX_VALUE_LENGTH)
+                {
                     ucValue[ucValueCount++] = ucByte;
+                    iAuxCommaPos ++;
+                }
             }
-            else
+            else if (ucByte == ','){
+                iCommaPos = iAuxCommaPos;
+            }
+
+            else          
             {
                 if (';' == ucByte)
                 {
                     ucValue[ucValueCount] = '\0';
-                    setParam(ucParam, ucValue);
+                    setParam(ucParam, ucValue, iCommaPos);
                 }
                 ucUartState = IDLE;
             }
             break;
 
         case BUTTON_VALUE:
-            if ('0' == ucByte || '1' == ucByte)
-            {
-                ucValue[0] = ucByte;
+            if (iFlag == 0 ){
+                if ('0' == ucByte || '1' == ucByte)
+                {
+                    iFlag++;
+                    ucValue[0] = ucByte;
+                }
             }
             else
             {
                 if (';' == ucByte)
-                    setParam(ucParam, ucValue);
+                    setParam(ucParam, ucValue, iCommaPos);
+                
                 ucUartState = IDLE;
             }
             break;

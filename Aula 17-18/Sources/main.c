@@ -16,7 +16,9 @@ int main(void)
 
     UART0_init();
     UART0_enableIRQ();
-
-    /*Call the StateMachine*/
-    UART0_IRQHandler();
+    
+    while(true){
+        /*Call the StateMachine*/
+        UART0_IRQHandler();
+    }
 };
