@@ -27,8 +27,8 @@ int main(void)
     heater_init();
 
     /*init Temperature sensor*/
-    unsigned int Temp;
-	unsigned char aux[3];
+    unsigned int uiTemp;
+	unsigned char ucAux[3];
  	initTempSensor();
 
  	/*init lcd*/
@@ -36,12 +36,12 @@ int main(void)
     while(1){
     	/*get and show temperature at lcd*/
     	util_genDelay100ms();
-    	Temp=getTemp();
-    	aux[0]=Temp%10;
-    	Temp=Temp/10;
-    	aux[1]=Temp%10;
-    	aux[2]='\0';
-    	lcd_writeText(0,aux);
+    	uiTemp=getTemp();
+    	ucAux[0]=uiTemp%10 + 48; /*add 48 to match ascii table*/
+    	uiTemp=uiTemp/10;
+    	ucAux[1]=uiTemp%10 + 48; /*add 48 to match ascii table*/
+    	ucAux[2]='\0';
+    	lcd_writeText(0,ucAux);
     }
     /* Never leave main */
     return 0;
