@@ -4,8 +4,8 @@
 /*                     of the peripheral board for the ES670 hardware*/
 /*                                                                   */
 /* Author name:      Hebert Wandick / Caio Villela                   */
-/* Creation date:    24bri2020                                      */
-/* Revision date:    25abri2020                                      */
+/* Creation date:    24/abri/2020                                    */
+/* Revision date:    26/jul/2020                                     */
 /* ***************************************************************** */
 
 #ifndef SOURCES_BOARD_H_
