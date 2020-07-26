@@ -23,7 +23,7 @@
 #define TPM_CLOCK				0b11U		/*TPM clock source select, 11 MCGIRCLK clock (32KHz)*/
 #define TPM_CMOD				0b01U		/*Clock Mode Selection *,01 LPTPM counter increments on every LPTPM counter clock */
 #define TPM_CPWMS				0b0U		/*Center-aligned PWM Select,0 LPTPM counter operates in up counting mode.*/
-#define TPM_MOD					50U			/*Counting 50 pulses*/
+#define TPM_MOD					49U			/*Counting 50 pulses*/
 #define TPM_MSnx				0b10U		/*Edge-aligned PWM*/
 #define TPM_ELSnx				0b10U		/*High-true pulses (clear Output on match, set Output on reload)*/
 #define CONFIG_PORT_AS_PWM		0b011U		/*011 Alternative 3 (chip-specific).*/

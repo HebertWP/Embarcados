@@ -88,7 +88,7 @@ void coolerfan_PWMDuty(float fCoolerDuty){
 	/*reset the TPM1 */
 	SET_BITS(TPM1_CNT,0x00,16,0);
 
-	SET_BITS(COOLERFAN_TPMx_CnV, (unsigned int)(fCoolerDuty*50), 16, 0);
+	SET_BITS(COOLERFAN_TPMx_CnV, (unsigned int)(fCoolerDuty*49), 16, 0);
 }
 
 /* ************************************************ */
@@ -103,5 +103,5 @@ void heater_PWMDuty(float fHeaterDuty){
 	/*reset the TPM1 */
 	SET_BITS(TPM1_CNT,0x00,16,0);
 
-	SET_BITS(HEADER_TPMx_CnV, (unsigned int)(fHeaterDuty*50), 16, 0);
+	SET_BITS(HEADER_TPMx_CnV, (unsigned int)(fHeaterDuty*49), 16, 0);
 }
