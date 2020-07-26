@@ -7,6 +7,7 @@
 /* Creation date:    24bri2020                                      */
 /* Revision date:    25abri2020                                      */
 /* ***************************************************************** */
+
 #ifndef SOURCES_BOARD_H_
 #define SOURCES_BOARD_H_
 

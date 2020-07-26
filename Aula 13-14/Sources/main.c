@@ -19,7 +19,7 @@
 #include "lptmr.h"
 #include "tacometro.h"
 
-bool flag = false;
+bool bFlag = false;
 
 /* ************************************************  */
 /* Method name:        main_cyclicExecuteIsr         */
@@ -30,12 +30,12 @@ bool flag = false;
 /* ************************************************  */
 void main_cyclicExecuteIsr()
 {
-    flag = true;
+    bFlag = true;
 }
 
 int main(void)
 {
-    unsigned int value = 0;
+    unsigned int uiValue = 0;
     /* initing the tachometer and interruptions */
     tachometer_init();
     tc_installLptmr0(250000, main_cyclicExecuteIsr);
@@ -43,11 +43,11 @@ int main(void)
     while (true)
     {
         /* if it is need to read tachometer */
-        if (flag)
+        if (bFlag)
         {
             /*read with a windows of 100ms */
-            value = tachometer_readSensor(250000);
-            flag = false;
+            uiValue = tachometer_readSensor(250000);
+            bFlag = false;
         }
     }
     return 0;
