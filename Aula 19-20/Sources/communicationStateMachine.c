@@ -14,7 +14,7 @@
 
 #define MAX_VALUE_LENGTH 3
 enum state esUartState = IDLE;
-    
+
 unsigned char ucValueCount;
 
 /* ************************************************ */
@@ -48,13 +48,13 @@ void processByteCommunication(unsigned char ucByte)
             esUartState = TARGETKD;
             break;
         case '>':
-            setParam('T','u');
+            setParam('T', "u");
             break;
         case '<':
-            setParam('T','d');
+            setParam('T', "d");
             break;
         default:
-            esUartState=IDLE;
+            esUartState = IDLE;
         }
         break;
     case TARGETKD:
@@ -64,13 +64,13 @@ void processByteCommunication(unsigned char ucByte)
             esUartState = TARGETKI;
             break;
         case '>':
-            setParam('D','u');
+            setParam('D', "u");
             break;
         case '<':
-            setParam('D','d');
+            setParam('D', "d");
             break;
         default:
-            esUartState=IDLE;
+            esUartState = IDLE;
         }
         break;
     case TARGETKI:
@@ -80,45 +80,52 @@ void processByteCommunication(unsigned char ucByte)
             esUartState = TARGETKP;
             break;
         case '>':
-            setParam('I','u');
+            setParam('I', "u");
             break;
         case '<':
-            setParam('I','d');
+            setParam('I', "d");
             break;
         default:
-            esUartState=IDLE;
+            esUartState = IDLE;
         }
         break;
     case TARGETKP:
         switch (ucByte)
         {
         case '@':
-            esUartState = IDLE;
+            esUartState = DUTYHEATER;
             break;
         case '>':
-            setParam('P','u');
+            setParam('P', "u");
             break;
         case '<':
-            setParam('P','d');
+            setParam('P', "d");
             break;
         default:
-            esUartState=GETDUTY;
+            esUartState = IDLE;
         }
         break;
-    
-    case GETDUTY:
+    case DUTYHEATER:
         switch (ucByte)
         {
         case '@':
+            esUartState = DUTYCOOLER;
+            break;
         case '>':
+            setParam('H', "u");
+            break;
         case '<':
-            esUartState = IDLE;
+            setParam('H', "d");
             break;
         default:
-            esUartState=IDLE;
+            esUartState = IDLE;
         }
         break;
-    
+
+    case DUTYCOOLER:
+        esUartState = IDLE;
+        break;
+
     case READY:
         switch (ucByte)
         {
@@ -136,17 +143,26 @@ void processByteCommunication(unsigned char ucByte)
         break;
 
     case GET:
-        if ('t' == ucByte || 'c' == ucByte || 'a' == ucByte)
+        switch (ucByte)
         {
+        case 't':
+        case 'c':
+        case 'a':
+        case 'i':
+        case 'k':
+        case 'p':
+        case 'b':
             ucParam = ucByte;
             esUartState = PARAM;
-        }
-        else
+            break;
+        default:
             esUartState = IDLE;
+            break;
+        }
         break;
 
     case SET:
-        if ('t' == ucByte || 'a' == ucByte || 'c' == ucByte)
+        if ('a' == ucByte || 'i' == ucByte || 'p' == ucByte|| 'd' == ucByte || 's' == ucByte)
         {
             ucParam = ucByte;
             ucValueCount = 0;
@@ -199,6 +215,7 @@ void processByteCommunication(unsigned char ucByte)
     }
 }
 
-enum state getState(void){
+enum state getState(void)
+{
     return esUartState;
 }

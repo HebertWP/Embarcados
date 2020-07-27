@@ -17,20 +17,33 @@
 #include "pid.h"
 #include "ledSwi.h"
 #include "communicationStateMachine.h"
+#include "lptmr.h"
+
+bool bFlag = false;
+/* ************************************************  */
+/* Method name:        main_cyclicExecuteIsr         */
+/* Method description: lets program continue running */
+/*                     upon timer reaching its limit */
+/* Input params:       n/a                           */
+/* Output params:      n/a                           */
+/* ************************************************  */
+void main_cyclicExecuteIsr(void)
+{
+	bFlag = true;
+}
 
 int main(void)
 {
 
 	/*init GPIOS*/
-	/* no leds*/
-	int *iLeds = (int*) NULL;
+	int *iLeds = (int *)NULL; /* no leds*/
 	int iNumLeds = 0;
 	/*using the 1º,2º,3º buttons*/
 	int iButtons[3] = {1, 2, 3};
 	int iNumButtons = 3;
 	initLedButton(iLeds, iNumLeds, iButtons, iNumButtons);
 	bool press = false;
-	
+
 	/*init UART0*/
 	UART0_init();
 	UART0_enableIRQ();
@@ -39,18 +52,25 @@ int main(void)
 	PWM_init();
 	coolerfan_init();
 	heater_init();
+	coolerfan_PWMDuty(0); /*turn off fan*/
+	heater_PWMDuty(0); /*turn off heater*/
 
 	/*init Temperature sensor*/
-	unsigned int fTemp;
-	unsigned char ucAux[3];
 	initTempSensor();
-
-	float fSetPoint = 0, fActuatorValue = 0;
 
 	/*init lcd*/
 	void lcd_initLcd(void);
-	while (1)
+
+	/*init PID with interruptions*/
+	pid_init();
+	tc_installLptmr0(100000, main_cyclicExecuteIsr);
+
+	/*Updade Screen*/
+	setScreen();
+
+	while (true)
 	{
+		/*read buttons and put on staemachine*/
 		if (!press)
 		{
 			if (readButton(1))
@@ -76,19 +96,13 @@ int main(void)
 		}
 
 		/*PID LOOP*/
-		fTemp = getTemp();
-		fSetPoint = getSetPoint();
-		fActuatorValue = pidUpdateData(fTemp, fSetPoint);
-		actuatorSetValue(fActuatorValue);
-
-		setScreen();
-		/*print Temperature*/
-		ucAux[0] = fTemp % 10 + 48;
-		fTemp = fTemp / 10 ;
-		ucAux[1] = fTemp % 10 + 48;
-		ucAux[2] = '\0';
-		lcd_writeText(0, ucAux);
-		util_genDelay100ms();
+		if (bFlag)
+		{
+			coolerfan_PWMDuty(pidUpdateData(getTemp())/100);
+			bFlag = false;
+			/*Updade Screen*/
+			setScreen();
+		}
 	}
 	/* Never leave main */
 	return 0;

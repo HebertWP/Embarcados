@@ -105,10 +105,23 @@ float pid_getKd(void)
 	return pidConfig.fKd;
 }
 
-void  setSetValue(float fValue){
+/* ************************************************** */
+/* Method name:        pid_setSetValue                */
+/* Method description: set temperature target in PID  */
+/* Input params:       fValue: the temperature        */
+/* Output params:      n/a			                  */
+/* ************************************************** */
+void  pid_setSetValue(float fValue){
 	fSetValue=fValue;
 }
-float getSetValue(){
+
+/* ************************************************** */
+/* Method name:        pid_getSetValue                */
+/* Method description: get temperature target in PID  */
+/* Input params:       n/a					          */
+/* Output params:      float: temperature             */
+/* ************************************************** */
+float pid_getSetValue(){
 	return fSetValue;
 };
 

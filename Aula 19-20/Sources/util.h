@@ -78,6 +78,13 @@ void setParam(unsigned char ucParam, unsigned char *ucByte);
 /* ************************************************ */
 void answerParam(unsigned char ucParam);
 
+/* ************************************************ */
+/* Method name:        setScreen			        */
+/* Method description: print on lcd the current 	*/
+/*					   state  of the equipament     */
+/* Input params:       n/a							*/
+/* Output params:      n/a	 				        */
+/* ************************************************ */
 void setScreen();
 
 #endif /* UTIL_H */

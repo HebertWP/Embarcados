@@ -4,7 +4,7 @@
 /*                   used to control the CoolerFan and Header        */
 /* Author name:      Caio Villela, Hebert Wandick                    */
 /* Creation date:    21/apr/2020                                     */
-/* Revision date:    24/apr/2020                                     */
+/* Revision date:    26/jul/2020                                     */
 /* ***************************************************************** */
 
 /*my  includes*/
@@ -39,6 +39,7 @@ void PWM_init(void){
     /*Center-aligned PWM Select,0 LPTPM counter operates in up counting mode.*/
     SET_BITS(TPM1_SC, TPM_CPWMS, 1, 5);
 
+    /**/
     /*Counting 50 pulses*/
     SET_BITS(TPM1_MOD, TPM_MOD, 16, 0);
 }
@@ -75,6 +76,8 @@ void heater_init(void){
     heater_PWMDuty(0);
 }
 
+float fSaveCoolerDuty;//aux varieble to use in getCoolerDuty
+
 /* ************************************************ */
 /* Method name:        coolerfan_PWMDuty            */
 /* Method description: set the coolerfan speed		*/
@@ -84,8 +87,26 @@ void heater_init(void){
 /* Output params:      n/a                          */
 /* ************************************************ */
 void coolerfan_PWMDuty(float fCoolerDuty){
-    SET_BITS(COOLERFAN_TPMx_CnV, (unsigned int)fCoolerDuty*50, 16, 0);
+	/*reset the TPM1 */
+	SET_BITS(TPM1_CNT,0x00,16,0);
+
+	SET_BITS(COOLERFAN_TPMx_CnV, (unsigned int)(fCoolerDuty*49), 16, 0);
+
+    /*save state*/
+    fSaveCoolerDuty= fCoolerDuty;
 }
+
+/* ************************************************ */
+/* Method name:        getCoolerDuty                */
+/* Method description: get the coolerfan speed		*/
+/* Output params:      float 0 to 1 representing    */
+/*                     speed in %                   */
+/* ************************************************ */
+float getCoolerDuty(){
+    return fSaveCoolerDuty;
+}
+
+float fSaveHeaterDuty;//aux varieble to use in getHeaterDuty
 
 /* ************************************************ */
 /* Method name:        heater_PWMDuty	            */
@@ -96,5 +117,23 @@ void coolerfan_PWMDuty(float fCoolerDuty){
 /* Output params:      n/a                          */
 /* ************************************************ */
 void heater_PWMDuty(float fHeaterDuty){
-    SET_BITS(HEADER_TPMx_CnV, (unsigned int)fHeaterDuty*50, 16, 0);
+	/*reset the TPM1 */
+	SET_BITS(TPM1_CNT,0x00,16,0);
+
+	SET_BITS(HEADER_TPMx_CnV, (unsigned int)(fHeaterDuty*49), 16, 0);
+
+    /*save state*/
+    fSaveHeaterDuty= fHeaterDuty;
+
 }
+
+/* ************************************************ */
+/* Method name:        getHeaterDuty                */
+/* Method description: get the heater power use 	*/
+/* Output params:      float (0 to 1) representing  */
+/*                     power use in %               */
+/* ************************************************ */
+float getHeaterDuty(){
+
+    return fSaveHeaterDuty;
+};

@@ -180,6 +180,8 @@ unsigned char *floatToUChar(float fReceived)
     return (varFloatUChar.ucBytes);
 }
 
+bool bLock = false; /* auv varible to look the keys */
+
 /* ******************************************************** */
 /* Method name:        setParam                             */
 /* Method description: set the temperature or led in        */
@@ -191,38 +193,91 @@ unsigned char *floatToUChar(float fReceived)
 /* ************************************************ */
 void setParam(unsigned char ucParam, unsigned char *ucByte)
 {
-    float fTemp;
+    float fHeader;
     switch (ucParam)
     {
     case 'b':
         if ('0' == ucByte[0])
         {
             /*turn off button*/
-            /*test was supposed to use the debug mode with a break point in here*/
+            bLock = false;
         }
         else
         {
-            /*test was supposed to use the debug mode with a break point in here*/
             /*turn on button*/
+            bLock = true;
         }
-        break;
-    case 't':
-        fTemp = uCharToFloat(ucByte);
-        /*setTemperature(fTemp)*/
-        /*ainda nao temos essa funcao*/
-        break;
-    case 'c':
-        /*set coller speed*/
-        fColler = uCharToFloat(ucByte);
-        fColler = (fColler > 0.5) ? 0.5 : fColler;
-        coolerfan_PWMDuty(fColler);
-
         break;
     case 'a':
         /*set resitor power*/
         fHeader = uCharToFloat(ucByte);
-        fHeader = (fHeader > 0.5) ? 0.5 : fHeader;
+        fHeader = (fHeader > 50) ? 0.5 : fHeader / 100;
         heater_PWMDuty(fHeader);
+        break;
+    case 'i':
+        /*set Ki in PID*/
+        pid_setKi(uCharToFloat(ucByte));
+        break;
+    case 'p':
+        /*set Kp in PID*/
+        pid_setKi(uCharToFloat(ucByte));
+        break;
+    case 'd':
+        /*set Kd in PID*/
+        pid_setKi(uCharToFloat(ucByte));
+        break;
+    case 's':
+        /*set target temperature */
+        pid_setSetValue(uCharToFloat(ucByte));
+
+    case 'T':
+        if (!bLock)
+            switch (ucByte[0])
+            {
+            case 'u':
+                pid_setSetValue(pid_getSetValue() + 1);
+                break;
+            case 'd':
+                pid_setSetValue(pid_getSetValue() - 1);
+                break;
+            }
+        break;
+    case 'D':
+        if (!bLock)
+            switch (ucByte[0])
+            {
+            case 'u':
+                pid_setKd(pid_getKd() + 1);
+                break;
+            case 'd':
+                pid_setKd(pid_getKd() - 1);
+                break;
+            }
+        break;
+    case 'I':
+        if (!bLock)
+            switch (ucByte[0])
+            {
+            case 'u':
+                pid_setKi(pid_getKi() + 1);
+                break;
+            case 'd':
+                pid_setKi(pid_getKi() - 1);
+                break;
+            }
+        break;
+    case 'P':
+        if (!bLock)
+
+            switch (ucByte[0])
+            {
+            case 'u':
+                pid_setKp(pid_getKp() + 1);
+                break;
+            case 'd':
+                pid_setKp(pid_getKp() - 1);
+                break;
+            }
         break;
     }
 
@@ -243,7 +298,13 @@ void setParam(unsigned char ucParam, unsigned char *ucByte)
 
 void answerParam(unsigned char ucParam)
 {
-    float fTemp;
+    static float fTempNow = 0;
+    static float fTempReq = 0;
+    static float fKd = 0;
+    static float fKi = 0;
+    static float fKp = 0;
+    static float fHeater = 0;
+    static float fCooler = 0;
 
     unsigned char *ucValue = malloc(4 * sizeof(unsigned char));
     int iI;
@@ -254,11 +315,10 @@ void answerParam(unsigned char ucParam)
     switch (ucParam)
     {
     case 't':
-        /* return the temperature*/
-        /* fTemp = getTemp()*/
-        fTemp = 23.37;
+        /* return actual temperature*/
+        fTempNow = getTemp();
 
-        ucValue = floatToUChar(fTemp);
+        ucValue = floatToUChar(fTempNow);
         for (iI = 0; iI < 4; iI++)
             debug_putchar(ucValue[iI]);
 
@@ -266,7 +326,7 @@ void answerParam(unsigned char ucParam)
 
     case 'c':
         /* return the cooler duty cycle*/
-        /* fCy = getCoolerDutyCycle()*/
+        fCooler = getCoolerDuty();
         ucValue = floatToUChar(fColler);
         for (iI = 0; iI < 4; iI++)
             debug_putchar(ucValue[iI]);
@@ -275,18 +335,60 @@ void answerParam(unsigned char ucParam)
 
     case 'a':
         /*return  the heater duty cycle*/
-        /* fCy = getHeaterDutyCycle()*/
-        ucValue = floatToUChar(fHeader);
-
+        fHeater = getHeaterDuty();
+        ucValue = floatToUChar(fHeater);
         for (iI = 0; iI < 4; iI++)
             debug_putchar(ucValue[iI]);
+        break;
+    case 'i':
+        /*return  the Ki param of PID*/
+        fKi = pid_getKi();
+        ucValue = floatToUChar(fKi);
+        for (iI = 0; iI < 4; iI++)
+            debug_putchar(ucValue[iI]);
+        break;
+    case 'd':
+        /*return  the Kd param of PID*/
+        fKd = pid_getKd();
+        ucValue = floatToUChar(fKd);
+        for (iI = 0; iI < 4; iI++)
+            debug_putchar(ucValue[iI]);
+        break;
+    case 'p':
+        /*return  the Kp param of PID*/
+        fKp = pid_getKp();
+        ucValue = floatToUChar(fKp);
+        for (iI = 0; iI < 4; iI++)
+            debug_putchar(ucValue[iI]);
+        break;
+    case 's':
+        /*return  target temperature*/
+        fTempReq = pid_getSetValue();
+        ucValue = floatToUChar(fTempReq);
+        for (iI = 0; iI < 4; iI++)
+            debug_putchar(ucValue[iI]);
+        break;
 
+    case 'b':
+        if (bLock)
+            debug_putchar('1');
+        else
+            debug_putchar('0');
         break;
     };
+
     free(ucValue);
     debug_putchar(PONTO_VIRGULA);
 }
 
+
+/* ************************************************ */
+/* Method name:        setScreen			        */
+/* Method description: print on lcd the current 	*/
+/*					   state  of the equipament     */
+/* Input params:       n/a							*/
+/* Output params:      n/a	 				        */
+/* ************************************************ */
 void setScreen()
 {
     enum state esState = getState();
@@ -295,11 +397,147 @@ void setScreen()
     static float fKd = 0;
     static float fKi = 0;
     static float fKp = 0;
-    
+    static float fHeater = 0;
+    static float fCooler = 0;
+
     static unsigned char ucAux[16];
     switch (esState)
     {
-    case IDLE:
+    case TARGETTEMP:
+        ucAux[0] = 'S';
+        ucAux[1] = 'E';
+        ucAux[2] = 'T';
+        ucAux[3] = ' ';
+        ucAux[4] = 'T';
+        ucAux[5] = 'E';
+        ucAux[6] = 'M';
+        ucAux[7] = 'P';
+        ucAux[8] = ':';
+
+        fTempReq = pid_getSetValue();
+        ucAux[10] = (((int)fTempReq) % 10) + 48;
+        fTempReq = ((int)fTempReq) / 10;
+        ucAux[9] = (((int)fTempReq) % 10) + 48;
+
+        ucAux[11] = 'º';
+        ucAux[12] = 'C';
+        ucAux[13] = '\0';
+
+        lcd_writeText(0, ucAux);
+        break;
+    case TARGETKD:
+        ucAux[0] = 'K';
+        ucAux[1] = 'D';
+        ucAux[2] = ':';
+        ucAux[3] = ' ';
+
+        fKd = pid_getKd();
+        fKd = fKd * 100;
+
+        ucAux[8] = (((int)fKd) % 10) + 48;
+        fKd = ((int)fKd) / 10;
+        ucAux[7] = (((int)fKd) % 10) + 48;
+        ucAux[6] = '.';
+        ucAux[5] = (((int)fKd) % 10) + 48;
+        fKd = ((int)fKd) / 10;
+        ucAux[4] = (((int)fKd) % 10) + 48;
+
+        ucAux[9] = '\0';
+        lcd_writeText(0, ucAux);
+        break;
+    case TARGETKI:
+        ucAux[0] = 'K';
+        ucAux[1] = 'I';
+        ucAux[2] = ':';
+        ucAux[3] = ' ';
+
+        fKi = pid_getKi();
+        fKi = fKi * 100;
+
+        ucAux[8] = (((int)fKi) % 10) + 48;
+        fKi = ((int)fKi) / 10;
+        ucAux[7] = (((int)fKi) % 10) + 48;
+        ucAux[6] = '.';
+        ucAux[5] = (((int)fKi) % 10) + 48;
+        fKi = ((int)fKi) / 10;
+        ucAux[4] = (((int)fKi) % 10) + 48;
+
+        ucAux[9] = '\0';
+        lcd_writeText(0, ucAux);
+        break;
+
+    case TARGETKP:
+        ucAux[0] = 'K';
+        ucAux[1] = 'P';
+        ucAux[2] = ':';
+        ucAux[3] = ' ';
+
+        fKp = pid_getKp();
+        fKp = fKp * 100;
+
+        ucAux[8] = (((int)fKp) % 10) + 48;
+        fKp = ((int)fKp) / 10;
+        ucAux[7] = (((int)fKp) % 10) + 48;
+        ucAux[6] = '.';
+        ucAux[5] = (((int)fKp) % 10) + 48;
+        fKp = ((int)fKp) / 10;
+        ucAux[4] = (((int)fKp) % 10) + 48;
+
+        ucAux[9] = '\0';
+        lcd_writeText(0, ucAux);
+        break;
+    case DUTYHEATER:
+        ucAux[0] = 'R';
+        ucAux[1] = 'E';
+        ucAux[2] = 'S';
+        ucAux[3] = 'I';
+        ucAux[4] = 'S';
+        ucAux[5] = 'T';
+        ucAux[6] = 'O';
+        ucAux[7] = 'R';
+        ucAux[8] = ' ';
+        ucAux[9] = ':';
+
+        fHeader = getHeaterDuty();
+        fHeader = fHeader * 100;
+
+        ucAux[12] = (((int)fHeader) % 10) + 48;
+        fHeader = ((int)fHeader) / 10;
+        ucAux[11] = (((int)fHeader) % 10) + 48;
+        fHeader = ((int)fHeader) / 10;
+        ucAux[10] = (((int)fHeader) % 10) + 48;
+
+        ucAux[13] = ' ';
+        ucAux[14] = '%';
+        ucAux[15] = '\0';
+        lcd_writeText(0, ucAux);
+        break;
+
+    case DUTYCOOLER:
+        ucAux[0] = 'F';
+        ucAux[1] = 'A';
+        ucAux[2] = 'N';
+        ucAux[3] = ' ';
+        ucAux[4] = 'E';
+        ucAux[5] = 'M';
+        ucAux[6] = ' ';
+
+        fColler = getCoolerDuty();
+        fColler = fColler * 100;
+
+        ucAux[9] = (((int)fColler) % 10) + 48;
+        fColler = ((int)fColler) / 10;
+        ucAux[8] = (((int)fColler) % 10) + 48;
+        fColler = ((int)fColler) / 10;
+        ucAux[7] = (((int)fColler) % 10) + 48;
+
+        ucAux[10] = ' ';
+        ucAux[11] = '%';
+        ucAux[12] = '\0';
+        lcd_writeText(0, ucAux);
+        break;
+
+    default:
         ucAux[0] = 'T';
         ucAux[1] = 'E';
         ucAux[2] = 'M';
@@ -314,101 +552,15 @@ void setScreen()
 
         /*print Temperature*/
         fTempNow = getTemp();
-        ucAux[12] = fTempNow % 10 + 48;
+        ucAux[12] = (((int)fTempNow) % 10) + 48;
         fTempNow = fTempNow / 10;
-        ucAux[11] = fTempNow % 10 + 48;
+        ucAux[11] = (((int)fTempNow) % 10) + 48;
 
-        ucAux[12] = 'Â°';
+        ucAux[12] = 'º';
         ucAux[13] = 'C';
         ucAux[14] = '\0';
-        
-        lcd_writeText(0, ucAux);
-        break;
-    case TARGETTEMP:
-        ucAux[0] = 'S';
-        ucAux[1] = 'E';
-        ucAux[2] = 'T';
-        ucAux[3] = ' ';
-        ucAux[4] = 'T';
-        ucAux[5] = 'E';
-        ucAux[6] = 'M';
-        ucAux[7] = 'P';
-        ucAux[8] = ':';
 
-        fTempReq = getSetValue();
-        ucAux[10] = (((int)fTempReq) % 10) + 48;
-        fTempReq=((int)fTempReq)/10;
-        ucAux[9] = (((int)fTempReq) % 10) + 48;
-        
-        ucAux[11] = 'Â°';
-        ucAux[12] = 'C';
-        ucAux[13] = '\0';
-        
         lcd_writeText(0, ucAux);
-        break;
-    case TARGETKD:
-        ucAux[0] = 'K';
-        ucAux[1] = 'D';
-        ucAux[2] = ':';
-        ucAux[3] = ' ';
-        
-        fKd = pid_getKd();
-        fKd= fKd*100;
-        
-        ucAux[8] = (((int)fKd) % 10) + 48;
-        fKd=((int)fKd)/10;
-        ucAux[7] = (((int)fKd) % 10) + 48;
-        ucAux[6] = '.';
-        ucAux[5] = (((int)fKd) % 10) + 48;
-        fKd=((int)fKd)/10;
-        ucAux[4] = (((int)fKd) % 10) + 48;
-        
-        ucAux[9] = '\0';
-        lcd_writeText(0, ucAux);
-        break;
-    case TARGETKI:
-        ucAux[0] = 'K';
-        ucAux[1] = 'I';
-        ucAux[2] = ':';
-        ucAux[3] = ' ';
-        
-        fKi = pid_getKi();
-        fKi= fKi*100;
-        
-        ucAux[8] = (((int)fKi) % 10) + 48;
-        fKi=((int)fKi)/10;
-        ucAux[7] = (((int)fKi) % 10) + 48;
-        ucAux[6] = '.';
-        ucAux[5] = (((int)fKi) % 10) + 48;
-        fKi=((int)fKi)/10;
-        ucAux[4] = (((int)fKi) % 10) + 48;
-        
-        ucAux[9] = '\0';
-        lcd_writeText(0, ucAux);
-        break;
-    
-    case TARGETKP:
-        ucAux[0] = 'K';
-        ucAux[1] = 'P';
-        ucAux[2] = ':';
-        ucAux[3] = ' ';
-        
-        fKp = pid_getKp();
-        fKp= fKp*100;
-        
-        ucAux[8] = (((int)fKp) % 10) + 48;
-        fKp=((int)fKp)/10;
-        ucAux[7] = (((int)fKp) % 10) + 48;
-        ucAux[6] = '.';
-        ucAux[5] = (((int)fKp) % 10) + 48;
-        fKp=((int)fKp)/10;
-        ucAux[4] = (((int)fKp) % 10) + 48;
-        
-        ucAux[9] = '\0';
-        lcd_writeText(0, ucAux);
-        break;
-    
-    default:
         break;
     }
 }
