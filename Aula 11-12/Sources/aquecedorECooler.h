@@ -63,5 +63,12 @@ float getCoolerDuty();
 /* ************************************************ */
 void heater_PWMDuty(float fHeaterDuty);
 
+/* ************************************************ */
+/* Method name:        getHeaterDuty                */
+/* Method description: get the heater power use 	*/
+/* Output params:      float (0 to 1) representing  */
+/*                     power use in %               */
+/* ************************************************ */
+float getHeaterDuty();
 
 #endif

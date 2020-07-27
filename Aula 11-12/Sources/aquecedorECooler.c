@@ -106,6 +106,8 @@ float getCoolerDuty(){
     return fSaveCoolerDuty;
 }
 
+float fSaveHeaterDuty;//aux varieble to use in getHeaterDuty
+
 /* ************************************************ */
 /* Method name:        heater_PWMDuty	            */
 /* Method description: set the heater power			*/
@@ -119,4 +121,18 @@ void heater_PWMDuty(float fHeaterDuty){
 	SET_BITS(TPM1_CNT,0x00,16,0);
 
 	SET_BITS(HEADER_TPMx_CnV, (unsigned int)(fHeaterDuty*49), 16, 0);
+
+    /*save state*/
+    fSaveHeaterDuty= fHeaterDuty;
+
 }
+
+/* ************************************************ */
+/* Method name:        getHeaterDuty                */
+/* Method description: get the heater power use 	*/
+/* Output params:      float (0 to 1) representing  */
+/*                     power use in %               */
+/* ************************************************ */
+float getHeaterDuty(
+    return fSaveHeaterDuty;
+);
