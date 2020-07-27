@@ -17,4 +17,23 @@
 /* ************************************************ */
 void processByteCommunication(unsigned char ucByte);
 
+
+enum state{
+    IDLE,
+    READY,
+    GET,
+    SET,
+    PARAM,
+    FLOAT_VALUE,
+    BUTTON_VALUE,
+    SET_VALUE,
+    ANSWER,
+    TARGETTEMP,
+    TARGETKD,
+    TARGETKI,
+    TARGETKP,
+    GETDUTY
+};
+
+enum state getState();
 #endif

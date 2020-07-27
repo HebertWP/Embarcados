@@ -78,5 +78,6 @@ void setParam(unsigned char ucParam, unsigned char *ucByte);
 /* ************************************************ */
 void answerParam(unsigned char ucParam);
 
+void setScreen();
 
 #endif /* UTIL_H */

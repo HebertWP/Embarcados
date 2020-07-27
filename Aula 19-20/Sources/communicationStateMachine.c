@@ -12,19 +12,9 @@
 #include "communicationStateMachine.h"
 #include "util.h"
 
-#define IDLE '0'
-#define READY '1'
-#define GET '2'
-#define SET '3'
-#define PARAM '4'
-#define FLOAT_VALUE '5'
-#define BUTTON_VALUE '6'
-#define SET_VALUE '7'
-#define ANSWER '8'
-
 #define MAX_VALUE_LENGTH 3
-
-unsigned char ucUartState = IDLE;
+enum state esUartState = IDLE;
+    
 unsigned char ucValueCount;
 
 /* ************************************************ */
@@ -39,88 +29,176 @@ void processByteCommunication(unsigned char ucByte)
 
     static unsigned char ucParam;
     static unsigned char ucValue[MAX_VALUE_LENGTH + 1];
-    if ('#' == ucByte)
-        ucUartState = READY;
-    else if (IDLE != ucUartState)
-        switch (ucUartState)
+    switch (esUartState)
+    {
+    case IDLE:
+        switch (ucByte)
         {
-
-        case READY:
-            switch (ucByte)
-            {
-            case 'g':
-                ucUartState = GET;
-                break;
-
-            case 's':
-                ucUartState = SET;
-                break;
-
-            default:
-                ucUartState = IDLE;
-            }
+        case '#':
+            esUartState = READY;
             break;
-
-        case GET:
-            if ('t' == ucByte || 'c' == ucByte || 'a' == ucByte)
-            {
-                ucParam = ucByte;
-                ucUartState = PARAM;
-            }
-            else
-                ucUartState = IDLE;
-            break;
-
-        case SET:
-            if ('t' == ucByte || 'a' == ucByte || 'c' == ucByte)
-            {
-                ucParam = ucByte;
-                ucValueCount = 0;
-                ucUartState = FLOAT_VALUE;
-            }
-            else if ('b' == ucByte)
-            {
-                ucParam = ucByte;
-                ucUartState = BUTTON_VALUE;
-            }
-            else
-                ucUartState = IDLE;
-            break;
-
-        case PARAM:
-            if (';' == ucByte)
-                answerParam(ucParam);
-            ucUartState = IDLE;
-            break;
-
-        case FLOAT_VALUE:
-            if (ucByte >= '0' && ucByte <= '9')
-            {
-                if (ucValueCount < MAX_VALUE_LENGTH)
-                    ucValue[ucValueCount++] = ucByte;
-            }
-            else
-            {
-                if (';' == ucByte)
-                {
-                    ucValue[ucValueCount] = '\0';
-                    setParam(ucParam, ucValue);
-                }
-                ucUartState = IDLE;
-            }
-            break;
-
-        case BUTTON_VALUE:
-            if ('0' == ucByte || '1' == ucByte)
-            {
-                ucValue[0] = ucByte;
-            }
-            else
-            {
-                if (';' == ucByte)
-                    setParam(ucParam, ucValue);
-                ucUartState = IDLE;
-            }
-            break;
+        case '@':
+            esUartState = TARGETTEMP;
         }
+        break;
+    case TARGETTEMP:
+        switch (ucByte)
+        {
+        case '@':
+            esUartState = TARGETKD;
+            break;
+        case '>':
+            setParam('T','u');
+            break;
+        case '<':
+            setParam('T','d');
+            break;
+        default:
+            esUartState=IDLE;
+        }
+        break;
+    case TARGETKD:
+        switch (ucByte)
+        {
+        case '@':
+            esUartState = TARGETKI;
+            break;
+        case '>':
+            setParam('D','u');
+            break;
+        case '<':
+            setParam('D','d');
+            break;
+        default:
+            esUartState=IDLE;
+        }
+        break;
+    case TARGETKI:
+        switch (ucByte)
+        {
+        case '@':
+            esUartState = TARGETKP;
+            break;
+        case '>':
+            setParam('I','u');
+            break;
+        case '<':
+            setParam('I','d');
+            break;
+        default:
+            esUartState=IDLE;
+        }
+        break;
+    case TARGETKP:
+        switch (ucByte)
+        {
+        case '@':
+            esUartState = IDLE;
+            break;
+        case '>':
+            setParam('P','u');
+            break;
+        case '<':
+            setParam('P','d');
+            break;
+        default:
+            esUartState=GETDUTY;
+        }
+        break;
+    
+    case GETDUTY:
+        switch (ucByte)
+        {
+        case '@':
+        case '>':
+        case '<':
+            esUartState = IDLE;
+            break;
+        default:
+            esUartState=IDLE;
+        }
+        break;
+    
+    case READY:
+        switch (ucByte)
+        {
+        case 'g':
+            esUartState = GET;
+            break;
+
+        case 's':
+            esUartState = SET;
+            break;
+
+        default:
+            esUartState = IDLE;
+        }
+        break;
+
+    case GET:
+        if ('t' == ucByte || 'c' == ucByte || 'a' == ucByte)
+        {
+            ucParam = ucByte;
+            esUartState = PARAM;
+        }
+        else
+            esUartState = IDLE;
+        break;
+
+    case SET:
+        if ('t' == ucByte || 'a' == ucByte || 'c' == ucByte)
+        {
+            ucParam = ucByte;
+            ucValueCount = 0;
+            esUartState = FLOAT_VALUE;
+        }
+        else if ('b' == ucByte)
+        {
+            ucParam = ucByte;
+            esUartState = BUTTON_VALUE;
+        }
+        else
+            esUartState = IDLE;
+        break;
+
+    case PARAM:
+        if (';' == ucByte)
+            answerParam(ucParam);
+        esUartState = IDLE;
+        break;
+
+    case FLOAT_VALUE:
+        if (ucByte >= '0' && ucByte <= '9')
+        {
+            if (ucValueCount < MAX_VALUE_LENGTH)
+                ucValue[ucValueCount++] = ucByte;
+        }
+        else
+        {
+            if (';' == ucByte)
+            {
+                ucValue[ucValueCount] = '\0';
+                setParam(ucParam, ucValue);
+            }
+            esUartState = IDLE;
+        }
+        break;
+
+    case BUTTON_VALUE:
+        if ('0' == ucByte || '1' == ucByte)
+        {
+            ucValue[0] = ucByte;
+        }
+        else
+        {
+            if (';' == ucByte)
+                setParam(ucParam, ucValue);
+            esUartState = IDLE;
+        }
+        break;
+    }
+}
+
+enum state getState(void){
+    return esUartState;
 }

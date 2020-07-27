@@ -85,6 +85,8 @@ void pid_setKd(float fKd);
 /* ************************************************** */
 float pid_getKd(void);
 
+void  setSetValue(float fValue);
+float getSetValue();
 
 /* ************************************************** */
 /* Method name:        pid_updateData                 */
@@ -97,7 +99,7 @@ float pid_getKd(void);
 /*                     control reference              */
 /* Output params:      float: New Control effort     */
 /* ************************************************** */
-float pidUpdateData(float fSensorValue, float fReferenceValue);
+float pidUpdateData(float fSensorValue);
 
 
 #endif /* SOURCES_CONTROLLER_PID_H_ */

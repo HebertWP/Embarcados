@@ -10,6 +10,7 @@
 #include "pid.h"
 
 pid_data_type pidConfig;
+float fSetValue=0;
 
 /* ************************************************ */
 /* Method name:        pid_init                     */
@@ -104,6 +105,12 @@ float pid_getKd(void)
 	return pidConfig.fKd;
 }
 
+void  setSetValue(float fValue){
+	fSetValue=fValue;
+}
+float getSetValue(){
+	return fSetValue;
+};
 
 /* ************************************************** */
 /* Method name:        pid_updateData                 */
@@ -112,11 +119,9 @@ float pid_getKd(void)
 /*                     value                          */
 /* Input params:       fSensorValue: Value read from  */
 /*                     the sensor                     */
-/*                     fReferenceValue: Value used as */
-/*                     control reference              */
 /* Output params:      float: New Control effort     */
 /* ************************************************** */
-float pidUpdateData(float fSensorValue, float fSetValue)
+float pidUpdateData(float fSensorValue)
 {
 	float fError, fDifference, fOut;
 	static int iStaturationFlag;
