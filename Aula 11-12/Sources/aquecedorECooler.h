@@ -44,6 +44,15 @@ void heater_init(void);
 /* ************************************************ */
 void coolerfan_PWMDuty(float fCoolerDuty);
 
+
+/* ************************************************ */
+/* Method name:        getCoolerDuty                */
+/* Method description: get the coolerfan speed		*/
+/* Output params:      float 0 to 1 representing    */
+/*                     speed in %                   */
+/* ************************************************ */
+float getCoolerDuty();
+
 /* ************************************************ */
 /* Method name:        heater_PWMDuty	            */
 /* Method description: set the heater power			*/
@@ -53,5 +62,6 @@ void coolerfan_PWMDuty(float fCoolerDuty);
 /* Output params:      n/a                          */
 /* ************************************************ */
 void heater_PWMDuty(float fHeaterDuty);
+
 
 #endif

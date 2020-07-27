@@ -4,7 +4,7 @@
 /*                   used to control the CoolerFan and Header        */
 /* Author name:      Caio Villela, Hebert Wandick                    */
 /* Creation date:    21/apr/2020                                     */
-/* Revision date:    24/apr/2020                                     */
+/* Revision date:    26/jul/2020                                     */
 /* ***************************************************************** */
 
 /*my  includes*/
@@ -76,6 +76,8 @@ void heater_init(void){
     heater_PWMDuty(0);
 }
 
+float fSaveCoolerDuty;//aux varieble to use in getCoolerDuty
+
 /* ************************************************ */
 /* Method name:        coolerfan_PWMDuty            */
 /* Method description: set the coolerfan speed		*/
@@ -89,6 +91,19 @@ void coolerfan_PWMDuty(float fCoolerDuty){
 	SET_BITS(TPM1_CNT,0x00,16,0);
 
 	SET_BITS(COOLERFAN_TPMx_CnV, (unsigned int)(fCoolerDuty*49), 16, 0);
+
+    /*save state*/
+    fSaveCoolerDuty= fCoolerDuty;
+}
+
+/* ************************************************ */
+/* Method name:        getCoolerDuty                */
+/* Method description: get the coolerfan speed		*/
+/* Output params:      float 0 to 1 representing    */
+/*                     speed in %                   */
+/* ************************************************ */
+float getCoolerDuty(){
+    return fSaveCoolerDuty;
 }
 
 /* ************************************************ */
