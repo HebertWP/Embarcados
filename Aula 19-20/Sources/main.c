@@ -70,7 +70,7 @@ int main(void)
 
 	while (true)
 	{
-		/*read buttons and put on staemachine*/
+		/*read buttons and put on statemachine*/
 		if (!press)
 		{
 			if (readButton(1))
