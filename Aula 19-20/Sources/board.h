@@ -160,4 +160,17 @@
 
 /*		END OF TERMPERATURE SENSOR DIODE DEFINITONS */
 
+/*state machine constants*/
+#define IDLE '0'
+#define READY '1'
+#define GET '2'
+#define SET '3'
+#define PARAM '4'
+#define FLOAT_VALUE '5'
+#define BUTTON_VALUE '6'
+#define SET_VALUE '7'
+
+#define MAX_VALUE_LENGTH 3
+/*end of state machine constants*/
+
 #endif /* SOURCES_BOARD_H_ */

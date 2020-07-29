@@ -11,11 +11,11 @@
 /*my includes*/
 #include "communicationStateMachine.h"
 #include "util.h"
+#include "board.h"
 
-#define MAX_VALUE_LENGTH 3
-enum state esUartState = IDLE;
-
-unsigned char ucValueCount;
+unsigned char ucUartState = IDLE;
+unsigned char ucValueCount = 0;
+int iCommaPos = 0, iAuxCommaPos = 0, iFlag = 0;
 
 /* ************************************************ */
 /* Method name:        processByteCommunication     */
@@ -171,6 +171,7 @@ void processByteCommunication(unsigned char ucByte)
         else if ('b' == ucByte)
         {
             ucParam = ucByte;
+            iFlag = 0;
             esUartState = BUTTON_VALUE;
         }
         else
@@ -184,35 +185,44 @@ void processByteCommunication(unsigned char ucByte)
         break;
 
     case FLOAT_VALUE:
-        if (ucByte >= '0' && ucByte <= '9')
-        {
-            if (ucValueCount < MAX_VALUE_LENGTH)
-                ucValue[ucValueCount++] = ucByte;
-        }
-        else
-        {
-            if (';' == ucByte)
+            if (ucByte >= '0' && ucByte <= '9')
             {
-                ucValue[ucValueCount] = '\0';
-                setParam(ucParam, ucValue);
+                if (ucValueCount < MAX_VALUE_LENGTH)
+                {
+                    ucValue[ucValueCount++] = ucByte;
+                    iAuxCommaPos ++;
+                }
             }
-            esUartState = IDLE;
-        }
-        break;
+            else if (ucByte == ','){
+                iCommaPos = iAuxCommaPos;
+            }
+
+            else          
+            {
+                if (';' == ucByte)
+                {
+                    ucValue[ucValueCount] = '\0';
+                    setParam(ucParam, ucValue, iCommaPos);
+                }
+                ucUartState = IDLE;
+            }
+            break;
 
     case BUTTON_VALUE:
-        if ('0' == ucByte || '1' == ucByte)
-        {
-            ucValue[0] = ucByte;
-        }
-        else
-        {
-            if (';' == ucByte)
-                setParam(ucParam, ucValue);
-            esUartState = IDLE;
-        }
-        break;
-    }
+            if (iFlag == 0 ){
+                if ('0' == ucByte || '1' == ucByte)
+                {
+                    iFlag++;
+                    ucValue[0] = ucByte;
+                }
+            }
+            else
+            {
+                if (';' == ucByte)
+                    setParam(ucParam, ucValue, iCommaPos);
+                
+                ucUartState = IDLE;
+            }
 }
 
 enum state getState(void)

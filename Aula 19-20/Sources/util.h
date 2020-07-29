@@ -13,6 +13,17 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+
+/* ************************************************** */
+/* Method name:        floatToUChar     		      */
+/* Method description: converts 4 unsiged chars to 1  */
+/* 					           float  		          */
+/* Input params:       ucValue array character to be  */
+/*					           converted 			  */
+/* Output params:      1 float                        */
+/* ****************************************************/
+float uCharToFloat(unsigned char *ucValue, int iCommaPos)
+
 /* ************************************************ */
 /* Method name:        util_genDelay088us           */
 /* Method description: generates ~ 088 micro sec    */

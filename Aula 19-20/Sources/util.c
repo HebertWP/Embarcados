@@ -143,7 +143,7 @@ void util_genDelay100ms(void)
 /*union variable used for converting unsigned chars/floats */
 typedef union {
     unsigned char ucBytes[4];
-    float fReal;
+    int iReal;
 } floatUCharType;
 
 /* ************************************************** */
@@ -152,17 +152,23 @@ typedef union {
 /* 					           float  		          */
 /* Input params:       ucValue array character to be  */
 /*					           converted 			  */
+/*                     iCommaPos, position of comma   */
+/*                      float conversion              */
 /* Output params:      1 float                        */
 /* ****************************************************/
-float uCharToFloat(unsigned char *ucValue)
+float uCharToFloat(unsigned char *ucValue, int iCommaPos)
 {
+    float fFloat;
+
     floatUCharType varFloatUChar;
     int iI;
     for (iI = 0; iI < 4; iI++)
     {
         varFloatUChar.ucBytes[iI] = ucValue[iI];
     }
-    return (varFloatUChar.fReal);
+
+    fFLoat = varFloatUChar.iReal / pow(10, 4 - iCommaPos)
+    return (fFloat);
 }
 
 /* ************************************************** */
@@ -179,6 +185,7 @@ unsigned char *floatToUChar(float fReceived)
     varFloatUChar.fReal = fReceived;
     return (varFloatUChar.ucBytes);
 }
+
 
 bool bLock = false; /* auv varible to look the keys */
 
@@ -210,25 +217,25 @@ void setParam(unsigned char ucParam, unsigned char *ucByte)
         break;
     case 'a':
         /*set resitor power*/
-        fHeader = uCharToFloat(ucByte);
+        fHeader = uCharToFloat(ucByte, 4);
         fHeader = (fHeader > 50) ? 0.5 : fHeader / 100;
         heater_PWMDuty(fHeader);
         break;
     case 'i':
         /*set Ki in PID*/
-        pid_setKi(uCharToFloat(ucByte));
+        pid_setKi(uCharToFloat(ucByte, 4));
         break;
     case 'p':
         /*set Kp in PID*/
-        pid_setKi(uCharToFloat(ucByte));
+        pid_setKi(uCharToFloat(ucByte, 4));
         break;
     case 'd':
         /*set Kd in PID*/
-        pid_setKi(uCharToFloat(ucByte));
+        pid_setKi(uCharToFloat(ucByte, 4));
         break;
     case 's':
         /*set target temperature */
-        pid_setSetValue(uCharToFloat(ucByte));
+        pid_setSetValue(uCharToFloat(ucByte, 4));
 
     case 'T':
         if (!bLock)
@@ -419,7 +426,7 @@ void setScreen()
         fTempReq = ((int)fTempReq) / 10;
         ucAux[9] = (((int)fTempReq) % 10) + 48;
 
-        ucAux[11] = 'º';
+        ucAux[11] = 'ï¿½';
         ucAux[12] = 'C';
         ucAux[13] = '\0';
 
@@ -556,7 +563,7 @@ void setScreen()
         fTempNow = fTempNow / 10;
         ucAux[11] = (((int)fTempNow) % 10) + 48;
 
-        ucAux[12] = 'º';
+        ucAux[12] = 'ï¿½';
         ucAux[13] = 'C';
         ucAux[14] = '\0';
 
