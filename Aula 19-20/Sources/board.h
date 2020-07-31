@@ -169,6 +169,13 @@
 #define FLOAT_VALUE '5'
 #define BUTTON_VALUE '6'
 #define SET_VALUE '7'
+#define TARGETTEMP '8'
+#define TARGETKD '9'
+#define TARGETKI '10'
+#define TARGETKP '11'
+#define DUTYHEATER '12'
+#define DUTYCOOLER '13'
+
 
 #define MAX_VALUE_LENGTH 3
 /*end of state machine constants*/

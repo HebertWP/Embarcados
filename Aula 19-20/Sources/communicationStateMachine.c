@@ -179,6 +179,7 @@ void processByteCommunication(unsigned char ucByte)
         break;
 
     case PARAM:
+    
         if (';' == ucByte)
             answerParam(ucParam);
         esUartState = IDLE;
