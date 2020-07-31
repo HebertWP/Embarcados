@@ -20,6 +20,8 @@
 #include "lptmr.h"
 
 bool bFlag = false;
+unsigned char ucTempNow = 't';
+
 /* ************************************************  */
 /* Method name:        main_cyclicExecuteIsr         */
 /* Method description: lets program continue running */
@@ -98,8 +100,10 @@ int main(void)
 		/*PID LOOP*/
 		if (bFlag)
 		{
-			coolerfan_PWMDuty(pidUpdateData(getTemp())/100);
+			heater_PWMDuty(pidUpdateData(getTemp())/100);
 			bFlag = false;
+			if(bPidConfig)
+				answerParam(ucTempNow)
 			/*Updade Screen*/
 			setScreen();
 		}

@@ -16,6 +16,7 @@
 unsigned char ucUartState = IDLE;
 unsigned char ucValueCount = 0;
 int iCommaPos = 0, iAuxCommaPos = 0, iFlag = 0;
+bool bPidConfig = 0;
 
 /* ************************************************ */
 /* Method name:        processByteCommunication     */
@@ -45,7 +46,7 @@ void processByteCommunication(unsigned char ucByte)
         switch (ucByte)
         {
         case '@':
-            esUartState = TARGETKD;
+            esUartState = TARGETKP;
             break;
         case '>':
             setParam('T', "u");
@@ -57,7 +58,26 @@ void processByteCommunication(unsigned char ucByte)
             esUartState = IDLE;
         }
         break;
+    
+    case TARGETKP:
+        switch (ucByte)
+        {
+        case '@':
+            esUartState = TARGETKD;
+            break;
+        case '>':
+            setParam('P', "u");
+            break;
+        case '<':
+            setParam('P', "d");
+            break;
+        default:
+            esUartState = IDLE;
+        }
+        break;
+
     case TARGETKD:
+        bPidConfig = true;
         switch (ucByte)
         {
         case '@':
@@ -77,7 +97,7 @@ void processByteCommunication(unsigned char ucByte)
         switch (ucByte)
         {
         case '@':
-            esUartState = TARGETKP;
+            esUartState = DUTYHEATER;
             break;
         case '>':
             setParam('I', "u");
@@ -89,40 +109,26 @@ void processByteCommunication(unsigned char ucByte)
             esUartState = IDLE;
         }
         break;
-    case TARGETKP:
+    
+    case DUTYCOOLER:
+        bPidConfig = false;
         switch (ucByte)
         {
         case '@':
             esUartState = DUTYHEATER;
             break;
         case '>':
-            setParam('P', "u");
+            setParam('C', "u");
             break;
         case '<':
-            setParam('P', "d");
-            break;
-        default:
-            esUartState = IDLE;
-        }
-        break;
-    case DUTYHEATER:
-        switch (ucByte)
-        {
-        case '@':
-            esUartState = DUTYCOOLER;
-            break;
-        case '>':
-            setParam('H', "u");
-            break;
-        case '<':
-            setParam('H', "d");
+            setParam('C', "d");
             break;
         default:
             esUartState = IDLE;
         }
         break;
 
-    case DUTYCOOLER:
+    case DUTYHEATER:
         esUartState = IDLE;
         break;
 
@@ -179,7 +185,6 @@ void processByteCommunication(unsigned char ucByte)
         break;
 
     case PARAM:
-    
         if (';' == ucByte)
             answerParam(ucParam);
         esUartState = IDLE;

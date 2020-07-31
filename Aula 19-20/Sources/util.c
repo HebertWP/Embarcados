@@ -237,6 +237,19 @@ void setParam(unsigned char ucParam, unsigned char *ucByte)
         /*set target temperature */
         pid_setSetValue(uCharToFloat(ucByte, 4));
 
+    case 'C':
+        if (!bLock)
+            switch (ucByte[0])
+            {
+            case 'u':
+                coolerfan_PWMDuty(getCoolerDuty() + 0.05);
+                break;
+            case 'd':
+                coolerfan_PWMDuty(getCoolerDuty() - 0.05);
+                break;
+            }
+        break;
+
     case 'T':
         if (!bLock)
             switch (ucByte[0])
@@ -328,7 +341,6 @@ void answerParam(unsigned char ucParam)
         ucValue = floatToUChar(fTempNow);
         for (iI = 0; iI < 4; iI++)
             debug_putchar(ucValue[iI]);
-
         break;
 
     case 'c':

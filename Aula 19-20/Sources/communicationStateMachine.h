@@ -17,6 +17,7 @@
 /* ************************************************ */
 void processByteCommunication(unsigned char ucByte);
 
+extern bool bPidConfig;
 
 enum state{
     IDLE,
