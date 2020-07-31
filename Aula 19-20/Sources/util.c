@@ -25,8 +25,8 @@
 #include "lcd.h"
 #include "pid.h"
 
-float fColler = 0;
-float fHeader = 0;
+float fCooler = 0;
+float fHeater = 0;
 /* ************************************************ */
 /* Method name:        util_genDelay088us           */
 /* Method description: generates ~ 088 micro sec    */
@@ -200,7 +200,7 @@ bool bLock = false; /* auv varible to look the keys */
 /* ************************************************ */
 void setParam(unsigned char ucParam, unsigned char *ucByte)
 {
-    float fHeader;
+    float fHeater;
     switch (ucParam)
     {
     case 'b':
@@ -215,11 +215,11 @@ void setParam(unsigned char ucParam, unsigned char *ucByte)
             bLock = true;
         }
         break;
-    case 'a':
+    case 'c':
         /*set resitor power*/
-        fHeader = uCharToFloat(ucByte, 4);
-        fHeader = (fHeader > 50) ? 0.5 : fHeader / 100;
-        heater_PWMDuty(fHeader);
+        fCooler = uCharToFloat(ucByte, 4);
+        fCooler = (fCooler > 50) ? 0.5 : fCooler / 100;
+        coolerfan_PWMDuty(fCooler);
         break;
     case 'i':
         /*set Ki in PID*/
@@ -346,7 +346,7 @@ void answerParam(unsigned char ucParam)
     case 'c':
         /* return the cooler duty cycle*/
         fCooler = getCoolerDuty();
-        ucValue = floatToUChar(fColler);
+        ucValue = floatToUChar(fCooler);
         for (iI = 0; iI < 4; iI++)
             debug_putchar(ucValue[iI]);
 
@@ -517,14 +517,14 @@ void setScreen()
         ucAux[8] = ' ';
         ucAux[9] = ':';
 
-        fHeader = getHeaterDuty();
-        fHeader = fHeader * 100;
+        fHeater = getHeaterDuty();
+        fHeater = fHeater * 100;
 
-        ucAux[12] = (((int)fHeader) % 10) + 48;
-        fHeader = ((int)fHeader) / 10;
-        ucAux[11] = (((int)fHeader) % 10) + 48;
-        fHeader = ((int)fHeader) / 10;
-        ucAux[10] = (((int)fHeader) % 10) + 48;
+        ucAux[12] = (((int)fHeater) % 10) + 48;
+        fHeater = ((int)fHeater) / 10;
+        ucAux[11] = (((int)fHeater) % 10) + 48;
+        fHeater = ((int)fHeater) / 10;
+        ucAux[10] = (((int)fHeater) % 10) + 48;
 
         ucAux[13] = ' ';
         ucAux[14] = '%';
@@ -541,14 +541,14 @@ void setScreen()
         ucAux[5] = 'M';
         ucAux[6] = ' ';
 
-        fColler = getCoolerDuty();
-        fColler = fColler * 100;
+        fCooler = getCoolerDuty();
+        fCooler = fCooler * 100;
 
-        ucAux[9] = (((int)fColler) % 10) + 48;
-        fColler = ((int)fColler) / 10;
-        ucAux[8] = (((int)fColler) % 10) + 48;
-        fColler = ((int)fColler) / 10;
-        ucAux[7] = (((int)fColler) % 10) + 48;
+        ucAux[9] = (((int)fCooler) % 10) + 48;
+        fCooler = ((int)fCooler) / 10;
+        ucAux[8] = (((int)fCooler) % 10) + 48;
+        fCooler = ((int)fCooler) / 10;
+        ucAux[7] = (((int)fCooler) % 10) + 48;
 
         ucAux[10] = ' ';
         ucAux[11] = '%';
