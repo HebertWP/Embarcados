@@ -2,9 +2,10 @@
 /* File name:        pid.h                                           */
 /* File description: Header file containing the functions/methods    */
 /*                   interfaces for handling the PID                 */
-/* Author name:      julioalvesMS, IagoAF, rBacurau                  */
+/* Author name:      julioalvesMS, IagoAF, rBacurau, Hebert Wandick  */
+/*					 Caio Villela					                 */
 /* Creation date:    21jun2018                                       */
-/* Revision date:    27mai2020                                       */
+/* Revision date:    01gos2020                                       */
 /* ***************************************************************** */
 
 #ifndef SOURCES_CONTROLLER_PID_H_
