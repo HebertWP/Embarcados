@@ -267,10 +267,10 @@ void setParam(unsigned char ucParam, unsigned char *ucByte)
             switch (ucByte[0])
             {
             case 'u':
-                pid_setKd(pid_getKd() + 1);
+                pid_setKd(pid_getKd() + 2);
                 break;
             case 'd':
-                pid_setKd(pid_getKd() - 1);
+                pid_setKd(pid_getKd() - 2);
                 break;
             }
         break;
@@ -279,10 +279,10 @@ void setParam(unsigned char ucParam, unsigned char *ucByte)
             switch (ucByte[0])
             {
             case 'u':
-                pid_setKi(pid_getKi() + 1);
+                pid_setKi(pid_getKi() + 2);
                 break;
             case 'd':
-                pid_setKi(pid_getKi() - 1);
+                pid_setKi(pid_getKi() - 2);
                 break;
             }
         break;
@@ -292,10 +292,10 @@ void setParam(unsigned char ucParam, unsigned char *ucByte)
             switch (ucByte[0])
             {
             case 'u':
-                pid_setKp(pid_getKp() + 1);
+                pid_setKp(pid_getKp() + 2);
                 break;
             case 'd':
-                pid_setKp(pid_getKp() - 1);
+                pid_setKp(pid_getKp() - 2);
                 break;
             }
         break;
@@ -317,7 +317,7 @@ void setParam(unsigned char ucParam, unsigned char *ucByte)
 /* ************************************************ */
 
 void answerParam(unsigned char ucParam)
-{
+{  
     static float fTempNow = 0;
     static float fTempReq = 0;
     static float fKd = 0;
@@ -410,6 +410,16 @@ void answerParam(unsigned char ucParam)
 /* ************************************************ */
 void setScreen()
 {
+    static int iSendTemp= 0;
+    if(iSendTemp == 10){
+        iSendTemp = 0;
+        answerParam(ucTempNow);
+    }
+    else
+    {
+        bSendTemp++;
+    }
+    
     enum state esState = getState();
     static float fTempNow = 0;
     static float fTempReq = 0;
@@ -420,6 +430,10 @@ void setScreen()
     static float fCooler = 0;
 
     static unsigned char ucAux[16];
+    if(bLock)
+        lcd_writeText(1,"TEC. DESBLOQ");
+    else
+        lcd_writeText(1,"")
     switch (esState)
     {
     case TARGETTEMP:
@@ -438,7 +452,7 @@ void setScreen()
         fTempReq = ((int)fTempReq) / 10;
         ucAux[9] = (((int)fTempReq) % 10) + 48;
 
-        ucAux[11] = '�';
+        ucAux[11] = '^';
         ucAux[12] = 'C';
         ucAux[13] = '\0';
 
@@ -451,17 +465,25 @@ void setScreen()
         ucAux[3] = ' ';
 
         fKd = pid_getKd();
-        fKd = fKd * 100;
-
-        ucAux[8] = (((int)fKd) % 10) + 48;
+        
+        fKd = fKd * 1000;
+        ucAux[9] = (((int)fKd) % 10) + 48;
+        
         fKd = ((int)fKd) / 10;
-        ucAux[7] = (((int)fKd) % 10) + 48;
-        ucAux[6] = '.';
+        ucAux[8] = (((int)fKd) % 10) + 48;
+        
+        ucAux[7] = '.';
+        
+        fKd = ((int)fKd) / 10;
+        ucAux[6] = (((int)fKd) % 10) + 48;
+        
+        fKd = ((int)fKd) / 10;
         ucAux[5] = (((int)fKd) % 10) + 48;
+        
         fKd = ((int)fKd) / 10;
         ucAux[4] = (((int)fKd) % 10) + 48;
 
-        ucAux[9] = '\0';
+        ucAux[10] = '\0';
         lcd_writeText(0, ucAux);
         break;
     case TARGETKI:
@@ -471,17 +493,25 @@ void setScreen()
         ucAux[3] = ' ';
 
         fKi = pid_getKi();
-        fKi = fKi * 100;
 
-        ucAux[8] = (((int)fKi) % 10) + 48;
+        fKi = fKi * 1000;
+        ucAux[9] = (((int)fKi) % 10) + 48;
+
         fKi = ((int)fKi) / 10;
-        ucAux[7] = (((int)fKi) % 10) + 48;
-        ucAux[6] = '.';
+        ucAux[8] = (((int)fKi) % 10) + 48;
+
+        ucAux[7] = '.';
+
+        fKi = ((int)fKi) / 10;
+        ucAux[6] = (((int)fKi) % 10) + 48;
+
+        fKi = ((int)fKi) / 10;
         ucAux[5] = (((int)fKi) % 10) + 48;
+
         fKi = ((int)fKi) / 10;
         ucAux[4] = (((int)fKi) % 10) + 48;
 
-        ucAux[9] = '\0';
+        ucAux[10] = '\0';
         lcd_writeText(0, ucAux);
         break;
 
@@ -514,8 +544,8 @@ void setScreen()
         ucAux[5] = 'T';
         ucAux[6] = 'O';
         ucAux[7] = 'R';
-        ucAux[8] = ' ';
-        ucAux[9] = ':';
+        ucAux[8] = ':';
+        ucAux[9] = ' ';
 
         fHeater = getHeaterDuty();
         fHeater = fHeater * 100;
@@ -575,9 +605,9 @@ void setScreen()
         fTempNow = fTempNow / 10;
         ucAux[11] = (((int)fTempNow) % 10) + 48;
 
-        ucAux[12] = '�';
-        ucAux[13] = 'C';
-        ucAux[14] = '\0';
+        ucAux[13] = '^';
+        ucAux[14] = 'C';
+        ucAux[15] = '\0';
 
         lcd_writeText(0, ucAux);
         break;

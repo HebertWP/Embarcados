@@ -65,6 +65,7 @@ int main(void)
 
 	/*init PID with interruptions*/
 	pid_init();
+	pid_setSetValue(20);
 	tc_installLptmr0(100000, main_cyclicExecuteIsr);
 
 	/*Updade Screen*/
@@ -102,8 +103,6 @@ int main(void)
 		{
 			heater_PWMDuty(pidUpdateData(getTemp())/100);
 			bFlag = false;
-			if(bPidConfig)
-				answerParam(ucTempNow)
 			/*Updade Screen*/
 			setScreen();
 		}
