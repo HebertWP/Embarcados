@@ -9,15 +9,16 @@
 /* ***************************************************************** */
 
 /*my includes*/
-#include "communicationStateMachine.h"
 #include "util.h"
+#include "communicationStateMachine.h"
 #include "board.h"
 
 unsigned char ucUartState = IDLE;
 unsigned char ucValueCount = 0;
 int iCommaPos = 0, iAuxCommaPos = 0, iFlag = 0;
-bool bPidConfig = 0;
+bool bPidConfig = false;
 
+enum state esUartState = IDLE;
 /* ************************************************ */
 /* Method name:        processByteCommunication     */
 /* Method description: Handle what to do by 		*/

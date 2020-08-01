@@ -13,6 +13,7 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+typedef enum {false, true} bool;
 
 /* ************************************************** */
 /* Method name:        floatToUChar     		      */
@@ -22,7 +23,7 @@
 /*					           converted 			  */
 /* Output params:      1 float                        */
 /* ****************************************************/
-float uCharToFloat(unsigned char *ucValue, int iCommaPos)
+float uCharToFloat(unsigned char *ucValue, int iCommaPos);
 
 /* ************************************************ */
 /* Method name:        util_genDelay088us           */
