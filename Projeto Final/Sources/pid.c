@@ -5,7 +5,7 @@
 /* Author name:      julioalvesMS, IagoAF, rBacurau, Hebert Wandick  */
 /*					 Caio Villela					                 */
 /* Creation date:    21jun2018                                       */
-/* Revision date:    01gos2020                                       */
+/* Revision date:    01ago2020                                       */
 /* ***************************************************************** */
 
 #include "pid.h"
@@ -113,7 +113,7 @@ float pid_getKd(void)
 /* Output params:      n/a			                  */
 /* ************************************************** */
 void  pid_setSetValue(float fValue){
-	fSetValue=fValue;
+	fSetValue=(fValue > 77 ) ? 77: fValue;/*limit temperature in 77*/
 }
 
 /* ************************************************** */
