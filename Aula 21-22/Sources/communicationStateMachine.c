@@ -33,51 +33,51 @@ void processByteCommunication(unsigned char ucByte)
     static unsigned char ucValue[MAX_VALUE_LENGTH + 2];
     switch (esUartState)
     {
-    case IDLE:
+    case IDLE: /*wait for UART comand*/
         switch (ucByte)
         {
-        case '#':
+        case '#': /*UART Comand arive */
             esUartState = READY;
             break;
-        case '@':
+        case '@':/*progrming via Local interface*/
             esUartState = TARGETTEMP;
         }
         break;
-    case TARGETTEMP:
+    case TARGETTEMP:/*condiguring controled temperature*/
         switch (ucByte)
         {
-        case '@':
+        case '@':/*go to next menu*/
             esUartState = TARGETKP;
             break;
-        case '>':
+        case '>':/*going up*/
             setParam('T', "u");
             break;
-        case '<':
+        case '<':/*going dow*/
             setParam('T', "d");
             break;
         default:
-            esUartState = IDLE;
+            esUartState = IDLE;/*some one send comand via uart in same time, wi back idle state, before acet nem orders */
         }
         break;
 
-    case TARGETKP:
+    case TARGETKP:/*set KP*/
         switch (ucByte)
         {
-        case '@':
+        case '@':/*next menu */
             esUartState = TARGETKD;
             break;
-        case '>':
+        case '>':/*up*/
             setParam('P', "u");
             break;
-        case '<':
+        case '<':/*dow*/
             setParam('P', "d");
             break;
         default:
-            esUartState = IDLE;
+            esUartState = IDLE;/*some one send comand via uart in same time, wi back idle state, before acet nem orders */
         }
         break;
 
-    case TARGETKD:
+    case TARGETKD:/*same logic in here*/
         bPidConfig = true;
         switch (ucByte)
         {
@@ -136,16 +136,16 @@ void processByteCommunication(unsigned char ucByte)
     case READY:
         switch (ucByte)
         {
-        case 'g':
+        case 'g':/*get infamation */
             esUartState = GET;
             break;
 
-        case 's':
+        case 's':/*set varieble */
             esUartState = SET;
             break;
         case '@':
         case '<':
-        case '>':
+        case '>':/*case some on click on local inteface it will not interfere*/
             break;
         default:
             esUartState = IDLE;
@@ -155,19 +155,20 @@ void processByteCommunication(unsigned char ucByte)
     case GET:
         switch (ucByte)
         {
-        case 't':
-        case 'c':
-        case 'a':
-        case 'i':
-        case 'k':
-        case 'p':
-        case 'b':
+        case 't':/* temperature now*/
+        case 'c':/* cooler*/
+        case 'a':/* resistor*/
+        case 'i': /*ki*/
+        case 'd': /*kd*/
+        case 'p': /*kp*/
+        case 'b': /*botaão*/
+        case 's': /*temp to control*/
             ucParam = ucByte;
             esUartState = PARAM;
             break;
         case '@':
         case '<':
-        case '>':
+        case '>':/*case some on click on local inteface it will not interfere*/
             break;
         default:
             esUartState = IDLE;
@@ -178,16 +179,16 @@ void processByteCommunication(unsigned char ucByte)
     case SET:
         switch (ucByte)
         {
-        case 'a':
-        case 'i':
-        case 'p':
-        case 'd':
-        case 's':
+        case 'c': /*cooler*/
+        case 'i':/*ki*/
+        case 'd':/*kd*/
+        case 'p':/*Kp*/
+        case 's':/*Temp to control*/
             ucParam = ucByte;
             ucValueCount = 0;
             esUartState = FLOAT_VALUE;
             break;
-        case 'b':
+        case 'b':/*button*/
             ucParam = ucByte;
             iFlag = 0;
             esUartState = BUTTON_VALUE;

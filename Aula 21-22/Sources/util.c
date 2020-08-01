@@ -232,16 +232,16 @@ void setParam(unsigned char ucParam, unsigned char *ucByte)
     case 's':
         /*set target temperature */
         pid_setSetValue(uCharToFloat(ucByte, 100));
-
+    /*Upcase mean buttons entrace*/
     case 'C':
-        if (!bLock)
+        if (!bLock)/*check if it'not lock*/
             switch (ucByte[0])
             {
             case 'u':
-                coolerfan_PWMDuty(getCoolerDuty() + 0.05);
+                coolerfan_PWMDuty(getCoolerDuty() + 0.05);/*add 5%*/
                 break;
             case 'd':
-                coolerfan_PWMDuty(getCoolerDuty() - 0.05);
+                coolerfan_PWMDuty(getCoolerDuty() - 0.05);/*remove 5%*/
                 break;
             }
         break;
@@ -251,10 +251,10 @@ void setParam(unsigned char ucParam, unsigned char *ucByte)
             switch (ucByte[0])
             {
             case 'u':
-                pid_setSetValue(pid_getSetValue() + 1);
+                pid_setSetValue(pid_getSetValue() + 1);/*up 1 grau*/
                 break;
             case 'd':
-                pid_setSetValue(pid_getSetValue() - 1);
+                pid_setSetValue(pid_getSetValue() - 1);/*dou 2 grau*/
                 break;
             }
         break;
@@ -263,10 +263,10 @@ void setParam(unsigned char ucParam, unsigned char *ucByte)
             switch (ucByte[0])
             {
             case 'u':
-                pid_setKd(pid_getKd() + 2);
+                pid_setKd(pid_getKd() + 2);/*up 2 units*/
                 break;
             case 'd':
-                pid_setKd(pid_getKd() - 2);
+                pid_setKd(pid_getKd() - 2);/*dow 2 units*/
                 break;
             }
         break;
@@ -409,14 +409,14 @@ void setScreen()
     if (iSendTemp == 10)
     {
         iSendTemp = 0;
-        answerParam(ucTempNow);
+        answerParam(ucTempNow);/*send temperature information one time per second*/
     }
     else
     {
         iSendTemp++;
     }
 
-    enum state esState = getState();
+    enum state esState = getState();/*to now what to print, look the colors on state machine*/
     static float fTempNow = 0;
     static float fTempReq = 0;
     static float fKd = 0;
@@ -426,7 +426,7 @@ void setScreen()
     static float fCooler = 0;
 
     static unsigned char ucAux[16];
-    if (bLock)
+    if (bLock)/*print massage relate to look buttons*/
         lcd_writeText(1, "TEC. DESBLOQ");
     else
         lcd_writeText(1, "TEC. BLOQUEADO");
@@ -444,11 +444,11 @@ void setScreen()
             ucAux[8] = ':';
 
             fTempReq = pid_getSetValue();
-            ucAux[10] = (((int)fTempReq) % 10) + 48;
-            fTempReq = ((int)fTempReq) / 10;
+            ucAux[10] = (((int)fTempReq) % 10) + 48;/*add 48 because of asci table, where 0 is 48*/
+            fTempReq = ((int)fTempReq) / 10; /*get the next number*/
             ucAux[9] = (((int)fTempReq) % 10) + 48;
 
-            ucAux[11] = '^';
+            ucAux[11] = '^';/*testei no simulador online e o º não aparecia :( */
             ucAux[12] = 'C';
             ucAux[13] = '\0';
 
@@ -462,7 +462,8 @@ void setScreen()
 
             fKd = pid_getKd();
 
-            fKd = fKd * 1000;
+            /*ex 123.23*/
+            fKd = fKd * 1000;/*mesma logica do anterior*/
             ucAux[9] = (((int)fKd) % 10) + 48;
 
             fKd = ((int)fKd) / 10;
@@ -482,7 +483,7 @@ void setScreen()
             ucAux[10] = '\0';
             lcd_writeText(0, ucAux);
             break;
-        case TARGETKI:
+        case TARGETKI:/*same logic */
             ucAux[0] = 'K';
             ucAux[1] = 'I';
             ucAux[2] = ':';
@@ -582,7 +583,7 @@ void setScreen()
             lcd_writeText(0, ucAux);
             break;
 
-        default:
+        default: /*printa a tempertura em todos estado exto pelos descritos acima */
             ucAux[0] = 'T';
             ucAux[1] = 'E';
             ucAux[2] = 'M';
