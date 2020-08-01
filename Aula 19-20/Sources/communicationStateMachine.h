@@ -35,5 +35,13 @@ enum state{
     DUTYCOOLER,
 };
 
+/* ************************************************ */
+/* Method name:        getState                     */
+/* Method description: Return in witch state the    */
+/*                     state machine are            */
+/* Input params:       n/a                  		*/
+/* Output params:      enum state                   */
+/* ************************************************ */
 enum state getState();
+
 #endif

@@ -25,8 +25,6 @@
 #include "lcd.h"
 #include "pid.h"
 
-float fCooler = 0;
-float fHeater = 0;
 /* ************************************************ */
 /* Method name:        util_genDelay088us           */
 /* Method description: generates ~ 088 micro sec    */
@@ -200,7 +198,9 @@ bool bLock = false; /* auv varible to look the keys */
 /* ************************************************ */
 void setParam(unsigned char ucParam, unsigned char *ucByte)
 {
-    float fHeater;
+    static float fCooler = 0;
+    static float fHeater = 0;
+    
     switch (ucParam)
     {
     case 'b':
