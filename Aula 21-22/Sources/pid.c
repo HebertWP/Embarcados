@@ -2,9 +2,10 @@
 /* File name:        pid.c                                           */
 /* File description: This file has a couple of useful functions to   */
 /*                   control the implemented PID controller          */
-/* Author name:      julioalvesMS, IagoAF, rBacurau                  */
+/* Author name:      julioalvesMS, IagoAF, rBacurau, Hebert Wandick  */
+/*					 Caio Villela					                 */
 /* Creation date:    21jun2018                                       */
-/* Revision date:    27mai2020                                       */
+/* Revision date:    01gos2020                                       */
 /* ***************************************************************** */
 
 #include "pid.h"
