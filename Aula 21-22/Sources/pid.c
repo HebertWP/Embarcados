@@ -113,7 +113,7 @@ float pid_getKd(void)
 /* Output params:      n/a			                  */
 /* ************************************************** */
 void  pid_setSetValue(float fValue){
-	fSetValue=fValue;
+	fSetValue=( fValue > 77 ) ? 77 : fValue; /*max at 77 */
 }
 
 /* ************************************************** */
