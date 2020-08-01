@@ -185,13 +185,14 @@ void desligaLed(int iPin){
 }
 
 
-/**************************************************************/
-/* Method name:           readButton                          */
-/* Method description:    reads button value                  */
-/* Input params:          iPin, defines what pin is to be     */
-/*                        read.                               */
-/* Output params:         n/a                                 */
-/**************************************************************/
+/* **********************************************************/
+/* Methodname:         readButton                           */
+/* Method description: Esse metodo realiza a leitura de um  */
+/*                     botao em especifico                  */
+/* Inputparams:        iPin- Numero do botao a ser lido     */
+/* Outputparams:       0 caso seja lido nivel logico baixo  */
+/*                     1 caso seja lido nivel logico alto   */
+/************************************************************/ 
 
 int readButton(int iPin){
     int iInput; /*32 bit number showing the inputs*/
