@@ -13,6 +13,20 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+/*bool type*/
+typedef enum {false, true} bool;
+
+/* ************************************************** */
+/* Method name:        floatToUChar     		      */
+/* Method description: converts 6 unsiged chars to 1  */
+/* 					           float  		          */
+/* Input params:       ucValue array character to be  */
+/*					           converted 			  */
+/*                     frec high decimal unity        */
+/* Output params:      1 float                        */
+/* ****************************************************/
+float uCharToFloat(unsigned char *ucValue, float fRec);
+
 /* ************************************************ */
 /* Method name:        util_genDelay088us           */
 /* Method description: generates ~ 088 micro sec    */
@@ -78,5 +92,13 @@ void setParam(unsigned char ucParam, unsigned char *ucByte);
 /* ************************************************ */
 void answerParam(unsigned char ucParam);
 
+/* ************************************************ */
+/* Method name:        setScreen			        */
+/* Method description: print on lcd the current 	*/
+/*					   state  of the equipament     */
+/* Input params:       n/a							*/
+/* Output params:      n/a	 				        */
+/* ************************************************ */
+void setScreen();
 
 #endif /* UTIL_H */

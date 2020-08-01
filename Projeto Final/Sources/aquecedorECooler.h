@@ -1,11 +1,12 @@
 /* ***************************************************************** */
-/* File name:        lcd.c                                           */
-/* File description: file containing the implementation of functions */
-/*                   used to control the LCD display                 */
+/* File name:        aquecedorECooler.h                              */
+/* File description: Header file containing the functions needed to	 */
+/* 					 use heater and cooler                           */
 /* Author name:      Caio Villela, Hebert Wandick                    */
 /* Creation date:    10/apr/2020                                     */
-/* Revision date:    10/apr/2020                                     */
+/* Revision date:    26/jul/2020                                     */
 /* ***************************************************************** */
+
 #ifndef AQUECEDORECOOLER_H_
 #define AQUECEDORECOOLER_H_
 
@@ -43,6 +44,15 @@ void heater_init(void);
 /* ************************************************ */
 void coolerfan_PWMDuty(float fCoolerDuty);
 
+
+/* ************************************************ */
+/* Method name:        getCoolerDuty                */
+/* Method description: get the coolerfan speed		*/
+/* Output params:      float 0 to 1 representing    */
+/*                     speed in %                   */
+/* ************************************************ */
+float getCoolerDuty();
+
 /* ************************************************ */
 /* Method name:        heater_PWMDuty	            */
 /* Method description: set the heater power			*/
@@ -52,5 +62,13 @@ void coolerfan_PWMDuty(float fCoolerDuty);
 /* Output params:      n/a                          */
 /* ************************************************ */
 void heater_PWMDuty(float fHeaterDuty);
+
+/* ************************************************ */
+/* Method name:        getHeaterDuty                */
+/* Method description: get the heater power use 	*/
+/* Output params:      float (0 to 1) representing  */
+/*                     power use in %               */
+/* ************************************************ */
+float getHeaterDuty();
 
 #endif

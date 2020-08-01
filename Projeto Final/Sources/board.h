@@ -4,20 +4,19 @@
 /*                     of the peripheral board for the ES670 hardware*/
 /*                                                                   */
 /* Author name:      Hebert Wandick / Caio Villela                   */
-/* Creation date:    21bri2020                                      */
-/* Revision date:    21abri2020                                      */
+/* Creation date:    24bri2020                                      */
+/* Revision date:    25abri2020                                      */
 /* ***************************************************************** */
 #ifndef SOURCES_BOARD_H_
 #define SOURCES_BOARD_H_
 
+
 /* system includes */
 #include <MKL25Z4.h>
 
-/*utilities*/
+/*                 General uC definitions                 */
+
 #define SET_BITS(OUTPUT, INPUT, NUM_BITS, TO_SHIFT)               (OUTPUT = ((OUTPUT & ( ~( (0XFFFFFFFFU  >> (32 - NUM_BITS)) << TO_SHIFT) ) ) | (INPUT << TO_SHIFT)) )
-
-/*         LED & BUTTON DEFINITIONS                 */
-
 
 #define BUTTON1_PORT_BASE_PNT   PORTA /* peripheral port base pointer */
 #define BUTTON1_GPIO_BASE_PNT   PTA   /* peripheral gpio base pointer */
@@ -59,22 +58,12 @@
 #define LED4_PIN	         (uint32_t) 5u
 #define LED4_MASK            0x20
 
-/*         END OF LED & BUTTON DEFINITIONS          */
 
+/* Clock gate control */
+#define  CGC_CLOCK_DISABLED     0x00U       /*Disable clock*/
+#define  CGC_CLOCK_ENABLED		0x01U       /*Enable clock*/
+#define PORT_A_TO_SHIFT			0x09U       /*Select byte to be turn on*/
 
-
-
-/*	TEMPERATURE SENSOR DIEODE DEFINITONS */
-#define THERMOMETER_PORT_BASE_PNT 	PORTE		/*peripheral port base pointer */
-#define THERMOMETER_GPIO_BASE_PNT 	PTE		/*peripheral gpio base pointer */
-#define THERMOMETER_PIN				21U		/*THERMOMETER PIN */
-#define THERMOMETER_DIR				(GPIO_INPUT << TERMOMETER_PIN)
-#define THERMOMETER_ALT				0X00u
-
-/*		END OF TERMPERATURE SENSOR DIODE DEFINITONS */
-
-
-/*           TPM DEFINITIONS                       */
 #define PRESCALER				0b110U		/*Prescale Factor Selection, 110 Divide by 64*/
 #define TPM_CLOCK				0b11U		/*TPM clock source select, 11 MCGIRCLK clock (32KHz)*/
 #define TPM_CMOD				0b01U		/*Clock Mode Selection *,01 LPTPM counter increments on every LPTPM counter clock */
@@ -92,8 +81,15 @@
 #define HEADER_TPMx_CnSC 		TPM1_C1SC   /*Header connect at TPM1 on CH 1*/
 #define HEADER_TPMx_CnV 		TPM1_C1V    /*Header connect at TPM1 on CH 1*/
 
-/*           END OF TPM DEFINITIONS                */
+/*                 General uC definitions                 */
 
+/* Clock gate control */
+#define  CGC_CLOCK_DISABLED         0x00U
+#define  CGC_CLOCK_ENABLED          0x01U
+
+/* GPIO input / output */
+#define GPIO_INPUT                  0x00U
+#define GPIO_OUTPUT                 0x01U
 
 /*                 LCD definitions                 */
 
@@ -155,44 +151,33 @@
 #define GPIO_OUTPUT                 0x01U
 
 
-#define PORT_A_TO_SHIFT			0x09U       /*Select byte to be turn on*/
+/*	TEMPERATURE SENSOR DIEODE DEFINITONS */
+#define THERMOMETER_PORT_BASE_PNT 	PORTE		/*peripheral port base pointer */
+#define THERMOMETER_GPIO_BASE_PNT 	PTE		/*peripheral gpio base pointer */
+#define THERMOMETER_PIN				21U		/*THERMOMETER PIN */
+#define THERMOMETER_DIR				(GPIO_INPUT << TERMOMETER_PIN)
+#define THERMOMETER_ALT				0X00u
+
+/*		END OF TERMPERATURE SENSOR DIODE DEFINITONS */
+
+/*state machine constants*/
+#define IDLE '0'
+#define READY '1'
+#define GET '2'
+#define SET '3'
+#define PARAM '4'
+#define FLOAT_VALUE '5'
+#define BUTTON_VALUE '6'
+#define SET_VALUE '7'
+#define TARGETTEMP '8'
+#define TARGETKD '9'
+#define TARGETKI '10'
+#define TARGETKP '11'
+#define DUTYHEATER '12'
+#define DUTYCOOLER '13'
 
 
-
-
-/*                  7 SEG DISPLAY DEFINITIONS                  */
-#define DISPLAY_BASE_PNT                PORTC                                   /* peripheral port base pointer */
-#define DISPLAY_GPIO_BASE_PNT           PTC                                     /* peripheral gpio base pointer */
-
-/*pins*/
-#define DISPLAY_A_PIN                   0U
-#define DISPLAY_B_PIN                   1U
-#define DISPLAY_C_PIN                   2U
-#define DISPLAY_D_PIN                   3U
-#define DISPLAY_E_PIN                   4U
-#define DISPLAY_F_PIN                   5U
-#define DISPLAY_G_PIN                   6U
-#define DISPLAY_DP_PIN                  7U
-
-#define DISPLAY_D1_PIN                  13U
-#define DISPLAY_D2_PIN                  12U
-#define DISPLAY_D3_PIN                  11U
-#define DISPLAY_D4_PIN                  10U
-
-/*directories*/
-#define DISPLAY_A_DIR                  (GPIO_OUTPUT << DISPLAY_A_PIN)
-#define DISPLAY_B_DIR                  (GPIO_OUTPUT << DISPLAY_B_PIN)
-#define DISPLAY_C_DIR                  (GPIO_OUTPUT << DISPLAY_C_PIN)
-#define DISPLAY_D_DIR                  (GPIO_OUTPUT << DISPLAY_D_PIN)
-#define DISPLAY_E_DIR                  (GPIO_OUTPUT << DISPLAY_E_PIN)
-#define DISPLAY_F_DIR                  (GPIO_OUTPUT << DISPLAY_F_PIN)
-#define DISPLAY_G_DIR                  (GPIO_OUTPUT << DISPLAY_G_PIN)
-#define DISPLAY_DP_DIR                 (GPIO_OUTPUT << DISPLAY_DP_PIN)
-
-#define DISPLAY_D1_DIR                 (GPIO_OUTPUT << DISPLAY_D1_PIN)
-#define DISPLAY_D2_DIR                 (GPIO_OUTPUT << DISPLAY_D2_PIN)
-#define DISPLAY_D3_DIR                 (GPIO_OUTPUT << DISPLAY_D3_PIN)
-#define DISPLAY_D4_DIR                 (GPIO_OUTPUT << DISPLAY_D4_PIN)
-/*                       END OF 7SEG DEFINITIONS                          */
+#define MAX_VALUE_LENGTH 5
+/*end of state machine constants*/
 
 #endif /* SOURCES_BOARD_H_ */
