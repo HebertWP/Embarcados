@@ -20,7 +20,6 @@
 #include "lptmr.h"
 
 bool bFlag = false;
-unsigned char ucTempNow = 't';
 
 /* ************************************************  */
 /* Method name:        main_cyclicExecuteIsr         */

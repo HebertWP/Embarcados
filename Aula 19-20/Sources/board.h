@@ -177,7 +177,7 @@
 #define DUTYCOOLER '13'
 
 
-#define MAX_VALUE_LENGTH 3
+#define MAX_VALUE_LENGTH 5
 /*end of state machine constants*/
 
 #endif /* SOURCES_BOARD_H_ */

@@ -9,13 +9,6 @@
 
 #include "pid.h"
 
-typedef struct pid_data_type {
-	float fKp, fKi, fKd;
-	float fError_previous;
-	float fError_sum;
-} pid_data_type;
-
-
 pid_data_type pidConfig;
 float fSetValue=0;
 

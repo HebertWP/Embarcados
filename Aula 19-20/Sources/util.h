@@ -13,17 +13,19 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+/*bool type*/
 typedef enum {false, true} bool;
 
 /* ************************************************** */
 /* Method name:        floatToUChar     		      */
-/* Method description: converts 4 unsiged chars to 1  */
+/* Method description: converts 6 unsiged chars to 1  */
 /* 					           float  		          */
 /* Input params:       ucValue array character to be  */
 /*					           converted 			  */
+/*                     frec high decimal unity        */
 /* Output params:      1 float                        */
 /* ****************************************************/
-float uCharToFloat(unsigned char *ucValue, int iCommaPos);
+float uCharToFloat(unsigned char *ucValue, float fRec);
 
 /* ************************************************ */
 /* Method name:        util_genDelay088us           */

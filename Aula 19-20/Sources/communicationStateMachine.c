@@ -30,7 +30,7 @@ void processByteCommunication(unsigned char ucByte)
 {
 
     static unsigned char ucParam;
-    static unsigned char ucValue[MAX_VALUE_LENGTH + 1];
+    static unsigned char ucValue[MAX_VALUE_LENGTH + 2];
     switch (esUartState)
     {
     case IDLE:
@@ -212,30 +212,40 @@ void processByteCommunication(unsigned char ucByte)
         break;
 
     case FLOAT_VALUE:
-        if (ucByte >= '0' && ucByte <= '9')
+        switch (ucByte)
         {
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        case ',':
             if (ucValueCount < MAX_VALUE_LENGTH)
             {
                 ucValue[ucValueCount++] = ucByte;
                 iAuxCommaPos++;
             }
-        }
-        else if (ucByte == ',')
-        {
-            iCommaPos = iAuxCommaPos;
-        }
-
-        else
-        {
-            if (';' == ucByte)
-            {
-                ucValue[ucValueCount] = '\0';
-                setParam(ucParam, ucValue, iCommaPos);
-            }
-            if (ucByte == '@' || ucByte == '<' || ucByte == '>')
-                ;
             else
+            {
                 esUartState = IDLE;
+            }
+            break;
+        case '@':
+        case '<':
+        case '>':
+            break;
+        case ';':
+            ucValue[ucValueCount] = '\0';
+            setParam(ucParam, ucValue);
+            esUartState = IDLE;
+            break;
+        default:
+            esUartState = IDLE;
             break;
         }
         break;
@@ -252,7 +262,7 @@ void processByteCommunication(unsigned char ucByte)
         else
         {
             if (';' == ucByte)
-                setParam(ucParam, ucValue, iCommaPos);
+                setParam(ucParam, ucValue);
 
             if (ucByte == '@' || ucByte == '<' || ucByte == '>')
                 ;
@@ -261,15 +271,16 @@ void processByteCommunication(unsigned char ucByte)
             break;
         }
     }
+}
 
-    /* ************************************************ */
-    /* Method name:        getState                     */
-    /* Method description: Return in witch state the    */
-    /*                     state machine are            */
-    /* Input params:       n/a                  		*/
-    /* Output params:      enum state                   */
-    /* ************************************************ */
-    enum state getState(void)
-    {
-        return esUartState;
-    }
+/* ************************************************ */
+/* Method name:        getState                     */
+/* Method description: Return in witch state the    */
+/*                     state machine are            */
+/* Input params:       n/a                  		*/
+/* Output params:      enum state                   */
+/* ************************************************ */
+enum state getState(void)
+{
+    return esUartState;
+}
