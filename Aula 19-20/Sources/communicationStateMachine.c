@@ -58,7 +58,7 @@ void processByteCommunication(unsigned char ucByte)
             esUartState = IDLE;
         }
         break;
-    
+
     case TARGETKP:
         switch (ucByte)
         {
@@ -109,7 +109,7 @@ void processByteCommunication(unsigned char ucByte)
             esUartState = IDLE;
         }
         break;
-    
+
     case DUTYCOOLER:
         bPidConfig = false;
         switch (ucByte)
@@ -142,7 +142,10 @@ void processByteCommunication(unsigned char ucByte)
         case 's':
             esUartState = SET;
             break;
-
+        case '@':
+        case '<':
+        case '>':
+            break;
         default:
             esUartState = IDLE;
         }
@@ -161,6 +164,10 @@ void processByteCommunication(unsigned char ucByte)
             ucParam = ucByte;
             esUartState = PARAM;
             break;
+        case '@':
+        case '<':
+        case '>':
+            break;
         default:
             esUartState = IDLE;
             break;
@@ -168,70 +175,100 @@ void processByteCommunication(unsigned char ucByte)
         break;
 
     case SET:
-        if ('a' == ucByte || 'i' == ucByte || 'p' == ucByte|| 'd' == ucByte || 's' == ucByte)
+        switch (ucByte)
         {
+        case 'a':
+        case 'i':
+        case 'p':
+        case 'd':
+        case 's':
             ucParam = ucByte;
             ucValueCount = 0;
             esUartState = FLOAT_VALUE;
-        }
-        else if ('b' == ucByte)
-        {
+            break;
+        case 'b':
             ucParam = ucByte;
             iFlag = 0;
             esUartState = BUTTON_VALUE;
-        }
-        else
+            break;
+        case '@':
+        case '<':
+        case '>':
+            break;
+        default:
             esUartState = IDLE;
+            break;
+        }
         break;
 
     case PARAM:
         if (';' == ucByte)
             answerParam(ucParam);
-        esUartState = IDLE;
+        if (ucByte == '@' || ucByte == '<' || ucByte == '>')
+            ;
+        else
+            esUartState = IDLE;
         break;
 
     case FLOAT_VALUE:
-            if (ucByte >= '0' && ucByte <= '9')
+        if (ucByte >= '0' && ucByte <= '9')
+        {
+            if (ucValueCount < MAX_VALUE_LENGTH)
             {
-                if (ucValueCount < MAX_VALUE_LENGTH)
-                {
-                    ucValue[ucValueCount++] = ucByte;
-                    iAuxCommaPos ++;
-                }
+                ucValue[ucValueCount++] = ucByte;
+                iAuxCommaPos++;
             }
-            else if (ucByte == ','){
-                iCommaPos = iAuxCommaPos;
-            }
+        }
+        else if (ucByte == ',')
+        {
+            iCommaPos = iAuxCommaPos;
+        }
 
-            else          
+        else
+        {
+            if (';' == ucByte)
             {
-                if (';' == ucByte)
-                {
-                    ucValue[ucValueCount] = '\0';
-                    setParam(ucParam, ucValue, iCommaPos);
-                }
-                ucUartState = IDLE;
+                ucValue[ucValueCount] = '\0';
+                setParam(ucParam, ucValue, iCommaPos);
             }
+            if (ucByte == '@' || ucByte == '<' || ucByte == '>')
+                ;
+            else
+                esUartState = IDLE;
             break;
+        }
+        break;
 
     case BUTTON_VALUE:
-            if (iFlag == 0 ){
-                if ('0' == ucByte || '1' == ucByte)
-                {
-                    iFlag++;
-                    ucValue[0] = ucByte;
-                }
-            }
-            else
+        if (iFlag == 0)
+        {
+            if ('0' == ucByte || '1' == ucByte)
             {
-                if (';' == ucByte)
-                    setParam(ucParam, ucValue, iCommaPos);
-                
-                ucUartState = IDLE;
+                iFlag++;
+                ucValue[0] = ucByte;
             }
-}
+        }
+        else
+        {
+            if (';' == ucByte)
+                setParam(ucParam, ucValue, iCommaPos);
 
-enum state getState(void)
-{
-    return esUartState;
-}
+            if (ucByte == '@' || ucByte == '<' || ucByte == '>')
+                ;
+            else
+                esUartState = IDLE;
+            break;
+        }
+    }
+
+    /* ************************************************ */
+    /* Method name:        getState                     */
+    /* Method description: Return in witch state the    */
+    /*                     state machine are            */
+    /* Input params:       n/a                  		*/
+    /* Output params:      enum state                   */
+    /* ************************************************ */
+    enum state getState(void)
+    {
+        return esUartState;
+    }
