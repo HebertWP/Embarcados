@@ -61,6 +61,7 @@ void processByteCommunication(unsigned char ucByte)
         break;
 
     case TARGETKP:/*set KP*/
+        bPidConfig = true;
         switch (ucByte)
         {
         case '@':/*next menu */
@@ -78,7 +79,6 @@ void processByteCommunication(unsigned char ucByte)
         break;
 
     case TARGETKD:/*same logic in here*/
-        bPidConfig = true;
         switch (ucByte)
         {
         case '@':
